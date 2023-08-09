@@ -3,11 +3,22 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 
+// exports
+const notFound = require("./middleware/not-found");
+const errorHandler = require("./middleware/error-handler");
+const authRoutes = require("./routes/auth-routes");
+
 app.use(express.json());
 
+// app.use("/api/v1/auth", authRoutes);
+// app.use("/api/v1/cryptography");
+
 app.use("/", (req, res) => {
-  res.json({ msg: "hello world" });
+  res.send("home page");
 });
+
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 4000;
 
