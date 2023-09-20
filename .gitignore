@@ -1,2 +1,7 @@
+# backend
 /node_modules
 .env
+
+# client
+/public
+/client/node_modules
