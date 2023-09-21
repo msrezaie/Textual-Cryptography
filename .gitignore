@@ -1,6 +1,7 @@
 # backend
 /node_modules
 .env
+package-lock.json
 
 # client
 /public

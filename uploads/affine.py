@@ -1,5 +1,9 @@
+import sys
+import json
+
 def encrypt(text, key):
     try:
+        key = json.loads(key)
         a = int(key['a'])
         b = int(key['b'])
         encrypted = []      # Initialize an empty list to store encrypted characters.
@@ -13,7 +17,6 @@ def encrypt(text, key):
         return ''.join(encrypted)   # Join the characters in the 'encrypted' list into a string and return it as the output.
     except ValueError:
         return "Error!"  # If the 'a' or 'b' key cannot be converted to an integer, return an error message.
-
 
 def decrypt(text, key):
     try:
@@ -31,3 +34,21 @@ def decrypt(text, key):
         return ''.join(decrypted)
     except ValueError:
         return "Error!"
+    
+if len(sys.argv) < 4:
+    print("Usage: python AffineCipher.py <operation> <arg1> <arg2>")
+    sys.exit(1)
+
+operation = sys.argv[1]
+message = sys.argv[2]
+keys = sys.argv[3]
+
+if operation == "encrypt":
+    result = encrypt(message, keys)
+elif operation == "decrypt":
+    result = decrypt(message, keys)
+else:
+    print("Invalid operation")
+    sys.exit(1)
+
+print(result)

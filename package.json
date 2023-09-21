@@ -4,7 +4,7 @@
   "description": "A text based cryptography app",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "client": "npm start --prefix client"
   },
   "author": "msrezaie",
