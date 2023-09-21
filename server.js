@@ -5,21 +5,21 @@ const mongoose = require("mongoose");
 const app = express();
 
 // exports
-const authRoutes = require("./routes/authRoutes");
+// const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const mainRoutes = require("./routes/mainRoutes");
 const { errorHandler, notFound } = require("./middleware/errorHandler");
-const {
-  authenticateUser,
-  authenticateAdmin,
-} = require("./middleware/authHandler");
+// const {
+//   authenticateUser,
+//   authenticateAdmin,
+// } = require("./middleware/authHandler");
 
 // app.use(express.static("./public"));
 // app.use("/uploads", express.static("uploads"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use("/api/v1/auth", authRoutes);
+// app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/cryptography", mainRoutes);
 app.use("/api/v1/admin", adminRoutes);
 
