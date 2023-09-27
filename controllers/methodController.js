@@ -1,12 +1,19 @@
 const { spawn } = require("child_process");
 const path = require("path");
 const fs = require("fs");
+const Method = require("../models/Method");
 
 // @desc    retrieve all info about different methods
 // @route   GET /api/v1/cryptography/methods
 // @access  public
-const getAllMethods = (req, res) => {
-  res.json({ msg: "all methods" });
+const getAllMethods = async (req, res) => {
+  const method = await Method.find();
+  if (!method) {
+    res.status(404);
+    throw new Error("no method found!");
+  }
+
+  res.json({ count: method.length, method });
 };
 
 // @desc    retrieve individual info about different ciphers
@@ -33,7 +40,7 @@ const transformText = (req, res) => {
 
   if (!fs.existsSync(cipherPath)) {
     res.status(404);
-    throw new Error("cipher with given name does not exist!");
+    throw new Error(`${cipher} does not exist!`);
   }
 
   keys = JSON.stringify(keys);

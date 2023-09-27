@@ -33,4 +33,4 @@ A simple text based cryptography app that allows users to encrypt and decrypt te
 
 ### frontend
 
-- reactjs, react-router, styled-components, normalize.css, picocss, axios, react-toastify
+- reactjs, react-router, styled-components, picocss, axios, react-toastify

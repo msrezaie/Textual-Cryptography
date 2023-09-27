@@ -6,3 +6,6 @@ package-lock.json
 # client
 /public
 /client/node_modules
+
+/ciphers
+client/temp.txt
