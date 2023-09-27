@@ -14,8 +14,7 @@ const { errorHandler, notFound } = require("./middleware/errorHandler");
 //   authenticateAdmin,
 // } = require("./middleware/authHandler");
 
-// app.use(express.static("./public"));
-// app.use("/uploads", express.static("uploads"));
+app.use(express.static("./public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

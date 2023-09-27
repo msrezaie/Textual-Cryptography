@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  getAllMethods,
+  getAllCiphers,
   transformText,
-} = require("../controllers/methodController");
+} = require("../controllers/cipherController");
 
-router.get("/", getAllMethods);
+router.get("/ciphers", getAllCiphers);
 router.post("/", transformText);
 
 module.exports = router;
