@@ -1,7 +1,7 @@
-import { useOperationContext } from "../pages/Landing";
+import { useAppContext } from "../context/appContext";
 
 const Descriptions = () => {
-  const { operationVariables } = useOperationContext();
+  const { state } = useAppContext();
 
   return (
     <article>
@@ -9,7 +9,7 @@ const Descriptions = () => {
         <h4>Description</h4>
       </header>
       <div className="container">
-        <p id="cipher-desc">{operationVariables.cipherDescription}</p>
+        <p id="cipher-desc">{state.cipherDescription}</p>
       </div>
     </article>
   );

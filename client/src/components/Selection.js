@@ -1,18 +1,18 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useOperationContext } from "../pages/Landing";
+import { useAppContext } from "../context/appContext";
 import { useEffect, useState } from "react";
 
 const Selection = () => {
-  const { operationVariables, setOperationVariables } = useOperationContext();
+  const { state, setState } = useAppContext();
   const [ciphers, setCiphers] = useState([]);
 
   const cipherChange = (e) => {
     const selectedCipher = ciphers.filter(
       (cipher) => cipher.name === e.target.value
     )[0];
-    setOperationVariables({
-      ...operationVariables,
+    setState({
+      ...state,
       cipherName: e.target.value,
       cipherDescription: selectedCipher.description,
       keyType: selectedCipher.keyType,
@@ -30,8 +30,8 @@ const Selection = () => {
         } else {
           const firstCipher = data.cipher[0];
           setCiphers(data.cipher);
-          setOperationVariables({
-            ...operationVariables,
+          setState({
+            ...state,
             cipherName: firstCipher.name,
             cipherDescription: firstCipher.description,
             keyType: firstCipher.keyType,

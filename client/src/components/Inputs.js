@@ -1,13 +1,14 @@
 import BtnsWrapper from "../assets/wrappers/InputsWrapper";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import { useOperationContext } from "../pages/Landing";
+// import { useOperationContext } from "../pages/Landing";
+import { useAppContext } from "../context/appContext";
 import axios from "axios";
 
 const Inputs = () => {
-  const { operationVariables } = useOperationContext();
+  const { state } = useAppContext();
 
-  const { cipherName, keys, keyType } = operationVariables;
+  const { cipherName, keys, keyType } = state;
   const [plaintext, setPlaintext] = useState("");
   const [ciphertext, setCiphertext] = useState("");
 

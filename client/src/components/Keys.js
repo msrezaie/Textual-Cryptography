@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { useOperationContext } from "../pages/Landing";
+// import { useOperationContext } from "../pages/Landing";
+import { useAppContext } from "../context/appContext";
 
 const Keys = () => {
-  const { operationVariables, setOperationVariables } = useOperationContext();
+  const { state, setState } = useAppContext();
   const [keyValue, setKeyValue] = useState({
     key1: "",
     key2: "",
   });
-  const { keyType, keyArgs } = operationVariables;
+  const { keyType, keyArgs } = state;
 
   const keyInputHandler = (e) => {
     const { name, value } = e.target;
@@ -19,7 +20,7 @@ const Keys = () => {
   };
 
   useEffect(() => {
-    setOperationVariables({ ...operationVariables, keys: keyValue });
+    setState({ ...state, keys: keyValue });
   }, [keyValue]);
 
   useEffect(() => {
