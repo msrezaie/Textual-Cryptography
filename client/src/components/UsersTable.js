@@ -11,7 +11,9 @@ const UsersTable = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const { data } = await axios.get("/admin/users");
+        const { data } = await axios.get(
+          "https://ctd-final-tc.onrender.com/api/v1/admin/users"
+        );
         setUsers(data.users);
       } catch (error) {
         toast.warn(error);

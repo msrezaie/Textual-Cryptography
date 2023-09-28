@@ -29,11 +29,15 @@ const AddCipher = () => {
       return;
     }
     try {
-      const response = await axios.post("/admin/cipher/create", cipherData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "https://ctd-final-tc.onrender.com/api/v1/admin/cipher/create",
+        cipherData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       toast.success(response.data.msg);
       formRef.current.reset();
     } catch (error) {

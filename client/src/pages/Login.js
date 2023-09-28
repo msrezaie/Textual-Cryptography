@@ -17,10 +17,13 @@ const Login = () => {
   const signInHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/auth/login", {
-        name: user.name,
-        password: user.password,
-      });
+      const { data } = await axios.post(
+        "https://ctd-final-tc.onrender.com/api/v1/auth/login",
+        {
+          name: user.name,
+          password: user.password,
+        }
+      );
       setUserState({ user: data.name, isAdmin: data.isAdmin });
       navigate("/");
     } catch (error) {
