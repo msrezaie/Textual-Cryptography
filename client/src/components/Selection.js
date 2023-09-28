@@ -4,15 +4,15 @@ import { useAppContext } from "../context/appContext";
 import { useEffect, useState } from "react";
 
 const Selection = () => {
-  const { state, setState } = useAppContext();
+  const { globalState, setGlobalState } = useAppContext();
   const [ciphers, setCiphers] = useState([]);
 
   const cipherChange = (e) => {
     const selectedCipher = ciphers.filter(
       (cipher) => cipher.name === e.target.value
     )[0];
-    setState({
-      ...state,
+    setGlobalState({
+      ...globalState,
       cipherName: e.target.value,
       cipherDescription: selectedCipher.description,
       keyType: selectedCipher.keyType,
@@ -24,14 +24,14 @@ const Selection = () => {
     const fetchCiphers = async () => {
       try {
         const { data } = await axios.get("/cryptography/ciphers");
-
         if (data.count < 1) {
           toast.error("No Data, App is not Functional!", { autoClose: false });
         } else {
           const firstCipher = data.cipher[0];
           setCiphers(data.cipher);
-          setState({
-            ...state,
+          setGlobalState({
+            ...globalState,
+            ciphers: data.cipher,
             cipherName: firstCipher.name,
             cipherDescription: firstCipher.description,
             keyType: firstCipher.keyType,

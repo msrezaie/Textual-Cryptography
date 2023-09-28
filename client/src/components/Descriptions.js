@@ -1,7 +1,7 @@
 import { useAppContext } from "../context/appContext";
 
 const Descriptions = () => {
-  const { state } = useAppContext();
+  const { globalState } = useAppContext();
 
   return (
     <article>
@@ -9,7 +9,7 @@ const Descriptions = () => {
         <h4>Description</h4>
       </header>
       <div className="container">
-        <p id="cipher-desc">{state.cipherDescription}</p>
+        <p id="cipher-desc">{globalState.cipherDescription}</p>
       </div>
     </article>
   );

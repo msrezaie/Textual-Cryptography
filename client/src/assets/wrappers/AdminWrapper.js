@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Wrapper = styled.main`
-  max-width: 98%;
+  max-width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,15 +11,6 @@ const Wrapper = styled.main`
   }
   header {
     text-align: center;
-  }
-  ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  li {
-    display: inline;
   }
 `;
 

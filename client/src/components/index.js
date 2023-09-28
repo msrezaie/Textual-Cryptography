@@ -6,7 +6,9 @@ import Descriptions from "./Descriptions";
 import Keys from "./Keys";
 import Selection from "./Selection";
 import AddCipher from "./AddCipher";
-import MethodsTable from "./MethodsTable";
+import CiphersTable from "./CiphersTable";
+import History from "./History";
+import UsersTable from "./UsersTable";
 
 export {
   Navbar,
@@ -17,5 +19,7 @@ export {
   Selection,
   Keys,
   AddCipher,
-  MethodsTable,
+  CiphersTable,
+  History,
+  UsersTable,
 };

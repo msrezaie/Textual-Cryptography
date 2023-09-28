@@ -1,13 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {
-  AdminLayout,
-  LandingLayout,
-  Landing,
-  Login,
-  Register,
-  Admin,
-  Error,
-} from "./pages";
+import { LandingLayout, Landing, Login, Register, Admin, Error } from "./pages";
+
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const App = () => {
   return (
@@ -18,9 +12,14 @@ const App = () => {
             <Route index element={<Landing />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-          </Route>
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Admin />} />
+            <Route
+              path="admin"
+              element={
+                <ProtectedRoute>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>

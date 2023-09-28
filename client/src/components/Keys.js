@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-// import { useOperationContext } from "../pages/Landing";
 import { useAppContext } from "../context/appContext";
 
 const Keys = () => {
-  const { state, setState } = useAppContext();
+  const { globalState, setGlobalState } = useAppContext();
   const [keyValue, setKeyValue] = useState({
     key1: "",
     key2: "",
   });
-  const { keyType, keyArgs } = state;
+  const { keyType, keyArgs } = globalState;
 
   const keyInputHandler = (e) => {
     const { name, value } = e.target;
@@ -20,7 +19,7 @@ const Keys = () => {
   };
 
   useEffect(() => {
-    setState({ ...state, keys: keyValue });
+    setGlobalState({ ...globalState, keys: keyValue });
   }, [keyValue]);
 
   useEffect(() => {
@@ -43,6 +42,7 @@ const Keys = () => {
           name="key1"
           onChange={keyInputHandler}
           placeholder={keyArgs?.keyDataDesc}
+          required
         />
       )}
 
@@ -54,6 +54,7 @@ const Keys = () => {
             onChange={keyInputHandler}
             type={keyArgs?.key1DataType}
             placeholder={keyArgs?.key1DataDesc}
+            required
           />
           <input
             name="key2"
@@ -61,6 +62,7 @@ const Keys = () => {
             onChange={keyInputHandler}
             type={keyArgs?.key2DataType}
             placeholder={keyArgs?.key2DataDesc}
+            required
           />
         </div>
       )}

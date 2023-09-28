@@ -1,22 +1,24 @@
 import BtnsWrapper from "../assets/wrappers/InputsWrapper";
 import { toast } from "react-toastify";
 import { useState } from "react";
-// import { useOperationContext } from "../pages/Landing";
 import { useAppContext } from "../context/appContext";
 import axios from "axios";
 
 const Inputs = () => {
-  const { state } = useAppContext();
+  const { globalState, userState } = useAppContext();
 
-  const { cipherName, keys, keyType } = state;
+  const { cipherName, keys, keyType } = globalState;
   const [plaintext, setPlaintext] = useState("");
   const [ciphertext, setCiphertext] = useState("");
-
   const buttonHandler = async (e) => {
     const operation = e.target.name;
     if (operation === "encrypt") {
-      if (!plaintext || (keyType !== "no-key" && !keys.key1)) {
-        toast.info("Enter text and key[s]!");
+      if (!plaintext) {
+        toast.info("Enter text!");
+      } else if (keyType === "1-key" && !keys.key1) {
+        toast.info("Enter key!");
+      } else if (keyType === "2-key" && (!keys.key1 || !keys.key2)) {
+        toast.info("Enter both keys!");
       } else {
         try {
           const { data } = await axios.post("/cryptography", {
@@ -25,14 +27,30 @@ const Inputs = () => {
             message: plaintext,
             keys,
           });
-          setCiphertext(data.result);
+          const encryted = data.result;
+          setCiphertext(encryted);
+
+          if (userState.user) {
+            await axios.post("/user/history", {
+              cipher: cipherName,
+              plaintext,
+              keys,
+              ciphertext: encryted,
+            });
+          }
         } catch (error) {
-          toast.error(error.response.data.msg);
+          toast.error(error.response.data.error);
         }
       }
-    } else {
-      if (!ciphertext || (keyType !== "no-key" && !keys.key1)) {
-        toast.info("Enter encrypted text and key[s]!");
+    }
+
+    if (operation === "decrypt") {
+      if (!ciphertext) {
+        toast.info("Enter encrypted text!");
+      } else if (keyType === "1-key" && !keys.key1) {
+        toast.info("Enter key!");
+      } else if (keyType === "2-key" && (!keys.key1 || !keys.key2)) {
+        toast.info("Enter both keys!");
       } else {
         try {
           const { data } = await axios.post("/cryptography", {
@@ -41,9 +59,19 @@ const Inputs = () => {
             message: ciphertext,
             keys,
           });
-          setPlaintext(data.result);
+          const decryted = data.result;
+          setPlaintext(decryted);
+
+          if (userState.user) {
+            await axios.post("/user/history", {
+              cipher: cipherName,
+              plaintext: decryted,
+              keys,
+              ciphertext,
+            });
+          }
         } catch (error) {
-          toast.error(error.response.data.msg);
+          toast.error(error.response.data);
         }
       }
     }

@@ -6,10 +6,6 @@ const AddCipher = () => {
   const formRef = useRef(null);
   const [keyType, setKeyType] = useState("");
 
-  const keyChangeHandler = (e) => {
-    setKeyType(e.target.value);
-  };
-
   const cipherSaveHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -59,7 +55,7 @@ const AddCipher = () => {
           <select
             id="keyType"
             name="keyType"
-            onChange={keyChangeHandler}
+            onChange={(e) => setKeyType(e.target.value)}
             value={keyType}
             required
           >

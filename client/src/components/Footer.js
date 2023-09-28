@@ -32,7 +32,7 @@ const Footer = () => {
           </a>
         </li>
         <li>
-          <span>Developer: </span>
+          <span>My Portfolio: </span>
           <a
             href="https://msrezaieportfolio.onrender.com/"
             target="_blank"
