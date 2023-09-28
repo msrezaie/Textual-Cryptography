@@ -14,22 +14,22 @@ A simple text based cryptography app that allows users to encrypt and decrypt te
 - can access the main page and use any of the available ciphers to encrypt/decrypt text
 - user can also choose to sign up and their usage history be saved (not yet implemented)
 
-### rough breakdown:
+### feature breakdown:
 
 - admin cipher add/remove (+)
 - open usage of encryption/decryption with available ciphers (+)
 - admin dashboard interface for managing ciphers (partely implemented)
 - user interface for selecting cipher of choice and inputting text & key[s] for cryptography (+)
-- user authentication / authorization ()
-- admin authentication & securing admin routes ()
-- user session/cookies to secure individual users' usage history ()
-- user interface for viewing their usage history ()
+- user authentication / authorization (+)
+- admin authentication & securing admin routes (+)
+- user session/cookies to secure individual users' usage history (+)
+- user interface for viewing their usage history (+)
 
 ## technologies
 
 ### backend
 
-- nodejs, expressjs, mongodb, jwt, bcrypt, child_process, multer
+- nodejs, expressjs, mongodb, jwt, bcrypt, child_process, multer cookie-parser
 
 ### frontend
 
