@@ -21,9 +21,7 @@ const errorHandler = (err, req, res, next) => {
   }
 
   if (err.code || err.code === 11000) {
-    customError.errorMessage = `resource with entered ${Object.keys(
-      err.keyValue
-    )} already exists!`;
+    customError.errorMessage = `resource already exists!`;
     customError.errorCode = 400;
   }
 

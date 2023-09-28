@@ -50,7 +50,7 @@ const transformText = (req, res) => {
       res.status(200).json({ result: cipherOutput.replace(/\r\n/g, "") });
     } else {
       return res.status(500).json({
-        error: "cipher execution failed, input arguments not validated!",
+        error: "execution failed, check input and keys!",
       });
     }
   });

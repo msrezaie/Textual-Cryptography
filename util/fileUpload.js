@@ -1,5 +1,4 @@
 const multer = require("multer");
-const path = require("path");
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, callback) => {

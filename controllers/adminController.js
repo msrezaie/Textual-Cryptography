@@ -1,5 +1,6 @@
 const fs = require("fs");
 const Cipher = require("../models/Cipher");
+const User = require("../models/User");
 
 // @desc    creates a cipher file and add its information
 // @route   POST /api/v1/admin/cipher/create
@@ -38,7 +39,7 @@ const createCipher = async (req, res) => {
   }
 };
 
-// @desc    removes existing cipher file from disk
+// @desc    removes existing cipher file from disk and db
 // @route   DELETE /api/v1/admin/cipher/delete/:name
 // @access  private (admin only)
 const removeCipher = async (req, res) => {
@@ -69,4 +70,12 @@ const removeCipher = async (req, res) => {
   }
 };
 
-module.exports = { createCipher, removeCipher };
+// @desc    gets all existing users
+// @route   GET /api/v1/admin/users
+// @access  private (admin only)
+const getUsers = async (req, res) => {
+  const users = await User.find();
+  res.json({ count: users.length, users });
+};
+
+module.exports = { createCipher, removeCipher, getUsers };

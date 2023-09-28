@@ -4,8 +4,8 @@ import json
 def encrypt(text, key):
     try:
         key = json.loads(key)
-        a = int(key['a'])
-        b = int(key['b'])
+        a = int(key['key1'])
+        b = int(key['key2'])
         encrypted = []      # Initialize an empty list to store encrypted characters.
         for char in text:   # Loop through each character in the input text.
             if char.isalpha():  # Check if the character is a letter.
@@ -18,10 +18,12 @@ def encrypt(text, key):
     except ValueError:
         return "Error!"  # If the 'a' or 'b' key cannot be converted to an integer, return an error message.
 
+
 def decrypt(text, key):
     try:
-        a = int(key['a'])
-        b = int(key['b'])
+        key = json.loads(key)
+        a = int(key['key1'])
+        b = int(key['key2'])
         decrypted = []
         x = [ i for i in range(26) if (a * i) % 26 == 1 ] or [0]  # Calculate the modular inverse of 'a'.
         for char in text:
@@ -36,7 +38,7 @@ def decrypt(text, key):
         return "Error!"
     
 if len(sys.argv) < 4:
-    print("Usage: python AffineCipher.py <operation> <arg1> <arg2>")
+    print("Usage: python <operation> <arg1> <arg2>")
     sys.exit(1)
 
 operation = sys.argv[1]
