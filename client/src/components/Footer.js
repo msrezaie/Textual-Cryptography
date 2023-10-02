@@ -1,15 +1,8 @@
-import styled from "styled-components";
-
-const Wrapper = styled.footer`
-  li {
-    display: inline;
-    padding: 0 3px;
-  }
-`;
+import FooterWrapper from "../assets/wrappers/FooterWrapper";
 
 const Footer = () => {
   return (
-    <Wrapper className="container-fluid">
+    <FooterWrapper className="container-fluid">
       <ul>
         <li>
           <a
@@ -42,7 +35,7 @@ const Footer = () => {
           </a>
         </li>
       </ul>
-    </Wrapper>
+    </FooterWrapper>
   );
 };
 

@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import Wrapper from "../assets/wrappers/SignInForm";
 import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate, Link } from "react-router-dom";
+import { MainWrapper } from "../assets/wrappers/SignInWrapper";
 import { useAppContext } from "../context/appContext";
-import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+const SignUp = () => {
   const navigate = useNavigate();
   const { setUserState } = useAppContext();
   const [user, setUser] = useState({
@@ -17,13 +16,10 @@ const Register = () => {
   const signUpHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        "https://ctd-final-tc.onrender.com/api/v1/auth/register",
-        {
-          name: user.name,
-          password: user.password,
-        }
-      );
+      const { data } = await axios.post("/auth/signup", {
+        name: user.name,
+        password: user.password,
+      });
       setUserState({ user: data.name, isAdmin: data.isAdmin });
       navigate("/");
     } catch (error) {
@@ -32,7 +28,7 @@ const Register = () => {
   };
 
   return (
-    <Wrapper className="container">
+    <MainWrapper className="container">
       <article className="grid">
         <div>
           <hgroup>
@@ -62,12 +58,12 @@ const Register = () => {
               </label>
             </fieldset>
             <button type="submit" className="contrast">
-              Register
+              Sign Up
             </button>
           </form>
         </div>
       </article>
-    </Wrapper>
+    </MainWrapper>
   );
 };
-export default Register;
+export default SignUp;

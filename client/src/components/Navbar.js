@@ -1,6 +1,6 @@
 import { useAppContext } from "../context/appContext";
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
+// import { BtnUl } from "../assets/wrappers/NavbarWrapper";
 
 const Navbar = () => {
   const { userState, logout } = useAppContext();
@@ -22,7 +22,17 @@ const Navbar = () => {
                 <button className="contrast">Admin Panel</button>
               </Link>
             ) : userState.user ? (
-              <p>Welcome, {userState.user}</p>
+              <strong>Welcome, {userState.user}</strong>
+            ) : location === "/login" &&
+              (!userState.isAdmin || !userState.user) ? (
+              <Link to="/signup">
+                <button className="contrast">Sign Up</button>
+              </Link>
+            ) : location === "/signup" &&
+              (!userState.isAdmin || !userState.user) ? (
+              <Link to="/login">
+                <button className="contrast">Login</button>
+              </Link>
             ) : (
               <Link to="/login">
                 <button className="contrast">Login</button>
@@ -30,14 +40,10 @@ const Navbar = () => {
             )}
           </li>
           <li>
-            {userState.user ? (
+            {userState.user && (
               <button className="contrast" onClick={logout}>
                 Logout
               </button>
-            ) : (
-              <Link to="/register">
-                <button className="contrast">Register</button>
-              </Link>
             )}
           </li>
         </ul>

@@ -1,21 +1,15 @@
-import { AddCipher, CiphersTable, UsersTable } from "../components";
-import AdminWrapper from "../assets/wrappers/AdminWrapper";
+import { AddCipher, CiphersTable } from "../components";
+import { MainWrapper } from "../assets/wrappers/AdminWrapper";
 
 const Admin = () => {
   return (
     <>
-      <AdminWrapper className="container">
-        <header>
-          <strong>Admin Operations</strong>
-        </header>
-        <div className="grid">
-          <UsersTable />
-          <CiphersTable />
-        </div>
+      <MainWrapper className="container">
         <div className="container">
+          <CiphersTable />
           <AddCipher />
         </div>
-      </AdminWrapper>
+      </MainWrapper>
     </>
   );
 };

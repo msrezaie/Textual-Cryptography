@@ -9,3 +9,6 @@ package-lock.json
 
 /ciphers
 client/temp.txt
+client/package-lock.json
+client/src/assets/images/bg.png
+client/src/assets/images/cd-bg.jpg

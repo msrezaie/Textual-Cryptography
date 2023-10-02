@@ -29,15 +29,11 @@ const AddCipher = () => {
       return;
     }
     try {
-      const response = await axios.post(
-        "https://ctd-final-tc.onrender.com/api/v1/admin/cipher/create",
-        cipherData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post("/admin/cipher/create", cipherData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       toast.success(response.data.msg);
       formRef.current.reset();
     } catch (error) {
@@ -46,9 +42,11 @@ const AddCipher = () => {
   };
 
   return (
-    <article>
-      <div>
-        <header>Add New Cipher</header>
+    <div>
+      <article>
+        <header>
+          <strong>Add New Cipher</strong>
+        </header>
         <form ref={formRef} onSubmit={cipherSaveHandler}>
           <input
             type="text"
@@ -122,8 +120,8 @@ const AddCipher = () => {
             Save
           </button>
         </form>
-      </div>
-    </article>
+      </article>
+    </div>
   );
 };
 export default AddCipher;

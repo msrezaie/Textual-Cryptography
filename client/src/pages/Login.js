@@ -1,10 +1,9 @@
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import Wrapper from "../assets/wrappers/SignInForm";
 import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate, Link } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
-import { useNavigate } from "react-router-dom";
+import { MainWrapper, LoginFieldset } from "../assets/wrappers/SignInWrapper";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,13 +16,10 @@ const Login = () => {
   const signInHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        "https://ctd-final-tc.onrender.com/api/v1/auth/login",
-        {
-          name: user.name,
-          password: user.password,
-        }
-      );
+      const { data } = await axios.post("/auth/login", {
+        name: user.name,
+        password: user.password,
+      });
       setUserState({ user: data.name, isAdmin: data.isAdmin });
       navigate("/");
     } catch (error) {
@@ -32,11 +28,11 @@ const Login = () => {
   };
 
   return (
-    <Wrapper className="container">
+    <MainWrapper className="container">
       <article className="grid">
         <div>
           <hgroup>
-            <h1>Sign in</h1>
+            <h1>Login</h1>
             <h2>Login to save your usage history!</h2>
           </hgroup>
           <form onSubmit={signInHandler}>
@@ -56,18 +52,22 @@ const Login = () => {
               placeholder="Password"
               required
             />
-            <fieldset>
-              <label htmlFor="remember">
-                Not registered? <Link to="/register">Sign Up</Link>
-              </label>
-            </fieldset>
+            <LoginFieldset>
+              <ul>
+                <li>
+                  <label>
+                    Not registered? <Link to="/signup">Sign Up</Link>
+                  </label>
+                </li>
+              </ul>
+            </LoginFieldset>
             <button type="submit" className="contrast">
               Login
             </button>
           </form>
         </div>
       </article>
-    </Wrapper>
+    </MainWrapper>
   );
 };
 

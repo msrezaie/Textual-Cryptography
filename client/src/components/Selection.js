@@ -23,9 +23,7 @@ const Selection = () => {
   useEffect(() => {
     const fetchCiphers = async () => {
       try {
-        const { data } = await axios.get(
-          "https://ctd-final-tc.onrender.com/api/v1/cryptography/ciphers"
-        );
+        const { data } = await axios.get("/cryptography/ciphers");
         if (data.count < 1) {
           toast.error("No Data, App is not Functional!", { autoClose: false });
         } else {
@@ -44,7 +42,9 @@ const Selection = () => {
         toast.error(error.response.data, { autoClose: false });
       }
     };
+
     fetchCiphers();
+    // eslint-disable-next-line
   }, []);
 
   return (

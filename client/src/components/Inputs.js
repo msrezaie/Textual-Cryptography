@@ -21,15 +21,12 @@ const Inputs = () => {
         toast.info("Enter both keys!");
       } else {
         try {
-          const { data } = await axios.post(
-            "https://ctd-final-tc.onrender.com/api/v1/cryptography",
-            {
-              cipher: cipherName,
-              operation,
-              message: plaintext,
-              keys,
-            }
-          );
+          const { data } = await axios.post("/cryptography", {
+            cipher: cipherName,
+            operation,
+            message: plaintext,
+            keys,
+          });
           const encryted = data.result;
           setCiphertext(encryted);
 
@@ -56,28 +53,22 @@ const Inputs = () => {
         toast.info("Enter both keys!");
       } else {
         try {
-          const { data } = await axios.post(
-            "https://ctd-final-tc.onrender.com/api/v1/cryptography",
-            {
-              cipher: cipherName,
-              operation,
-              message: ciphertext,
-              keys,
-            }
-          );
+          const { data } = await axios.post("/cryptography", {
+            cipher: cipherName,
+            operation,
+            message: ciphertext,
+            keys,
+          });
           const decryted = data.result;
           setPlaintext(decryted);
 
           if (userState.user) {
-            await axios.post(
-              "https://ctd-final-tc.onrender.com/api/v1/user/history",
-              {
-                cipher: cipherName,
-                plaintext: decryted,
-                keys,
-                ciphertext,
-              }
-            );
+            await axios.post("/user/history", {
+              cipher: cipherName,
+              plaintext: decryted,
+              keys,
+              ciphertext,
+            });
           }
         } catch (error) {
           toast.error(error.response.data);

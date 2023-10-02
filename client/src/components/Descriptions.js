@@ -2,15 +2,12 @@ import { useAppContext } from "../context/appContext";
 
 const Descriptions = () => {
   const { globalState } = useAppContext();
-
   return (
     <article>
       <header>
-        <h4>Description</h4>
+        <strong>Description</strong>
       </header>
-      <div className="container">
-        <p id="cipher-desc">{globalState.cipherDescription}</p>
-      </div>
+      <p id="cipher-desc">{globalState.cipherDescription}</p>
     </article>
   );
 };

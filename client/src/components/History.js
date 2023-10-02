@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAppContext } from "../context/appContext";
+import { HistoryArticle } from "../assets/wrappers/HistoryWrapper";
 import axios from "axios";
 
 const History = () => {
@@ -9,9 +10,7 @@ const History = () => {
   useEffect(() => {
     const fetchHistoryData = async () => {
       try {
-        const { data } = await axios.get(
-          "https://ctd-final-tc.onrender.com/api/v1/user/history"
-        );
+        const { data } = await axios.get("/user/history");
         setHistoryData(data.history);
       } catch (error) {
         console.log(error);
@@ -21,8 +20,8 @@ const History = () => {
   }, [userState]);
 
   return (
-    <article>
-      <details>
+    <HistoryArticle>
+      <details open>
         <summary>
           <strong>Your Usage History</strong>
         </summary>
@@ -52,7 +51,7 @@ const History = () => {
           </tbody>
         </table>
       </details>
-    </article>
+    </HistoryArticle>
   );
 };
 export default History;

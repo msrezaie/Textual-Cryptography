@@ -1,30 +1,12 @@
-import styled from "styled-components";
+import { OperationArticle } from "../assets/wrappers/OperationWrapper";
 import { Keys, Selection, Inputs } from "./";
-
-const Wrapper = styled.article`
-  margin-bottom: 0;
-  header {
-    text-align: center;
-  }
-  h3 {
-    margin-bottom: 0;
-  }
-  select,
-  input {
-    max-width: 50%;
-    height: 40px;
-    padding: 0 5px;
-    margin: 0;
-    font-size: 0.8rem;
-  }
-`;
 
 const Operation = () => {
   return (
     <>
-      <Wrapper>
+      <OperationArticle>
         <header>
-          <h4>Encryptor/Decryptor</h4>
+          <strong>Encryptor/Decryptor</strong>
         </header>
         <div className="grid">
           <Selection />
@@ -33,7 +15,7 @@ const Operation = () => {
         <div className="grid">
           <Inputs />
         </div>
-      </Wrapper>
+      </OperationArticle>
     </>
   );
 };

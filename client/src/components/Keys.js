@@ -20,6 +20,7 @@ const Keys = () => {
 
   useEffect(() => {
     setGlobalState({ ...globalState, keys: keyValue });
+    // eslint-disable-next-line
   }, [keyValue]);
 
   useEffect(() => {
