@@ -1,4 +1,10 @@
 [[redirects]]
-    from = "/*"
-    to = "/index.html"
-    status = 200
+from = "/*"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/api/*"
+to = "https://ctd-final-tc.onrender.com/api/v1/*"
+status = 200
+force = true
