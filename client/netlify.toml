@@ -1,5 +1,5 @@
 [[redirects]]
-from = "/api/*"
+from = "https://text-crypt.netlify.app/api/v1/*"
 to = "https://ctd-final-tc.onrender.com/api/v1/*"
 status = 200
 force = true
