@@ -1,10 +1,10 @@
 const User = require("../models/User");
 const generateCookie = require("../util/generateCookie");
 
-// @desc    creates token, cookie registers users
-// @route   POST /api/v1/auth/register
-// @access  private (admin only)
-const register = async (req, res) => {
+// @desc    creates token, cookie and registers users
+// @route   POST /api/v1/auth/signup
+// @access  public
+const signup = async (req, res) => {
   const { name, password } = req.body;
 
   if (!name || !password) {
@@ -24,7 +24,7 @@ const register = async (req, res) => {
 
 // @desc    creates token and cookie for existing users
 // @route   POST /api/v1/auth/login
-// @access  registered users only
+// @access  public
 const login = async (req, res) => {
   const { name, password } = req.body;
 
@@ -69,4 +69,4 @@ const getCurrentUser = async (req, res) => {
     .json({ name: validUser.name, isAdmin: validUser.isAdmin });
 };
 
-module.exports = { login, register, getCurrentUser, logout };
+module.exports = { login, signup, getCurrentUser, logout };

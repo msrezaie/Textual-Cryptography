@@ -6,6 +6,7 @@ const { authenticateAdmin } = require("../middleware/authHandler");
 const {
   createCipher,
   removeCipher,
+  updateCipher,
   getUsers,
 } = require("../controllers/adminController");
 
@@ -20,5 +21,8 @@ router
 router
   .route("/cipher/delete/:cipherName")
   .delete(authenticateAdmin, removeCipher);
+router
+  .route("/cipher/update/:cipherName")
+  .patch(authenticateAdmin, updateCipher);
 
 module.exports = router;

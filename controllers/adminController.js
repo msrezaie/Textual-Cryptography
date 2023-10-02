@@ -70,6 +70,14 @@ const removeCipher = async (req, res) => {
   }
 };
 
+// @desc    updates existing cipher resource
+// @route   UPDATE /api/v1/admin/cipher/update/:name
+// @access  private (admin only)
+const updateCipher = async (req, res) => {
+  const { cipherName } = req.params;
+  res.json({ msg: "update cipher reached", cipherName });
+};
+
 // @desc    gets all existing users
 // @route   GET /api/v1/admin/users
 // @access  private (admin only)
@@ -78,4 +86,4 @@ const getUsers = async (req, res) => {
   res.json({ count: users.length, users });
 };
 
-module.exports = { createCipher, removeCipher, getUsers };
+module.exports = { createCipher, updateCipher, removeCipher, getUsers };
