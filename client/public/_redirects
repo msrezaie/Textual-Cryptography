@@ -1,3 +1,3 @@
-/api/v1/* https://ctd-final-tc.onrender.com/:splat 200!
+/api/v1/* https://ctd-final-tc.onrender.com/api/v1/:splat 200!
 
 /* /index.html 200

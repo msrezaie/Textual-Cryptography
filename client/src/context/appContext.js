@@ -22,7 +22,7 @@ const AppProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.get("/auth/logout");
+      await axios.get("/api/v1/auth/logout");
       setUserState({ user: "", isAdmin: false });
     } catch (error) {
       toast.error(error.response.data.msg);
