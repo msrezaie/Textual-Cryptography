@@ -6,30 +6,32 @@ A simple text based cryptography app that allows users to encrypt and decrypt te
 
 ### role: admin
 
-- admin logs in, and adds, updates, or removes cipher files and description (authentication not yet implemented)
+- admin logs in, and adds, updates, or removes cipher files and specification about the cipher and its keys
 - the cipher information gets added to the model, and the file (written in python) itself goes to an uploads directory in the server
 
 ### role: user
 
 - can access the main page and use any of the available ciphers to encrypt/decrypt text
-- user can also choose to sign up and their usage history be saved (not yet implemented)
+- user can also choose to sign up and get their usage history be saved in their account
 
 ### feature breakdown:
++: implemented
+-: not yet implemented
 
 - admin cipher add/remove (+)
-- open usage of encryption/decryption with available ciphers (+)
-- admin dashboard interface for managing ciphers (partely implemented)
+- encryption/decryption with available ciphers (+)
 - user interface for selecting cipher of choice and inputting text & key[s] for cryptography (+)
 - user authentication / authorization (+)
 - admin authentication & securing admin routes (+)
 - user session/cookies to secure individual users' usage history (+)
 - user interface for viewing their usage history (+)
+- admin dashboard interface for managing ciphers (partely implemented)
 
 ## technologies
 
 ### backend
 
-- nodejs, expressjs, mongodb, jwt, bcrypt, child_process, multer cookie-parser
+- nodejs, expressjs, mongodb, jwt, bcrypt, child_process, multer, cookie-parser
 
 ### frontend
 
