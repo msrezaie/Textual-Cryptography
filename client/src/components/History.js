@@ -1,11 +1,32 @@
+import axios from "axios";
+import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../context/appContext";
+import { BtnWrapper } from "../assets/wrappers/AdminWrapper";
 import { HistoryArticle } from "../assets/wrappers/HistoryWrapper";
-import axios from "axios";
 
 const History = () => {
   const { userState } = useAppContext();
   const [historyData, setHistoryData] = useState([]);
+
+  const deleteBtn = async (e) => {
+    const historyId = e.target.value;
+    try {
+      const response = await axios.delete(
+        `/api/v1/user/history/delete/${historyId}`
+      );
+      setHistoryData((prevHistoryData) => {
+        return prevHistoryData.filter((history) => history._id !== historyId);
+      });
+      toast.success(response.data.msg);
+    } catch (error) {
+      toast.error(error.response.data.msg);
+    }
+  };
+
+  const modifyBtn = async () => {
+    toast.info("not yet functional");
+  };
 
   useEffect(() => {
     const fetchHistoryData = async () => {
@@ -33,6 +54,7 @@ const History = () => {
               <th scope="col">Cipher</th>
               <th scope="col">Key[s]</th>
               <th scope="col">Ciphertext</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
 
@@ -45,6 +67,24 @@ const History = () => {
                   <td>{history.cipher}</td>
                   <td>{history.keys}</td>
                   <td>{history.ciphertext}</td>
+                  <td>
+                    <BtnWrapper>
+                      <li>
+                        <button
+                          className="contrast"
+                          onClick={deleteBtn}
+                          value={history._id}
+                        >
+                          Delete
+                        </button>
+                      </li>
+                      <li>
+                        <button className="contrast" onClick={modifyBtn}>
+                          Modify
+                        </button>
+                      </li>
+                    </BtnWrapper>
+                  </td>
                 </tr>
               );
             })}

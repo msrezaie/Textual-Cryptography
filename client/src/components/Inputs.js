@@ -31,7 +31,7 @@ const Inputs = () => {
           setCiphertext(encryted);
 
           if (userState.user) {
-            await axios.post("/api/v1/user/history", {
+            await axios.post("/api/v1/user/history/save", {
               cipher: cipherName,
               plaintext,
               keys,

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BtnWrapper } from "../assets/wrappers/AdminWrapper";
 import { useAppContext } from "../context/appContext";
 import axios from "axios";
@@ -5,17 +6,24 @@ import { toast } from "react-toastify";
 
 const CiphersTable = () => {
   const { globalState } = useAppContext();
-  console.log(globalState);
+  const [adminCiphers, setAdminCiphers] = useState([...globalState.ciphers]);
+
   const deleteBtn = async (e) => {
     const cipherName = e.target.value;
     try {
       const response = await axios.delete(
         `/api/v1/admin/cipher/delete/${cipherName}`
       );
+      setAdminCiphers((previous) => {
+        return previous.filter((cipher) => cipher.name !== cipherName);
+      });
       toast.success(response.data.msg);
     } catch (error) {
       toast.error(error.response.data.msg);
     }
+  };
+  const modifyBtn = async (e) => {
+    toast.info("not yet functional");
   };
 
   return (
@@ -34,16 +42,14 @@ const CiphersTable = () => {
           </tr>
         </thead>
         <tbody>
-          {globalState.ciphers.length > 0 &&
-            globalState.ciphers.map((cipher, index) => {
+          {adminCiphers.length > 0 &&
+            adminCiphers.map((cipher, index) => {
               return (
                 <tr key={cipher._id}>
                   <th scope="row">{index + 1}</th>
                   <td>{cipher.name}</td>
                   <td>{cipher.keyType}</td>
-                  <td>
-                    <a href={cipher.filePath}>{cipher.filePath}</a>
-                  </td>
+                  <td>{cipher.filePath}</td>
                   <td>
                     <BtnWrapper>
                       <li>
@@ -56,7 +62,9 @@ const CiphersTable = () => {
                         </button>
                       </li>
                       <li>
-                        <button className="contrast">Modify</button>
+                        <button className="contrast" onClick={modifyBtn}>
+                          Modify
+                        </button>
                       </li>
                     </BtnWrapper>
                   </td>
