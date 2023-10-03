@@ -19,7 +19,7 @@ const saveHistory = async (req, res) => {
       ? ""
       : !second[1]
       ? first[1]
-      : `Key1: ${second[1]} Key2: ${second[1]}`;
+      : `Key1: ${first[1]} Key2: ${second[1]}`;
   const savedHistory = await History.create({
     userId: req.user.userId,
     plaintext,
