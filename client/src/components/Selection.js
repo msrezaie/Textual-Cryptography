@@ -23,7 +23,7 @@ const Selection = () => {
   useEffect(() => {
     const fetchCiphers = async () => {
       try {
-        const { data } = await axios.get("/cryptography/ciphers");
+        const { data } = await axios.get("/api/v1/cryptography/ciphers");
         if (data.count < 1) {
           toast.error("No Data, App is not Functional!", { autoClose: false });
         } else {

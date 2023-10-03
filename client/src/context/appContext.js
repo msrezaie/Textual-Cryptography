@@ -31,7 +31,7 @@ const AppProvider = ({ children }) => {
 
   const getCurrentUser = async () => {
     try {
-      const { data } = await axios.get("/auth/getCurrentUser");
+      const { data } = await axios.get("/api/v1/auth/getCurrentUser");
       setUserState({ user: data.name, isAdmin: data.isAdmin });
     } catch (error) {
       console.log(error.response.data.msg);
