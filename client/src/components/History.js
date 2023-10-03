@@ -10,7 +10,7 @@ const History = () => {
   useEffect(() => {
     const fetchHistoryData = async () => {
       try {
-        const { data } = await axios.get("/user/history");
+        const { data } = await axios.get("/api/v1/user/history");
         setHistoryData(data.history);
       } catch (error) {
         console.log(error);

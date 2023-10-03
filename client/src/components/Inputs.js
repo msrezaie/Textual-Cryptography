@@ -21,7 +21,7 @@ const Inputs = () => {
         toast.info("Enter both keys!");
       } else {
         try {
-          const { data } = await axios.post("/cryptography", {
+          const { data } = await axios.post("/api/v1/cryptography", {
             cipher: cipherName,
             operation,
             message: plaintext,
@@ -31,7 +31,7 @@ const Inputs = () => {
           setCiphertext(encryted);
 
           if (userState.user) {
-            await axios.post("/user/history", {
+            await axios.post("/api/v1/user/history", {
               cipher: cipherName,
               plaintext,
               keys,
@@ -53,7 +53,7 @@ const Inputs = () => {
         toast.info("Enter both keys!");
       } else {
         try {
-          const { data } = await axios.post("/cryptography", {
+          const { data } = await axios.post("/api/v1/cryptography", {
             cipher: cipherName,
             operation,
             message: ciphertext,
@@ -63,7 +63,7 @@ const Inputs = () => {
           setPlaintext(decryted);
 
           if (userState.user) {
-            await axios.post("/user/history", {
+            await axios.post("/api/v1/user/history", {
               cipher: cipherName,
               plaintext: decryted,
               keys,

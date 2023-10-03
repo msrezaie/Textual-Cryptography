@@ -9,7 +9,9 @@ const CiphersTable = () => {
   const deleteBtn = async (e) => {
     const cipherName = e.target.value;
     try {
-      const response = await axios.delete(`/admin/cipher/delete/${cipherName}`);
+      const response = await axios.delete(
+        `/api/v1/admin/cipher/delete/${cipherName}`
+      );
       toast.success(response.data.msg);
     } catch (error) {
       toast.error(error.response.data.msg);
