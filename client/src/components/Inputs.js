@@ -63,7 +63,7 @@ const Inputs = () => {
           setPlaintext(decryted);
 
           if (userState.user) {
-            await axios.post("/api/v1/user/history", {
+            await axios.post("/api/v1/user/history/save", {
               cipher: cipherName,
               plaintext: decryted,
               keys,

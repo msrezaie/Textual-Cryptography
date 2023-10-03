@@ -45,18 +45,20 @@ const login = async (req, res) => {
 };
 
 // @desc    destroys authenticated user cookie
-// @route   GET /api/v1/auth/logout
+// @route   POST /api/v1/auth/logout
 // @access  authenticated users only
 const logout = async (req, res) => {
-  res.cookie(
-    "jwt",
-    {},
-    {
-      httpOnly: true,
-      maxAge: new Date(0),
-    }
-  );
-  res.status(200).json({ msg: "logged off!" });
+  const token = req.cookies.jwt;
+  if (!token) {
+    res.status(401);
+    throw new Error("no valid token found!");
+  }
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    maxAge: new Date(0),
+    secure: process.env.PRODUCTION_ENV === "production",
+  });
+  res.status(200).json({ msg: "logged out!" });
 };
 
 // @desc    get authenticated user detail
