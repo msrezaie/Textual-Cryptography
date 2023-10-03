@@ -37,6 +37,8 @@ A simple text based cryptography app that allows users to encrypt and decrypt te
 
 - reactjs, react-router, styled-components, picocss, axios, react-toastify
 
+swagger documentation: *coming soon*
+
 ## known bugs
 ### frontend
 - The state of the app is currnetly managed through two global contexts, and on different components these global contexts are being directly changed and updated using various hooks on the intial load. This causes the app to not properly function upon first access. This will be fixed with the implemention of the useReducer hook to manage the state of the app in a better way.**Only current work-around is to refreash the app a few times**
