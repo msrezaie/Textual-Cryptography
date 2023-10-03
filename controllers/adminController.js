@@ -40,7 +40,7 @@ const createCipher = async (req, res) => {
 };
 
 // @desc    removes existing cipher file from disk and db
-// @route   DELETE /api/v1/admin/cipher/delete/:name
+// @route   DELETE /api/v1/admin/cipher/delete/:cipherName
 // @access  private (admin only)
 const removeCipher = async (req, res) => {
   let { cipherName } = req.params;

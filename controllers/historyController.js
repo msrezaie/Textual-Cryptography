@@ -9,7 +9,7 @@ const getAllHistory = async (req, res) => {
 };
 
 // @desc    save encryption/decryption usage of a user
-// @route   POST /api/v1/user/history
+// @route   POST /api/v1/user/history/save
 // @access  users only
 const saveHistory = async (req, res) => {
   let { cipher, plaintext, keys, ciphertext } = req.body;
@@ -30,4 +30,27 @@ const saveHistory = async (req, res) => {
   res.json(savedHistory);
 };
 
-module.exports = { getAllHistory, saveHistory };
+// @desc    deletes encryption/decryption usage of a user
+// @route   DELETE /api/v1/user/history/delete/:id
+// @access  users only
+const deleteHistory = async (req, res) => {
+  let { id } = req.params;
+
+  if (!id) {
+    res.status(400);
+    throw new Error("no history id given!");
+  }
+  try {
+    const historyExists = await History.findByIdAndDelete({ _id: id });
+    if (!historyExists) {
+      res.status(404);
+      throw new Error("invalid history id!");
+    }
+    res.status(200).json({ msg: "history deleted!" });
+  } catch (error) {
+    res.status(500);
+    throw new Error(error);
+  }
+};
+
+module.exports = { getAllHistory, saveHistory, deleteHistory };
