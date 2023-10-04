@@ -3,20 +3,22 @@ require("express-async-errors");
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const app = express();
-const User = require("./models/User");
+
+// security packages
+const helmet = require("helmet");
+const cors = require("cors");
+const xss = require("xss-clean");
+const { rateLimit } = require("express-rate-limit");
 
 // exports
+const User = require("./models/User");
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const mainRoutes = require("./routes/mainRoutes");
 const historyRoutes = require("./routes/historyRoutes");
 const { errorHandler, notFound } = require("./middleware/errorHandler");
 
-// security packages
-const helmet = require("helmet");
-const cors = require("cors");
-const xss = require("xss-clean");
+const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -29,6 +31,13 @@ app.use("/api/v1/user", historyRoutes);
 app.use(errorHandler);
 app.use(notFound);
 
+app.set("trust proxy", 1);
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 100,
+  })
+);
 app.use(helmet());
 app.use(cors());
 app.use(xss());
