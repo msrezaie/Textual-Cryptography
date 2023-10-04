@@ -23,13 +23,20 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+
+app.get("/", (req, res) => {
+  res.send(
+    '<h2>Welcome to Textual Cryptography API</h2><a href="/api-docs">Documentation</a>'
+  );
+});
+
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/cryptography", mainRoutes);
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/user", historyRoutes);
 
-app.use(errorHandler);
 app.use(notFound);
+app.use(errorHandler);
 
 app.set("trust proxy", 1);
 app.use(
