@@ -10,6 +10,10 @@ const cors = require("cors");
 const xss = require("xss-clean");
 const { rateLimit } = require("express-rate-limit");
 
+// api documentation: swagger
+const swaggerDocument = require("yamljs").load("./swagger.yaml");
+const swaggerUi = require("swagger-ui-express");
+
 // exports
 const User = require("./models/User");
 const authRoutes = require("./routes/authRoutes");
@@ -29,6 +33,8 @@ app.get("/", (req, res) => {
     '<h2>Welcome to Textual Cryptography API</h2><a href="/api-docs">Documentation</a>'
   );
 });
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/cryptography", mainRoutes);

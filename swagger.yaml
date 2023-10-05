@@ -1,0 +1,398 @@
+openapi: 3.0.0
+info:
+  title: Textual Cryptography API
+  description: >
+    A text based cryptography API where entered text will be encrypted or decrypted using different ciphers.
+    Authentication can only be performed using an HTTP-only cookie that contains the JWT token.
+    The JWT token is generated and set in the cookie when the user logs in. The user's browser will automatically send the JWT token in the cookie on each subsequent request.
+    <br>
+    <br>
+    **Token will not be besides a successful sign in!**
+  contact: {}
+  version: "1.0"
+servers:
+  - url: https://textcrypt-api.onrender.com/api/v1
+    variables: {}
+paths:
+  /cryptography:
+    post:
+      tags:
+        - Cryptography
+      summary: Perform Encrypt or Decrypt
+      operationId: PerformEncryptorDecrypt
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/PerformEncryptorDecryptRequest"
+                - example:
+                    cipher: caesar
+                    operation: encrypt
+                    message: hello world
+                    keys:
+                      key1: "13"
+            example:
+              cipher: caesar
+              operation: encrypt
+              message: hello world
+              keys:
+                key1: "13"
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /cryptography/ciphers:
+    get:
+      tags:
+        - Cryptography
+      summary: Get Ciphers
+      operationId: GetCiphers
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /admin/users:
+    get:
+      tags:
+        - Admin
+      summary: Get Users
+      description: An admin authenticated user's token required
+      operationId: GetUsers
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/cipher/create:
+    post:
+      tags:
+        - Admin
+      summary: Create Cipher
+      description: An admin authenticated user's token required
+      operationId: CreateCipher
+      parameters: []
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding: {}
+            schema:
+              required:
+                - cipherName
+                - description
+                - cipherFile
+                - keyType
+                - keyArgs
+              type: object
+              properties:
+                cipherName:
+                  type: string
+                  example: caesar
+                description:
+                  type: string
+                  example: 'The Caesar cipher is a type of encryption that replaces each letter in a message with a different letter that is a fixed number of positions away in the alphabet.\r\n\r\nFor example, the formula might be something like this:\r\n\r\nNew letter = (Original letter + 3) % 26\r\n\r\nIn this formula, each letter is first assigned a number (A=0, B=1, C=2, etc.), the original letter is added to 3, and then the result is taken modulo 26. This gives a new number which corresponds to a new letter (the letter that matches the number in the alphabet).\r\n\r\nSo, if the original letter was \"A\", the new letter would be \"D\". To decode the message, the process is reversed, with the original formula being used in reverse and subtracting 3 instead of adding it. This gives the original message back.\r\n\r\nAllowed Key: the key used in the Caesar cipher is an integer between 1 and 25, which represents the number of positions each letter is shifted.'
+                cipherFile:
+                  type: string
+                  format: binary
+                keyType:
+                  type: string
+                  example: 1-key
+                keyArgs:
+                  allOf:
+                    - $ref: "#/components/schemas/keyArgs"
+                    - example:
+                        keyDataType: number
+                        keyDataDesc: i.e. 1-25
+        required: false
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/cipher/delete/{name}:
+    parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+        description: The cipher name
+    delete:
+      tags:
+        - Admin
+      summary: Delete Cipher
+      description: An admin authenticated user's token required
+      operationId: DeleteCipher
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /user/history:
+    get:
+      tags:
+        - User
+      summary: Get History
+      description: An authenticated user's token required
+      operationId: GetHistory
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /user/history/save:
+    post:
+      tags:
+        - User
+      summary: Save History
+      description: An authenticated user's token required
+      operationId: SaveHistory
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/SaveHistoryRequest"
+                - example:
+                    cipher: atbash
+                    plaintext: hello
+                    keys: ""
+                    ciphertext: sadfsd
+            example:
+              cipher: atbash
+              plaintext: hello
+              keys: ""
+              ciphertext: sadfsd
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /user/history/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID
+    delete:
+      tags:
+        - User
+      summary: Delete History
+      description: An authenticated user's token required
+      operationId: DeleteHistory
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: Create User
+      operationId: CreateUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CreateUserRequest"
+                - example:
+                    name: user1
+                    password: user1@#4
+            example:
+              name: user1
+              password: user1@#4
+        required: true
+      responses:
+        "200":
+          description: >
+            The jwt token is returned in a http-only cookie named `jwt`. This cookie will automatically be included in subsequent requests.
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login User
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/LoginUserRequest"
+                - example:
+                    name: user1
+                    password: user1@#4
+            example:
+              name: user1
+              password: user1@#4
+        required: true
+      responses:
+        "200":
+          description: >
+            The jwt token is returned in a http-only cookie named `jwt`. This cookie will automatically be included in subsequent requests.
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: Logout User
+      description: An authenticated user's token required
+      operationId: LogoutUser
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /auth/getCurrentUser:
+    get:
+      tags:
+        - Auth
+      summary: Get Current User
+      description: An authenticated user's token required
+      operationId: GetCurrentUser
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    PerformEncryptorDecryptRequest:
+      title: PerformEncryptorDecryptRequest
+      required:
+        - cipher
+        - operation
+        - message
+        - keys
+      type: object
+      properties:
+        cipher:
+          type: string
+        operation:
+          type: string
+        message:
+          type: string
+        keys:
+          allOf:
+            - $ref: "#/components/schemas/Keys"
+            - {}
+      example:
+        cipher: caesar
+        operation: encrypt
+        message: hello world
+        keys:
+          key1: "13"
+    Keys:
+      title: Keys
+      required:
+        - key1
+      type: object
+      properties:
+        key1:
+          type: string
+      example:
+        key1: "13"
+    keyArgs:
+      title: keyArgs
+      required:
+        - keyDataType
+        - keyDataDesc
+      type: object
+      properties:
+        keyDataType:
+          type: string
+        keyDataDesc:
+          type: string
+      example:
+        keyDataType: number
+        keyDataDesc: i.e. 1-25
+    SaveHistoryRequest:
+      title: SaveHistoryRequest
+      required:
+        - cipher
+        - plaintext
+        - keys
+        - ciphertext
+      type: object
+      properties:
+        cipher:
+          type: string
+        plaintext:
+          type: string
+        keys:
+          type: string
+        ciphertext:
+          type: string
+      example:
+        cipher: atbash
+        plaintext: hello
+        keys: ""
+        ciphertext: sadfsd
+    CreateUserRequest:
+      title: CreateUserRequest
+      required:
+        - name
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+      example:
+        name: user1
+        password: user1@#4
+    LoginUserRequest:
+      title: LoginUserRequest
+      required:
+        - name
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+      example:
+        name: user1
+        password: user1@#4
+security:
+  - jwtCookie: []
+tags:
+  - name: Cryptography
+    description: ""
+  - name: Admin
+    description: ""
+  - name: User
+    description: ""
+  - name: Auth
+    description: ""
