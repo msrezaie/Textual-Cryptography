@@ -5,10 +5,8 @@ const Admin = () => {
   return (
     <>
       <MainWrapper className="container">
-        <div className="container">
-          <CiphersTable />
-          <AddCipher />
-        </div>
+        <CiphersTable />
+        <AddCipher />
       </MainWrapper>
     </>
   );

@@ -31,48 +31,50 @@ const CiphersTable = () => {
       <header>
         <strong>Existing Ciphers</strong>
       </header>
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">name</th>
-            <th scope="col">keyType</th>
-            <th scope="col">file</th>
-            <th scope="col">actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {adminCiphers.length > 0 &&
-            adminCiphers.map((cipher, index) => {
-              return (
-                <tr key={cipher._id}>
-                  <th scope="row">{index + 1}</th>
-                  <td>{cipher.name}</td>
-                  <td>{cipher.keyType}</td>
-                  <td>{cipher.filePath}</td>
-                  <td>
-                    <BtnWrapper>
-                      <li>
-                        <button
-                          className="contrast"
-                          onClick={deleteBtn}
-                          value={cipher.name}
-                        >
-                          Delete
-                        </button>
-                      </li>
-                      <li>
-                        <button className="contrast" onClick={modifyBtn}>
-                          Modify
-                        </button>
-                      </li>
-                    </BtnWrapper>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
+      <figure>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">name</th>
+              <th scope="col">keyType</th>
+              <th scope="col">file</th>
+              <th scope="col">actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {adminCiphers.length > 0 &&
+              adminCiphers.map((cipher, index) => {
+                return (
+                  <tr key={cipher._id}>
+                    <th scope="row">{index + 1}</th>
+                    <td>{cipher.name}</td>
+                    <td>{cipher.keyType}</td>
+                    <td>{cipher.filePath}</td>
+                    <td>
+                      <BtnWrapper>
+                        <li>
+                          <button
+                            className="contrast"
+                            onClick={deleteBtn}
+                            value={cipher.name}
+                          >
+                            Delete
+                          </button>
+                        </li>
+                        <li>
+                          <button className="contrast" onClick={modifyBtn}>
+                            Modify
+                          </button>
+                        </li>
+                      </BtnWrapper>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      </figure>
     </article>
   );
 };

@@ -46,50 +46,52 @@ const History = () => {
         <summary>
           <strong>Your Usage History</strong>
         </summary>
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Plaintext</th>
-              <th scope="col">Cipher</th>
-              <th scope="col">Key[s]</th>
-              <th scope="col">Ciphertext</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
+        <figure>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Plaintext</th>
+                <th scope="col">Cipher</th>
+                <th scope="col">Key[s]</th>
+                <th scope="col">Ciphertext</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {historyData?.map((history, index) => {
-              return (
-                <tr key={history._id}>
-                  <th scope="row">{index + 1}</th>
-                  <td>{history.plaintext}</td>
-                  <td>{history.cipher}</td>
-                  <td>{history.keys}</td>
-                  <td>{history.ciphertext}</td>
-                  <td>
-                    <BtnWrapper>
-                      <li>
-                        <button
-                          className="contrast"
-                          onClick={deleteBtn}
-                          value={history._id}
-                        >
-                          Delete
-                        </button>
-                      </li>
-                      <li>
-                        <button className="contrast" onClick={modifyBtn}>
-                          Modify
-                        </button>
-                      </li>
-                    </BtnWrapper>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+            <tbody>
+              {historyData?.map((history, index) => {
+                return (
+                  <tr key={history._id}>
+                    <th scope="row">{index + 1}</th>
+                    <td>{history.plaintext}</td>
+                    <td>{history.cipher}</td>
+                    <td>{history.keys}</td>
+                    <td>{history.ciphertext}</td>
+                    <td>
+                      <BtnWrapper>
+                        <li>
+                          <button
+                            className="contrast"
+                            onClick={deleteBtn}
+                            value={history._id}
+                          >
+                            Delete
+                          </button>
+                        </li>
+                        <li>
+                          <button className="contrast" onClick={modifyBtn}>
+                            Modify
+                          </button>
+                        </li>
+                      </BtnWrapper>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </figure>
       </details>
     </HistoryArticle>
   );
