@@ -4,11 +4,9 @@ A simple text based cryptography app that allows users to encrypt and decrypt te
 
 ### Access
 
-Frontend: https://text-crypt.netlify.app/
+App: https://text-crypt.netlify.app/
 <br>
-API: https://ctd-final-tc.onrender.com/
-<br>
-API Documentation: _coming soon_
+API Documentation (Swagger UI): https://textcrypt-api.onrender.com/api-docs/
 
 ### Feature Breakdown:
 
