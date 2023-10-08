@@ -38,5 +38,4 @@ API Documentation (Swagger UI): https://textcrypt-api.onrender.com/api-docs/
 
 ### Frontend
 
-- The state of the app is currnetly managed through two global contexts, and on different components these global contexts are being directly changed and updated using various hooks on the intial load. This causes the app to not properly function upon first access. This will be fixed with the implemention of the useReducer hook to manage the state of the app in a better way.
 - The css framework used for designing the app comes with built-in light and dark themes. Currently the theme is set to client's system default preference. A switch will be added in order to toggle between the light and dark themes.
