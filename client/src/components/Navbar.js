@@ -3,7 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 // import { BtnUl } from "../assets/wrappers/NavbarWrapper";
 
 const Navbar = () => {
-  const { userState, logout } = useAppContext();
+  const { userName, isAdmin, logout } = useAppContext();
   const location = useLocation().pathname;
   return (
     <>
@@ -17,19 +17,17 @@ const Navbar = () => {
         </ul>
         <ul>
           <li>
-            {location === "/" && userState.isAdmin ? (
+            {location === "/" && isAdmin ? (
               <Link to="/admin">
                 <button className="contrast">Admin Panel</button>
               </Link>
-            ) : userState.user ? (
-              <strong>Welcome, {userState.user}</strong>
-            ) : location === "/login" &&
-              (!userState.isAdmin || !userState.user) ? (
+            ) : userName ? (
+              <strong>Welcome, {userName}</strong>
+            ) : location === "/login" && (!isAdmin || !userName) ? (
               <Link to="/signup">
                 <button className="contrast">Sign Up</button>
               </Link>
-            ) : location === "/signup" &&
-              (!userState.isAdmin || !userState.user) ? (
+            ) : location === "/signup" && (!isAdmin || !userName) ? (
               <Link to="/login">
                 <button className="contrast">Login</button>
               </Link>
@@ -40,7 +38,7 @@ const Navbar = () => {
             )}
           </li>
           <li>
-            {userState.user && (
+            {userName && (
               <button className="contrast" onClick={logout}>
                 Logout
               </button>

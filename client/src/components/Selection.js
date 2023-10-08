@@ -1,51 +1,20 @@
-import axios from "axios";
-import { toast } from "react-toastify";
 import { useAppContext } from "../context/appContext";
-import { useEffect, useState } from "react";
 
 const Selection = () => {
-  const { globalState, setGlobalState } = useAppContext();
-  const [ciphers, setCiphers] = useState([]);
+  const { ciphers, updateCipher } = useAppContext();
 
   const cipherChange = (e) => {
     const selectedCipher = ciphers.filter(
       (cipher) => cipher.name === e.target.value
     )[0];
-    setGlobalState({
-      ...globalState,
+    updateCipher({
       cipherName: e.target.value,
-      cipherDescription: selectedCipher.description,
+      cipherDescription: selectedCipher.cipherDescription,
+      keysDescription: selectedCipher.keysDescription,
       keyType: selectedCipher.keyType,
       keyArgs: selectedCipher.keyArgs,
     });
   };
-
-  useEffect(() => {
-    const fetchCiphers = async () => {
-      try {
-        const { data } = await axios.get("/api/v1/cryptography/ciphers");
-        if (data.count < 1) {
-          toast.error("No Data, App is not Functional!", { autoClose: false });
-        } else {
-          const firstCipher = data.cipher[0];
-          setCiphers(data.cipher);
-          setGlobalState({
-            ...globalState,
-            ciphers: data.cipher,
-            cipherName: firstCipher.name,
-            cipherDescription: firstCipher.description,
-            keyType: firstCipher.keyType,
-            keyArgs: firstCipher.keyArgs,
-          });
-        }
-      } catch (error) {
-        toast.error(error.response.data, { autoClose: false });
-      }
-    };
-
-    fetchCiphers();
-    // eslint-disable-next-line
-  }, []);
 
   return (
     <div className="container">

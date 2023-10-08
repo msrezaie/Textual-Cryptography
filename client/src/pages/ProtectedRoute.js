@@ -3,8 +3,8 @@ import { useAppContext } from "../context/appContext";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  const { userState } = useAppContext();
-  if (userState.isAdmin) {
+  const { isAdmin } = useAppContext();
+  if (isAdmin) {
     return children;
   }
   toast.warn("admin access required!");

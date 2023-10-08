@@ -2,12 +2,8 @@ import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
 
 const Keys = () => {
-  const { globalState, setGlobalState } = useAppContext();
-  const [keyValue, setKeyValue] = useState({
-    key1: "",
-    key2: "",
-  });
-  const { keyType, keyArgs } = globalState;
+  const { keyType, keyArgs, updateKeys } = useAppContext();
+  const [keyValue, setKeyValue] = useState({});
 
   const keyInputHandler = (e) => {
     const { name, value } = e.target;
@@ -19,15 +15,12 @@ const Keys = () => {
   };
 
   useEffect(() => {
-    setGlobalState({ ...globalState, keys: keyValue });
+    updateKeys(keyValue);
     // eslint-disable-next-line
   }, [keyValue]);
 
   useEffect(() => {
-    setKeyValue({
-      key1: "",
-      key2: "",
-    });
+    setKeyValue({});
   }, [keyType]);
 
   return (
@@ -38,10 +31,10 @@ const Keys = () => {
 
       {keyType === "1-key" && (
         <input
-          type={keyArgs?.keyDataType}
-          value={keyValue.key1}
-          name="key1"
+          name="key"
+          value={keyValue?.key || ""}
           onChange={keyInputHandler}
+          type={keyArgs?.keyDataType}
           placeholder={keyArgs?.keyDataDesc}
           required
         />
@@ -51,7 +44,7 @@ const Keys = () => {
         <div>
           <input
             name="key1"
-            value={keyValue.key1}
+            value={keyValue?.key1 || ""}
             onChange={keyInputHandler}
             type={keyArgs?.key1DataType}
             placeholder={keyArgs?.key1DataDesc}
@@ -59,7 +52,7 @@ const Keys = () => {
           />
           <input
             name="key2"
-            value={keyValue.key2}
+            value={keyValue?.key2 || ""}
             onChange={keyInputHandler}
             type={keyArgs?.key2DataType}
             placeholder={keyArgs?.key2DataDesc}

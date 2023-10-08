@@ -1,31 +1,31 @@
-import axios from "axios";
-import { useState } from "react";
 import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
 import { MainWrapper, LoginFieldset } from "../assets/wrappers/SignInWrapper";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUserState } = useAppContext();
-  const [user, setUser] = useState({
+  const { userName, loginUser } = useAppContext();
+  const [userInfo, setUserInfo] = useState({
     name: "",
     password: "",
   });
 
-  const signInHandler = async (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/v1/auth/login", {
-        name: user.name,
-        password: user.password,
-      });
-      setUserState({ user: data.name, isAdmin: data.isAdmin });
-      navigate("/");
+      loginUser(userInfo);
     } catch (error) {
       toast.error(error.response.data.msg);
     }
   };
+
+  useEffect(() => {
+    if (userName) {
+      navigate("/");
+    }
+  }, [userName, navigate]);
 
   return (
     <MainWrapper className="container">
@@ -35,20 +35,24 @@ const Login = () => {
             <h1>Login</h1>
             <h2>Login to save your usage history!</h2>
           </hgroup>
-          <form onSubmit={signInHandler}>
+          <form onSubmit={loginHandler}>
             <input
               type="text"
               name="name"
-              value={user.name}
-              onChange={(e) => setUser({ ...user, name: e.target.value })}
+              value={userInfo.name}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, name: e.target.value })
+              }
               placeholder="Name"
               required
             />
             <input
               type="password"
               name="password"
-              value={user.password}
-              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              value={userInfo.password}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, password: e.target.value })
+              }
               placeholder="Password"
               required
             />

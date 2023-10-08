@@ -1,14 +1,13 @@
-import axios from "axios";
-import { useState } from "react";
 import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { MainWrapper } from "../assets/wrappers/SignInWrapper";
 import { useAppContext } from "../context/appContext";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { setUserState } = useAppContext();
-  const [user, setUser] = useState({
+  const { userName, signUpUser } = useAppContext();
+  const [userInfo, setUserInfo] = useState({
     name: "",
     password: "",
   });
@@ -16,16 +15,17 @@ const SignUp = () => {
   const signUpHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/v1/auth/signup", {
-        name: user.name,
-        password: user.password,
-      });
-      setUserState({ user: data.name, isAdmin: data.isAdmin });
-      navigate("/");
+      signUpUser(userInfo);
     } catch (error) {
       toast.error(error.response.data.msg);
     }
   };
+
+  useEffect(() => {
+    if (userName) {
+      navigate("/");
+    }
+  }, [userName, navigate]);
 
   return (
     <MainWrapper className="container">
@@ -39,16 +39,20 @@ const SignUp = () => {
             <input
               type="text"
               name="name"
-              value={user.name}
-              onChange={(e) => setUser({ ...user, name: e.target.value })}
+              value={userInfo.name}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, name: e.target.value })
+              }
               placeholder="Name"
               required
             />
             <input
               type="password"
               name="password"
-              value={user.password}
-              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              value={userInfo.password}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, password: e.target.value })
+              }
               placeholder="Password"
               required
             />

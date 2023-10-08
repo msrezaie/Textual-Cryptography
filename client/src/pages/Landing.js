@@ -3,12 +3,12 @@ import MainWrapper from "../assets/wrappers/MainWrapper";
 import { useAppContext } from "../context/appContext";
 
 const Landing = () => {
-  const { userState } = useAppContext();
+  const { userName, isAdmin } = useAppContext();
 
   return (
     <MainWrapper className="container">
       <Operation />
-      {!userState.isAdmin && userState.user && <History />}
+      {!isAdmin && userName && <History />}
       <Descriptions />
     </MainWrapper>
   );

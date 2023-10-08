@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { BtnWrapper } from "../assets/wrappers/AdminWrapper";
-import { useAppContext } from "../context/appContext";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useAppContext } from "../context/appContext";
+import { BtnWrapper } from "../assets/wrappers/TableWrapper";
 
 const CiphersTable = () => {
-  const { globalState } = useAppContext();
-  const [adminCiphers, setAdminCiphers] = useState([...globalState.ciphers]);
+  const { ciphers } = useAppContext();
+  const [adminCiphers, setAdminCiphers] = useState([...ciphers]);
 
   const deleteBtn = async (e) => {
     const cipherName = e.target.value;
@@ -25,6 +25,10 @@ const CiphersTable = () => {
   const modifyBtn = async (e) => {
     toast.info("not yet functional");
   };
+
+  useEffect(() => {
+    setAdminCiphers([...ciphers]);
+  }, [ciphers]);
 
   return (
     <article>

@@ -2,12 +2,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../context/appContext";
-import { BtnWrapper } from "../assets/wrappers/AdminWrapper";
+import { BtnWrapper } from "../assets/wrappers/TableWrapper";
 import { HistoryArticle } from "../assets/wrappers/HistoryWrapper";
 
 const History = () => {
-  const { userState } = useAppContext();
-  const [historyData, setHistoryData] = useState([]);
+  const { history } = useAppContext();
+  const [historyData, setHistoryData] = useState([...history]);
 
   const deleteBtn = async (e) => {
     const historyId = e.target.value;
@@ -29,16 +29,8 @@ const History = () => {
   };
 
   useEffect(() => {
-    const fetchHistoryData = async () => {
-      try {
-        const { data } = await axios.get("/api/v1/user/history");
-        setHistoryData(data.history);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchHistoryData();
-  }, [userState]);
+    setHistoryData([...history]);
+  }, [history]);
 
   return (
     <HistoryArticle>

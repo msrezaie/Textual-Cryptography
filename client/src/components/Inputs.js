@@ -1,21 +1,22 @@
-import BtnsWrapper from "../assets/wrappers/InputsWrapper";
-import { toast } from "react-toastify";
-import { useState } from "react";
-import { useAppContext } from "../context/appContext";
 import axios from "axios";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { useAppContext } from "../context/appContext";
+import BtnsWrapper from "../assets/wrappers/InputsWrapper";
 
 const Inputs = () => {
-  const { globalState, userState } = useAppContext();
+  const { cipherName, keys, keyType, userName, isAdmin, fetchHistoryData } =
+    useAppContext();
 
-  const { cipherName, keys, keyType } = globalState;
   const [plaintext, setPlaintext] = useState("");
   const [ciphertext, setCiphertext] = useState("");
+
   const buttonHandler = async (e) => {
     const operation = e.target.name;
     if (operation === "encrypt") {
       if (!plaintext) {
         toast.info("Enter text!");
-      } else if (keyType === "1-key" && !keys.key1) {
+      } else if (keyType === "1-key" && !keys.key) {
         toast.info("Enter key!");
       } else if (keyType === "2-key" && (!keys.key1 || !keys.key2)) {
         toast.info("Enter both keys!");
@@ -30,13 +31,16 @@ const Inputs = () => {
           const encryted = data.result;
           setCiphertext(encryted);
 
-          if (userState.user) {
+          if (userName && !isAdmin) {
             await axios.post("/api/v1/user/history/save", {
+              userName,
+              operation,
               cipher: cipherName,
               plaintext,
               keys,
               ciphertext: encryted,
             });
+            fetchHistoryData();
           }
         } catch (error) {
           toast.error(error.response.data.error);
@@ -47,7 +51,7 @@ const Inputs = () => {
     if (operation === "decrypt") {
       if (!ciphertext) {
         toast.info("Enter encrypted text!");
-      } else if (keyType === "1-key" && !keys.key1) {
+      } else if (keyType === "1-key" && !keys.key) {
         toast.info("Enter key!");
       } else if (keyType === "2-key" && (!keys.key1 || !keys.key2)) {
         toast.info("Enter both keys!");
@@ -62,13 +66,16 @@ const Inputs = () => {
           const decryted = data.result;
           setPlaintext(decryted);
 
-          if (userState.user) {
+          if (userName && !isAdmin) {
             await axios.post("/api/v1/user/history/save", {
+              user: userName,
+              operation,
               cipher: cipherName,
               plaintext: decryted,
               keys,
               ciphertext,
             });
+            fetchHistoryData();
           }
         } catch (error) {
           toast.error(error.response.data);

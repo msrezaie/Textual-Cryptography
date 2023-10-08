@@ -12,7 +12,7 @@ const MainWrapper = styled.main`
     max-width: 50%;
   }
   @media (min-width: 1200px) {
-    max-width: 45%;
+    max-width: 35%;
   }
 `;
 

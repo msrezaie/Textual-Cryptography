@@ -1,22 +1,31 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRef, useState } from "react";
+import { useAppContext } from "../context/appContext";
 
 const AddCipher = () => {
   const formRef = useRef(null);
+  const { fetchCiphers } = useAppContext();
   const [keyType, setKeyType] = useState("");
 
   const cipherSaveHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const formDataObject = Object.fromEntries(formData);
-    const { cipherName, keyType, cipherDescription, cipherFile, ...keyArgs } =
-      formDataObject;
+    const {
+      cipherName,
+      keyType,
+      cipherDescription,
+      keysDescription,
+      cipherFile,
+      ...keyArgs
+    } = formDataObject;
 
     const cipherData = {
       cipherName,
       keyType,
       cipherDescription,
+      keysDescription,
       cipherFile,
       keyArgs: { ...keyArgs },
     };
@@ -28,6 +37,7 @@ const AddCipher = () => {
       toast.warn("Invalid file type!");
       return;
     }
+
     try {
       const response = await axios.post(
         "/api/v1/admin/cipher/create",
@@ -40,6 +50,7 @@ const AddCipher = () => {
       );
       toast.success(response.data.msg);
       formRef.current.reset();
+      fetchCiphers();
     } catch (error) {
       toast.error(error.response.data.msg);
     }
@@ -116,7 +127,13 @@ const AddCipher = () => {
           <textarea
             type="text"
             name="cipherDescription"
-            placeholder="Cipher description"
+            placeholder="About cipher"
+            required
+          />
+          <textarea
+            type="text"
+            name="keysDescription"
+            placeholder="About cipher keys"
             required
           />
           <input type="file" name="cipherFile" accept=".py" required />
