@@ -5,6 +5,12 @@ const historySchema = mongoose.Schema(
     userId: {
       type: String,
     },
+    userName: {
+      type: String,
+    },
+    operation: {
+      type: String,
+    },
     plaintext: {
       type: String,
     },

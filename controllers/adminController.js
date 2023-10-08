@@ -6,7 +6,8 @@ const User = require("../models/User");
 // @route   POST /api/v1/admin/cipher/create
 // @access  private (admin only)
 const createCipher = async (req, res) => {
-  let { cipherName, cipherDescription, keyType, keyArgs } = req.body;
+  let { cipherName, cipherDescription, keysDescription, keyType, keyArgs } =
+    req.body;
 
   cipherName = cipherName.toLowerCase();
   if (!cipherName) {
@@ -30,7 +31,8 @@ const createCipher = async (req, res) => {
       name: cipherName,
       keyType,
       keyArgs,
-      description: cipherDescription,
+      cipherDescription,
+      keysDescription,
       filePath: req.file.path,
     };
 

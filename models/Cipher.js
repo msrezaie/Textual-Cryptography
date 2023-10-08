@@ -20,7 +20,8 @@ const cipherSchema = mongoose.Schema(
     keyArgs: {
       type: mongoose.Schema.Types.Mixed,
     },
-    description: { type: String, default: "cipher desc" },
+    cipherDescription: { type: String, default: "cipher desc" },
+    keysDescription: { type: String, default: "keys desc" },
     filePath: {
       type: String,
       required: [true, "please provide a file!"],
