@@ -30,16 +30,24 @@ API Documentation (Swagger UI): https://textcrypt-api.onrender.com/api-docs/
 
 ### Backend
 
-- MongoDB, Node.js:
-  - Express.js, jwt, bcrypt, child_process, multer, cookie-parser, cors, helmet, xss-clean, express-rate-limit
+- MongoDB: is used for managing data models of the app
+- Node.js: is used as the main environment for running the server
+- Express.js: is used for building the architecture of the server
+  - jsonwebtoken: is used as the main method of authenticating the users
+  - bcrypt: is used for hashing the user passwords
+  - child_process: is used for running python scripts in node environment as a sub process
+  - multer: is used for managing file upload to the server
+  - cookie-parser: is used for parsing cookie data
+  - cors: is used as a browser security feature for restricting cross-origin HTTP requests
+  - helmet: is used for protecting the server from some web vulnerabilities by setting HTTP response header to requests
+  - xss-clean: is used for sanitizing user input coming from request body or URL params
+  - express-rate-limit: is used for limiting the number of allowed requests in the API
 
 ### Frontend
 
-- Pico.css, React.js:
-  - react-router, styled-components, axios, react-toastify
-
-## Known Issues
-
-### Frontend
-
-- The css framework used for designing the app comes with built-in light and dark themes. Currently the theme is set to client's system default preference. A switch will be added in order to toggle between the light and dark themes.
+- Pico.css: is used as the main css framework
+- React.js: is used for building the architecture of the frontend
+  - react-router: is used for providing navigation between internal components
+  - styled-components: is used for allowing specific css styling to individual components 
+  - axios: is used as the main library for HTTP requests
+  - react-toastify: is used as the main package for pop up alert notifications
