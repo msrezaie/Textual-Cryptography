@@ -57,7 +57,7 @@ const SignUp = () => {
               required
             />
             <fieldset>
-              <label htmlFor="remember">
+              <label>
                 Already registered? <Link to="/login">Login</Link>
               </label>
             </fieldset>

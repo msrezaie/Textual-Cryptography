@@ -43,3 +43,7 @@ h4 {
 th {
   text-align: center;
 }
+
+textarea {
+  resize: none;
+}

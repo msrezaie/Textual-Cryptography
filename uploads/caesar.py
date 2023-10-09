@@ -4,7 +4,7 @@ import json
 def encrypt(text, key):
     try:
         key = json.loads(key)
-        key = key['key1']
+        key = key['key']
         encrypted = []
         # Iterate through each character in the input "text" using a for loop
         for char in text:
@@ -25,7 +25,7 @@ def encrypt(text, key):
 def decrypt(text, key):
     try:
         key = json.loads(key)
-        key = key['key1']
+        key = key['key']
         decrypted = []
         for char in text:
             if char.isalpha():

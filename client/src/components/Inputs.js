@@ -87,7 +87,7 @@ const Inputs = () => {
   return (
     <>
       <div className="container card">
-        <label htmlFor="plainTextarea">
+        <label>
           <strong>Plaintext</strong>
         </label>
         <textarea
@@ -116,7 +116,7 @@ const Inputs = () => {
         </button>
       </BtnsWrapper>
       <div className="container card">
-        <label htmlFor="cipherTextarea">
+        <label>
           <strong>Encrypted Text</strong>
         </label>
 

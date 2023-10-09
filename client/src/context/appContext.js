@@ -7,6 +7,7 @@ import {
   SETUP_USER,
   LOGOUT_USER,
   SETUP_CIPHERS,
+  FETCH_CIPHERS,
   GET_USER_HISTORY,
   UPDATE_CIPHER,
   UPDATE_KEYS,
@@ -75,8 +76,9 @@ const AppProvider = ({ children }) => {
         toast.error("No Data, App is not Functional!", { autoClose: false });
       } else {
         const firstCipher = data.cipher[0];
+
         dispatch({
-          type: SETUP_CIPHERS,
+          type: FETCH_CIPHERS,
           payload: {
             ciphers: data.cipher,
             cipherName: firstCipher.name,
@@ -108,6 +110,20 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const setupCiphers = () => {
+    const firstCipher = state.ciphers[0];
+    dispatch({
+      type: SETUP_CIPHERS,
+      payload: {
+        cipherName: firstCipher?.name,
+        cipherDescription: firstCipher?.cipherDescription,
+        keysDescription: firstCipher?.keysDescription,
+        keyType: firstCipher?.keyType,
+        keyArgs: firstCipher?.keyArgs,
+      },
+    });
   };
 
   const updateCipher = (cipherInfo) => {
@@ -169,6 +185,7 @@ const AppProvider = ({ children }) => {
         updateCipher,
         updateKeys,
         fetchCiphers,
+        setupCiphers,
         fetchHistoryData,
       }}
     >

@@ -62,9 +62,7 @@ const Keys = () => {
       )}
       {keyType === "no-key" && <input disabled placeholder="No Key Required" />}
 
-      <label id="non-printable" htmlFor="keys">
-        Note: Non-printable characters will be replaced with ☒
-      </label>
+      <label>Note: Non-printable characters will be replaced with ☒</label>
     </div>
   );
 };

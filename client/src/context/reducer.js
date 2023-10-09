@@ -6,6 +6,7 @@ import {
   UPDATE_KEYS,
   GET_USER_HISTORY,
   GET_USERS,
+  FETCH_CIPHERS,
 } from "./action";
 
 const reducer = (state, action) => {
@@ -25,10 +26,20 @@ const reducer = (state, action) => {
       isAdmin: action.payload.isAdmin,
     };
   }
-  if (action.type === SETUP_CIPHERS) {
+  if (action.type === FETCH_CIPHERS) {
     return {
       ...state,
       ciphers: action.payload.ciphers,
+      cipherName: action.payload.cipherName,
+      cipherDescription: action.payload.cipherDescription,
+      keysDescription: action.payload.keysDescription,
+      keyType: action.payload.keyType,
+      keyArgs: action.payload.keyArgs,
+    };
+  }
+  if (action.type === SETUP_CIPHERS) {
+    return {
+      ...state,
       cipherName: action.payload.cipherName,
       cipherDescription: action.payload.cipherDescription,
       keysDescription: action.payload.keysDescription,

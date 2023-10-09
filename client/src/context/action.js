@@ -1,5 +1,6 @@
 export const SETUP_USER = "SETUP_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
+export const FETCH_CIPHERS = "FETCH_CIPHERS";
 export const SETUP_CIPHERS = "SETUP_CIPHERS";
 export const UPDATE_CIPHER = "UPDATE_CIPHER";
 export const UPDATE_KEYS = "UPDATE_KEYS";
