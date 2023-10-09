@@ -18,7 +18,7 @@ const historySchema = mongoose.Schema(
       type: String,
     },
     keys: {
-      type: String,
+      type: mongoose.Schema.Types.Object,
     },
     ciphertext: {
       type: String,

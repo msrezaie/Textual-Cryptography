@@ -1,12 +1,20 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useAppContext } from "../context/appContext";
 import BtnsWrapper from "../assets/wrappers/InputsWrapper";
 
 const Inputs = () => {
-  const { cipherName, keys, keyType, userName, isAdmin, fetchHistoryData } =
-    useAppContext();
+  const {
+    cipherName,
+    keys,
+    keyType,
+    userName,
+    isAdmin,
+    fetchHistoryData,
+    selectHistoryPText,
+    selectHistoryCText,
+  } = useAppContext();
 
   const [plaintext, setPlaintext] = useState("");
   const [ciphertext, setCiphertext] = useState("");
@@ -83,6 +91,11 @@ const Inputs = () => {
       }
     }
   };
+
+  useEffect(() => {
+    setPlaintext(selectHistoryPText);
+    setCiphertext(selectHistoryCText);
+  }, [selectHistoryPText, selectHistoryCText]);
 
   return (
     <>

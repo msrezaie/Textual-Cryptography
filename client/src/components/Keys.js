@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
 
 const Keys = () => {
-  const { keyType, keyArgs, updateKeys } = useAppContext();
+  const { keyType, keyArgs, updateKeys, selectHistoryKeys } = useAppContext();
   const [keyValue, setKeyValue] = useState({});
 
   const keyInputHandler = (e) => {
@@ -20,8 +20,12 @@ const Keys = () => {
   }, [keyValue]);
 
   useEffect(() => {
-    setKeyValue({});
-  }, [keyType]);
+    if (selectHistoryKeys) {
+      setKeyValue(selectHistoryKeys);
+    } else {
+      setKeyValue({});
+    }
+  }, [selectHistoryKeys]);
 
   return (
     <div className="container card">

@@ -11,10 +11,11 @@ import {
   GET_USER_HISTORY,
   UPDATE_CIPHER,
   UPDATE_KEYS,
+  SETUP_SELECT_HISTORY,
   GET_USERS,
 } from "./action";
 
-const initialState = {
+let initialState = {
   userName: "",
   history: [],
   fetchedUsers: [],
@@ -26,6 +27,11 @@ const initialState = {
   keyType: "",
   keyArgs: "",
   keys: {},
+  selectHistoryId: "",
+  selectHistoryCipher: "",
+  selectHistoryPText: "",
+  selectHistoryCText: "",
+  selectHistoryKeys: {},
 };
 
 const AppContext = createContext();
@@ -148,6 +154,14 @@ const AppProvider = ({ children }) => {
     });
   };
 
+  const setupSelectHistory = (historyInfo) => {
+    const { _id, keys, cipher, plaintext, ciphertext } = historyInfo;
+    dispatch({
+      type: SETUP_SELECT_HISTORY,
+      payload: { _id, keys, cipher, plaintext, ciphertext },
+    });
+  };
+
   const getCurrentUser = async () => {
     try {
       const { data } = await axios.get("/api/v1/auth/getCurrentUser");
@@ -179,11 +193,13 @@ const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         ...state,
+        dispatch,
         signUpUser,
         loginUser,
         logout,
         updateCipher,
         updateKeys,
+        setupSelectHistory,
         fetchCiphers,
         setupCiphers,
         fetchHistoryData,

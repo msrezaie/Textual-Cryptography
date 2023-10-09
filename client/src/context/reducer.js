@@ -7,6 +7,8 @@ import {
   GET_USER_HISTORY,
   GET_USERS,
   FETCH_CIPHERS,
+  SETUP_SELECT_HISTORY,
+  UPDATE_CIPHER_SELECT,
 } from "./action";
 
 const reducer = (state, action) => {
@@ -55,13 +57,34 @@ const reducer = (state, action) => {
       keysDescription: action.payload.keysDescription,
       keyType: action.payload.keyType,
       keyArgs: action.payload.keyArgs,
-      keys: {},
+      selectHistoryKeys: {},
+    };
+  }
+  if (action.type === UPDATE_CIPHER_SELECT) {
+    return {
+      ...state,
+      cipherName: action.payload.cipherName,
+      cipherDescription: action.payload.cipherDescription,
+      keysDescription: action.payload.keysDescription,
+      keyType: action.payload.keyType,
+      keyArgs: action.payload.keyArgs,
+      selectHistoryKeys: action.payload.selectHistoryKeys,
     };
   }
   if (action.type === UPDATE_KEYS) {
     return {
       ...state,
       keys: action.payload.keys,
+    };
+  }
+  if (action.type === SETUP_SELECT_HISTORY) {
+    return {
+      ...state,
+      selectHistoryId: action.payload._id,
+      selectHistoryCipher: action.payload.cipher,
+      selectHistoryPText: action.payload.plaintext,
+      selectHistoryCText: action.payload.ciphertext,
+      selectHistoryKeys: action.payload.keys,
     };
   }
   if (action.type === GET_USER_HISTORY) {

@@ -12,14 +12,7 @@ const getAllHistory = async (req, res) => {
 // @route   POST /api/v1/user/history/save
 // @access  users only
 const saveHistory = async (req, res) => {
-  let { userName, operation, cipher, plaintext, keys, ciphertext } = req.body;
-  const [firstKey, secondKey] = Object.entries(keys);
-  keys =
-    Object.entries(keys).length < 1
-      ? ""
-      : !secondKey
-      ? firstKey[1]
-      : `Key1: ${firstKey[1]} Key2: ${secondKey[1]}`;
+  const { userName, operation, cipher, plaintext, keys, ciphertext } = req.body;
   const savedHistory = await History.create({
     userId: req.user.userId,
     userName,

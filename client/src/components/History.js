@@ -6,7 +6,7 @@ import { BtnWrapper } from "../assets/wrappers/TableWrapper";
 import { HistoryArticle } from "../assets/wrappers/HistoryWrapper";
 
 const History = () => {
-  const { history } = useAppContext();
+  const { history, setupSelectHistory } = useAppContext();
   const [historyData, setHistoryData] = useState([...history]);
 
   const deleteBtn = async (e) => {
@@ -24,8 +24,10 @@ const History = () => {
     }
   };
 
-  const modifyBtn = async () => {
-    toast.info("not yet functional");
+  const selectBtn = async (e) => {
+    const selectedHistory = history.filter((x) => x._id === e.target.value)[0];
+    const { _id, keys, cipher, plaintext, ciphertext } = selectedHistory;
+    setupSelectHistory({ _id, keys, cipher, plaintext, ciphertext });
   };
 
   useEffect(() => {
@@ -53,12 +55,21 @@ const History = () => {
 
             <tbody>
               {historyData?.map((history, index) => {
+                const [firstKey, secondKey] = Object.entries(
+                  history.keys ?? {}
+                );
+                const historyKeys =
+                  Object.entries(history.keys ?? {}).length < 1
+                    ? ""
+                    : !secondKey
+                    ? firstKey[1]
+                    : `Key1: ${firstKey[1]} Key2: ${secondKey[1]}` || "";
                 return (
                   <tr key={history._id}>
                     <th scope="row">{index + 1}</th>
                     <td>{history.plaintext}</td>
                     <td>{history.cipher}</td>
-                    <td>{history.keys}</td>
+                    <td>{historyKeys}</td>
                     <td>{history.ciphertext}</td>
                     <td>
                       <BtnWrapper>
@@ -72,8 +83,12 @@ const History = () => {
                           </button>
                         </li>
                         <li>
-                          <button className="contrast" onClick={modifyBtn}>
-                            Modify
+                          <button
+                            className="contrast"
+                            value={history._id}
+                            onClick={selectBtn}
+                          >
+                            Select
                           </button>
                         </li>
                       </BtnWrapper>

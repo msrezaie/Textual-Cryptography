@@ -11,7 +11,7 @@ const Navbar = () => {
         <ul>
           <li>
             <Link className="contrast" to="/">
-              <strong>Textual Cryptography</strong>
+              <strong>TextCrypt</strong>
             </Link>
           </li>
         </ul>
