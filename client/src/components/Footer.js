@@ -11,7 +11,7 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer"
           >
-            <i className="fa-brands fa-linkedin fa-2xl"></i>
+            <i className="fa-brands fa-linkedin-in fa-2xl"></i>
           </a>
         </li>
         <li>
@@ -21,17 +21,17 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer"
           >
-            <i className="fa-brands fa-square-github fa-2xl"></i>
+            <i className="fa-brands fa-github fa-2xl"></i>
           </a>
         </li>
         <li>
-          <span>My Portfolio: </span>
           <a
+            className="contrast"
             href="https://msrezaieportfolio.onrender.com/"
             target="_blank"
             rel="noreferrer"
           >
-            MSREZAIE
+            <i className="fa-solid fa-briefcase fa-2xl" />
           </a>
         </li>
       </ul>
