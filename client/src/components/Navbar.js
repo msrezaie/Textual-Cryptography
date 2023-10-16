@@ -4,7 +4,7 @@ import { useAppContext } from "../context/appContext";
 
 const Navbar = () => {
   const { userName, isAdmin, logout } = useAppContext();
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const location = useLocation().pathname;
 
   const toggleDarkMode = () => {
@@ -12,7 +12,7 @@ const Navbar = () => {
 
     document.documentElement.setAttribute(
       "data-theme",
-      isDarkMode ? "light" : "dark"
+      isDarkMode ? "dark" : "light"
     );
   };
 
@@ -32,8 +32,10 @@ const Navbar = () => {
               <Link to="/admin" className="contrast">
                 <strong>Admin Panel</strong>
               </Link>
-            ) : userName ? (
-              <strong>Welcome, {userName}</strong>
+            ) : !location.startsWith("/user") && userName && !isAdmin ? (
+              <Link to="/user" className="contrast">
+                <strong>Profile</strong>
+              </Link>
             ) : location === "/login" && (!isAdmin || !userName) ? (
               <Link to="/signup" className="contrast">
                 <strong>Sign Up</strong>
@@ -43,9 +45,11 @@ const Navbar = () => {
                 <strong>Login</strong>
               </Link>
             ) : (
-              <Link to="/login" className="contrast">
-                <strong>Login</strong>
-              </Link>
+              !userName && (
+                <Link to="/login" className="contrast">
+                  <strong>Login</strong>
+                </Link>
+              )
             )}
           </li>
           {userName && (

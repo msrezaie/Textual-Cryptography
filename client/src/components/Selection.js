@@ -53,13 +53,13 @@ const Selection = () => {
   return (
     <div className="container">
       <label>
-        <strong>Choices</strong>
+        <strong>Cipher Choices</strong>
       </label>
       <select name="cipherName" onChange={cipherChange} value={selectedCipher}>
         {ciphers.map((cipher) => {
           return (
             <option key={cipher._id} value={cipher.name}>
-              {cipher.name}
+              {cipher.name.replace(/[a-z]/, (letter) => letter.toUpperCase())}
             </option>
           );
         })}

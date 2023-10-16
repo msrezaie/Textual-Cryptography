@@ -9,6 +9,7 @@ import AddCipher from "./AddCipher";
 import CiphersTable from "./CiphersTable";
 import History from "./History";
 import UsersTable from "./UsersTable";
+import SideBarNav from "./SideBarNav";
 
 export {
   Navbar,
@@ -22,4 +23,5 @@ export {
   CiphersTable,
   History,
   UsersTable,
+  SideBarNav,
 };

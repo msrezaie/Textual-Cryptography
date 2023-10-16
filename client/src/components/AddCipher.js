@@ -60,7 +60,7 @@ const AddCipher = () => {
     <div>
       <article>
         <header>
-          <strong>Add New Cipher</strong>
+          <strong>Cipher Details</strong>
         </header>
         <form ref={formRef} onSubmit={cipherSaveHandler}>
           <input
@@ -137,7 +137,11 @@ const AddCipher = () => {
             required
           />
           <input type="file" name="cipherFile" accept=".py" required />
-          <button type="submit" className="contrast">
+          <button
+            type="submit"
+            style={{ width: "150px", padding: "10px" }}
+            className="contrast"
+          >
             Save
           </button>
         </form>

@@ -7,6 +7,16 @@ const Footer = () => {
         <li>
           <a
             className="contrast"
+            href="https://github.com/msrezaie/textual-cryptography"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <i className="fa-brands fa-github fa-2xl"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            className="contrast"
             href="https://www.linkedin.com/in/msrezaie/"
             target="_blank"
             rel="noreferrer"
@@ -14,16 +24,7 @@ const Footer = () => {
             <i className="fa-brands fa-linkedin-in fa-2xl"></i>
           </a>
         </li>
-        <li>
-          <a
-            className="contrast"
-            href="https://github.com/msrezaie"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <i className="fa-brands fa-github fa-2xl"></i>
-          </a>
-        </li>
+
         <li>
           <a
             className="contrast"

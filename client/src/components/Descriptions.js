@@ -10,11 +10,11 @@ const Descriptions = () => {
       </header>
       <div className="grid">
         <div className="container">
-          <h6>About Cipher</h6>
+          <h6>About This Cipher</h6>
           <p>{cipherDescription}</p>
         </div>
         <div className="container">
-          <h6>About Key[s]</h6>
+          <h6>About Cipher Key[s]</h6>
           <p>{keysDescription}</p>
         </div>
       </div>
