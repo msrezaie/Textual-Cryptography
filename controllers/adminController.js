@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const Cipher = require("../models/Cipher");
 const User = require("../models/User");
 
@@ -88,4 +89,44 @@ const getUsers = async (req, res) => {
   res.json({ count: users.length, users });
 };
 
-module.exports = { createCipher, updateCipher, removeCipher, getUsers };
+// @desc    gets saved cipher's file
+// @route   GET /api/v1/admin/cipher/file/:cipherName
+// @access  private (admin only)
+const getCipherFile = async (req, res) => {
+  let cipherName = req.params.cipherName.toLowerCase();
+  if (!cipherName) {
+    res.status(400);
+    throw new Error("cipher name must be provided!");
+  }
+  const cipherExists = await Cipher.findOne({ name: cipherName });
+  if (!cipherExists) {
+    res.status(404);
+    throw new Error(`${cipherName} does not exist!`);
+  }
+  try {
+    const fileExists = fs.existsSync(cipherExists.filePath);
+    if (!fileExists) {
+      res.status(404);
+      throw new Error("unable to find cipher file!");
+    }
+    const filename = `${cipherName}.py`;
+    const filePath = path.join(__dirname, "../uploads", filename);
+    const file = await fs.promises.readFile(filePath);
+
+    res.setHeader("Content-Type", "text/plain");
+    res.setHeader("Content-Disposition", `attachment; filename=${filename}`);
+
+    res.send(file);
+  } catch (error) {
+    res.status(500);
+    throw new Error(error);
+  }
+};
+
+module.exports = {
+  createCipher,
+  updateCipher,
+  removeCipher,
+  getUsers,
+  getCipherFile,
+};

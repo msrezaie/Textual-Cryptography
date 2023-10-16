@@ -8,6 +8,7 @@ const {
   removeCipher,
   updateCipher,
   getUsers,
+  getCipherFile,
 } = require("../controllers/adminController");
 
 router.route("/users").get(authenticateAdmin, getUsers);
@@ -24,5 +25,6 @@ router
 router
   .route("/cipher/update/:cipherName")
   .patch(authenticateAdmin, updateCipher);
+router.route("/cipher/file/:cipherName").get(authenticateAdmin, getCipherFile);
 
 module.exports = router;
