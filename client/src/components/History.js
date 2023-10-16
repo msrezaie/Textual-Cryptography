@@ -6,7 +6,7 @@ import { BtnWrapper } from "../assets/wrappers/TableWrapper";
 import { HistoryArticle } from "../assets/wrappers/HistoryWrapper";
 
 const History = () => {
-  const { history, setupSelectHistory } = useAppContext();
+  const { history, setupSelectHistory, updateHistory } = useAppContext();
   const [historyData, setHistoryData] = useState([...history]);
 
   const deleteBtn = async (e) => {
@@ -18,6 +18,7 @@ const History = () => {
       setHistoryData((prevHistoryData) => {
         return prevHistoryData.filter((history) => history._id !== historyId);
       });
+      updateHistory(history.filter((h) => h._id !== historyId));
       toast.success(response.data.msg);
     } catch (error) {
       toast.error(error.response.data.msg);

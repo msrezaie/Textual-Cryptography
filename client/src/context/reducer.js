@@ -4,6 +4,7 @@ import {
   SETUP_CIPHERS,
   UPDATE_CIPHER,
   UPDATE_KEYS,
+  UPDATE_HISTORY,
   GET_USER_HISTORY,
   GET_USERS,
   FETCH_CIPHERS,
@@ -58,6 +59,12 @@ const reducer = (state, action) => {
       keyType: action.payload.keyType,
       keyArgs: action.payload.keyArgs,
       selectHistoryKeys: {},
+    };
+  }
+  if (action.type === UPDATE_HISTORY) {
+    return {
+      ...state,
+      history: action.payload.newHistoryData,
     };
   }
   if (action.type === UPDATE_CIPHER_SELECT) {

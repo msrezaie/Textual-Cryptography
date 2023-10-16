@@ -11,6 +11,7 @@ import {
   GET_USER_HISTORY,
   UPDATE_CIPHER,
   UPDATE_KEYS,
+  UPDATE_HISTORY,
   SETUP_SELECT_HISTORY,
   GET_USERS,
 } from "./action";
@@ -145,6 +146,15 @@ const AppProvider = ({ children }) => {
     });
   };
 
+  const updateHistory = (newHistoryData) => {
+    dispatch({
+      type: UPDATE_HISTORY,
+      payload: {
+        newHistoryData,
+      },
+    });
+  };
+
   const updateKeys = (keyInfo) => {
     dispatch({
       type: UPDATE_KEYS,
@@ -199,6 +209,7 @@ const AppProvider = ({ children }) => {
         logout,
         updateCipher,
         updateKeys,
+        updateHistory,
         setupSelectHistory,
         fetchCiphers,
         setupCiphers,
