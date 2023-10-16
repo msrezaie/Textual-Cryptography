@@ -1,26 +1,25 @@
 import { Outlet } from "react-router-dom";
 import { SideBarNav } from "../components";
-import AdminProtected from "./AdminProtected";
-import adminLinks from "../util/adminNavLinks";
 import { MainWrapper, SideNavWrapper } from "../assets/wrappers/ProfileWrapper";
+import userLinks from "../util/userNavLinks";
+import UserProtected from "./UserProtected";
 
-const Admin = () => {
+const User = () => {
   return (
     <>
       <MainWrapper>
-        <AdminProtected>
+        <UserProtected>
           <SideNavWrapper>
             <div className="sidebar show-sidebar">
-              <SideBarNav links={adminLinks} />
+              <SideBarNav links={userLinks} />
             </div>
           </SideNavWrapper>
           <div className="pages">
             <Outlet />
           </div>
-        </AdminProtected>
+        </UserProtected>
       </MainWrapper>
     </>
   );
 };
-
-export default Admin;
+export default User;
