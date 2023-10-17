@@ -6,9 +6,9 @@ import { useAppContext } from "../context/appContext";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { userName, signUpUser } = useAppContext();
+  const { userEmail, signUpUser } = useAppContext();
   const [userInfo, setUserInfo] = useState({
-    name: "",
+    email: "",
     password: "",
   });
 
@@ -22,10 +22,10 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    if (userName) {
+    if (userEmail) {
       navigate("/");
     }
-  }, [userName, navigate]);
+  }, [userEmail, navigate]);
 
   return (
     <MainWrapper className="container">
@@ -37,13 +37,13 @@ const SignUp = () => {
           </hgroup>
           <form onSubmit={signUpHandler}>
             <input
-              type="text"
-              name="name"
-              value={userInfo.name}
+              type="email"
+              name="email"
+              value={userInfo.email}
               onChange={(e) =>
-                setUserInfo({ ...userInfo, name: e.target.value })
+                setUserInfo({ ...userInfo, email: e.target.value })
               }
-              placeholder="Name"
+              placeholder="Email"
               required
             />
             <input

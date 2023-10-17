@@ -3,7 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
 
 const Navbar = () => {
-  const { userName, isAdmin, logout } = useAppContext();
+  const { userEmail, isAdmin, logout } = useAppContext();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const location = useLocation().pathname;
 
@@ -32,27 +32,27 @@ const Navbar = () => {
               <Link to="/admin" className="contrast">
                 <strong>Admin Panel</strong>
               </Link>
-            ) : !location.startsWith("/user") && userName && !isAdmin ? (
+            ) : !location.startsWith("/user") && userEmail && !isAdmin ? (
               <Link to="/user" className="contrast">
                 <strong>Profile</strong>
               </Link>
-            ) : location === "/login" && (!isAdmin || !userName) ? (
+            ) : location === "/login" && (!isAdmin || !userEmail) ? (
               <Link to="/signup" className="contrast">
                 <strong>Sign Up</strong>
               </Link>
-            ) : location === "/signup" && (!isAdmin || !userName) ? (
+            ) : location === "/signup" && (!isAdmin || !userEmail) ? (
               <Link to="/login" className="contrast">
                 <strong>Login</strong>
               </Link>
             ) : (
-              !userName && (
+              !userEmail && (
                 <Link to="/login" className="contrast">
                   <strong>Login</strong>
                 </Link>
               )
             )}
           </li>
-          {userName && (
+          {userEmail && (
             <li>
               <Link onClick={logout} className="contrast">
                 <strong>Logout</strong>

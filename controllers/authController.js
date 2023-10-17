@@ -5,42 +5,41 @@ const generateCookie = require("../util/generateCookie");
 // @route   POST /api/v1/auth/signup
 // @access  public
 const signup = async (req, res) => {
-  const { name, password } = req.body;
+  const { email, password } = req.body;
 
-  if (!name || !password) {
+  if (!email || !password) {
     res.status(400);
-    throw new Error("please provide name and password!");
-  } else if (await User.findOne({ name })) {
+    throw new Error("please provide email and password!");
+  } else if (await User.findOne({ email })) {
     res.status(400);
-    throw new Error(`${name} already exists!`);
+    throw new Error(`user with ${email} email already exists!`);
   }
 
-  const user = await User.create({ name, password });
+  const user = await User.create({ email, password });
   const token = user.createJWT();
   generateCookie({ res, token });
-  res.status(201).json({ name: user.name, isAdmin: user.isAdmin });
-  console.log("new user registered!");
+  res.status(201).json({ email: user.email, isAdmin: user.isAdmin });
 };
 
 // @desc    creates token and cookie for existing users
 // @route   POST /api/v1/auth/login
 // @access  public
 const login = async (req, res) => {
-  const { name, password } = req.body;
+  const { email, password } = req.body;
 
-  if (!name || !password) {
+  if (!email || !password) {
     res.status(400);
-    throw new Error("please provide name and password!");
+    throw new Error("please provide email and password!");
   }
 
-  const user = await User.findOne({ name });
+  const user = await User.findOne({ email }).select("+password");
   if (user && (await user.comparePassword(password))) {
     const token = user.createJWT();
     generateCookie({ res, token });
-    res.status(200).json({ name: user.name, isAdmin: user.isAdmin });
+    res.status(200).json({ email: user.email, isAdmin: user.isAdmin });
   } else {
     res.status(400);
-    throw new Error("invalid name or password!");
+    throw new Error("invalid email or password!");
   }
 };
 
@@ -68,7 +67,7 @@ const getCurrentUser = async (req, res) => {
   const validUser = await User.findOne({ _id: req.user.userId });
   return res
     .status(200)
-    .json({ name: validUser.name, isAdmin: validUser.isAdmin });
+    .json({ email: validUser.email, isAdmin: validUser.isAdmin });
 };
 
 module.exports = { login, signup, getCurrentUser, logout };

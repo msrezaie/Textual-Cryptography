@@ -5,7 +5,7 @@ const historySchema = mongoose.Schema(
     userId: {
       type: String,
     },
-    userName: {
+    userEmail: {
       type: String,
     },
     operation: {

@@ -1,7 +1,7 @@
 import { useAppContext } from "../context/appContext";
 
 const UserSettings = () => {
-  const { userName } = useAppContext();
+  const { userEmail } = useAppContext();
   return (
     <>
       <article>
@@ -10,7 +10,7 @@ const UserSettings = () => {
             <label>
               <strong>Email</strong>
             </label>
-            <input disabled value={userName} />
+            <input disabled value={userEmail} />
           </div>
         </div>
         <button>Update</button>

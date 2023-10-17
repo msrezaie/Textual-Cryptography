@@ -7,6 +7,7 @@ import {
   UPDATE_HISTORY,
   GET_USER_HISTORY,
   GET_USERS,
+  UPDATE_FETCHED_USERS,
   FETCH_CIPHERS,
   SETUP_SELECT_HISTORY,
   UPDATE_CIPHER_SELECT,
@@ -16,7 +17,7 @@ const reducer = (state, action) => {
   if (action.type === LOGOUT_USER) {
     return {
       ...state,
-      userName: "",
+      userEmail: "",
       isAdmin: false,
       history: [],
       fetchedUsers: [],
@@ -25,7 +26,7 @@ const reducer = (state, action) => {
   if (action.type === SETUP_USER) {
     return {
       ...state,
-      userName: action.payload.name,
+      userEmail: action.payload.email,
       isAdmin: action.payload.isAdmin,
     };
   }
@@ -104,6 +105,13 @@ const reducer = (state, action) => {
     return {
       ...state,
       fetchedUsers: action.payload.fetchedUsers,
+    };
+  }
+
+  if (action.type === UPDATE_FETCHED_USERS) {
+    return {
+      ...state,
+      fetchedUsers: action.payload.newUsers,
     };
   }
   throw new Error(`${action.type} action not defined!`);

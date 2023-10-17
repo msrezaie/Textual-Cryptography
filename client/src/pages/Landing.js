@@ -4,7 +4,7 @@ import { useAppContext } from "../context/appContext";
 import { useEffect } from "react";
 
 const Landing = () => {
-  const { userName, isAdmin, setupCiphers } = useAppContext();
+  const { userEmail, isAdmin, setupCiphers } = useAppContext();
 
   useEffect(() => {
     setupCiphers();
@@ -14,7 +14,7 @@ const Landing = () => {
   return (
     <MainWrapper className="container">
       <Operation />
-      {!isAdmin && userName && <History />}
+      {!isAdmin && userEmail && <History />}
       <Descriptions />
     </MainWrapper>
   );

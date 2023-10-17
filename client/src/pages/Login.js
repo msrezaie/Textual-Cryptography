@@ -6,9 +6,9 @@ import { MainWrapper, LoginFieldset } from "../assets/wrappers/SignInWrapper";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { userName, loginUser } = useAppContext();
+  const { userEmail, loginUser } = useAppContext();
   const [userInfo, setUserInfo] = useState({
-    name: "",
+    email: "",
     password: "",
   });
 
@@ -22,10 +22,10 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (userName) {
+    if (userEmail) {
       navigate("/");
     }
-  }, [userName, navigate]);
+  }, [userEmail, navigate]);
 
   return (
     <MainWrapper className="container">
@@ -37,13 +37,13 @@ const Login = () => {
           </hgroup>
           <form onSubmit={loginHandler}>
             <input
-              type="text"
-              name="name"
-              value={userInfo.name}
+              type="email"
+              name="email"
+              value={userInfo.email}
               onChange={(e) =>
-                setUserInfo({ ...userInfo, name: e.target.value })
+                setUserInfo({ ...userInfo, email: e.target.value })
               }
-              placeholder="Name"
+              placeholder="Email"
               required
             />
             <input

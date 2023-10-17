@@ -12,12 +12,13 @@ import {
   UPDATE_CIPHER,
   UPDATE_KEYS,
   UPDATE_HISTORY,
+  UPDATE_FETCHED_USERS,
   SETUP_SELECT_HISTORY,
   GET_USERS,
 } from "./action";
 
 let initialState = {
-  userName: "",
+  userEmail: "",
   history: [],
   fetchedUsers: [],
   isAdmin: false,
@@ -43,10 +44,10 @@ const AppProvider = ({ children }) => {
   const loginUser = async (userInfo) => {
     try {
       const { data } = await axios.post("/api/v1/auth/login", userInfo);
-      const { name, isAdmin } = data;
+      const { email, isAdmin } = data;
       dispatch({
         type: SETUP_USER,
-        payload: { name, isAdmin },
+        payload: { email, isAdmin },
       });
     } catch (error) {
       toast.error(error.response.data.msg);
@@ -56,10 +57,10 @@ const AppProvider = ({ children }) => {
   const signUpUser = async (userInfo) => {
     try {
       const { data } = await axios.post("/api/v1/auth/signup", userInfo);
-      const { name, isAdmin } = data;
+      const { email, isAdmin } = data;
       dispatch({
         type: SETUP_USER,
-        payload: { name, isAdmin },
+        payload: { email, isAdmin },
       });
     } catch (error) {
       toast.error(error.response.data.msg);
@@ -82,12 +83,15 @@ const AppProvider = ({ children }) => {
       if (data.count < 1) {
         toast.error("No Data, App is not Functional!", { autoClose: false });
       } else {
-        const firstCipher = data.cipher[0];
+        const fetchedCiphers = data.cipher.sort((a, b) =>
+          a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+        );
+        const firstCipher = fetchedCiphers[0];
 
         dispatch({
           type: FETCH_CIPHERS,
           payload: {
-            ciphers: data.cipher,
+            ciphers: fetchedCiphers,
             cipherName: firstCipher.name,
             cipherDescription: firstCipher.cipherDescription,
             keysDescription: firstCipher.keysDescription,
@@ -155,6 +159,15 @@ const AppProvider = ({ children }) => {
     });
   };
 
+  const updateFetchedUsers = (newUsers) => {
+    dispatch({
+      type: UPDATE_FETCHED_USERS,
+      payload: {
+        newUsers,
+      },
+    });
+  };
+
   const updateKeys = (keyInfo) => {
     dispatch({
       type: UPDATE_KEYS,
@@ -175,10 +188,10 @@ const AppProvider = ({ children }) => {
   const getCurrentUser = async () => {
     try {
       const { data } = await axios.get("/api/v1/auth/getCurrentUser");
-      const { name, isAdmin } = data;
+      const { email, isAdmin } = data;
       dispatch({
         type: SETUP_USER,
-        payload: { name, isAdmin },
+        payload: { email, isAdmin },
       });
     } catch (error) {
       console.log(error.response.data.msg);
@@ -191,13 +204,13 @@ const AppProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (state.userName) {
+    if (state.userEmail) {
       fetchHistoryData();
     }
     if (state.isAdmin) {
       fetchUsers();
     }
-  }, [state.userName, state.isAdmin]);
+  }, [state.userEmail, state.isAdmin]);
 
   return (
     <AppContext.Provider
@@ -210,6 +223,7 @@ const AppProvider = ({ children }) => {
         updateCipher,
         updateKeys,
         updateHistory,
+        updateFetchedUsers,
         setupSelectHistory,
         fetchCiphers,
         setupCiphers,

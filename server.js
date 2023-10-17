@@ -63,8 +63,8 @@ const start = async () => {
     const adminUser = await User.findOne({ isAdmin: true });
     if (!adminUser) {
       await User.create({
-        name: process.env.ADMIN_NAME,
-        password: process.env.ADMIN_PASSWORD,
+        email: process.env.ADMIN_E,
+        password: process.env.ADMIN_P,
         isAdmin: true,
       });
       console.log("admin user generated!");
