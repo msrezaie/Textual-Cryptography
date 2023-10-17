@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const Cipher = require("../models/Cipher");
 const User = require("../models/User");
+const History = require("../models/History");
 
 // @desc    creates a cipher file and add its information
 // @route   POST /api/v1/admin/cipher/create
@@ -89,6 +90,34 @@ const getUsers = async (req, res) => {
   res.json({ count: users.length, users });
 };
 
+// @desc    removes registered user account
+// @route   DELETE /api/v1/admin/user/delete/:email
+// @access  private (admin only)
+const removeUser = async (req, res) => {
+  const { email } = req.params;
+
+  if (!email) {
+    res.status(400);
+    throw new Error("user email must be provided!");
+  }
+  const userExists = await User.findOne({ email });
+  if (!userExists) {
+    res.status(404);
+    throw new Error(`user with ${email} email does not exist!`);
+  } else if (userExists.email === process.env.ADMIN_E) {
+    res.status(403);
+    throw new Error(`action not allowed!`);
+  }
+  try {
+    await User.findOneAndDelete({ email });
+    await History.deleteMany({ userId: userExists._id });
+    res.status(200).json({ msg: `user with ${email} email removed!` });
+  } catch (error) {
+    res.status(500);
+    throw new Error(error);
+  }
+};
+
 // @desc    gets saved cipher's file
 // @route   GET /api/v1/admin/cipher/file/:cipherName
 // @access  private (admin only)
@@ -128,5 +157,6 @@ module.exports = {
   updateCipher,
   removeCipher,
   getUsers,
+  removeUser,
   getCipherFile,
 };

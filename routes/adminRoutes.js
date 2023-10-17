@@ -8,10 +8,12 @@ const {
   removeCipher,
   updateCipher,
   getUsers,
+  removeUser,
   getCipherFile,
 } = require("../controllers/adminController");
 
 router.route("/users").get(authenticateAdmin, getUsers);
+router.route("/user/delete/:email").delete(authenticateAdmin, removeUser);
 router
   .route("/cipher/create")
   .post(
