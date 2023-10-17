@@ -4,7 +4,7 @@ import { MainWrapper, SideNavWrapper } from "../assets/wrappers/ProfileWrapper";
 import userLinks from "../util/userNavLinks";
 import UserProtected from "./UserProtected";
 
-const User = () => {
+const UserLayout = () => {
   return (
     <>
       <MainWrapper>
@@ -22,4 +22,4 @@ const User = () => {
     </>
   );
 };
-export default User;
+export default UserLayout;

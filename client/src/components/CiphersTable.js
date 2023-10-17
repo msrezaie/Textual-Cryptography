@@ -71,6 +71,7 @@ const CiphersTable = () => {
               <th scope="col">Cipher</th>
               <th scope="col">Key-Type</th>
               <th scope="col">File</th>
+              <th scope="col">created at</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -108,6 +109,7 @@ const CiphersTable = () => {
                         {cipher.filePath}
                       </button>
                     </td>
+                    <td>{cipher.createdAt}</td>
                     <td>
                       <BtnWrapper>
                         <li>

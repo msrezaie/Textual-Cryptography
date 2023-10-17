@@ -59,7 +59,7 @@ const Selection = () => {
         {ciphers.map((cipher) => {
           return (
             <option key={cipher._id} value={cipher.name}>
-              {cipher.name.replace(/[a-z]/, (letter) => letter.toUpperCase())}
+              {cipher.name.charAt(0).toUpperCase() + cipher.name.slice(1)}
             </option>
           );
         })}

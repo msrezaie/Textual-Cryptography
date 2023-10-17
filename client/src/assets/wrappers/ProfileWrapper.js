@@ -69,7 +69,6 @@ const SideNavWrapper = styled.aside`
       border-bottom: 1px solid #1f2d38;
     }
     .nav-link:hover {
-      padding-left: 3rem;
       color: var(--primary);
     }
     .active {

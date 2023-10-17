@@ -1,24 +1,24 @@
-import Admin from "./Admin";
+import AdminLayout from "./AdminLayout";
 import AddCipherTab from "./AddCipherTab";
 import CiphersTab from "./CiphersTab";
 import UsersTab from "./UsersTab";
 import Landing from "./Landing";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import User from "./User";
+import UserLayout from "./UserLayout";
 import UserSettings from "./UserSettings";
 import UserHistory from "./UserHistory";
 import LandingLayout from "./LandingLayout";
 import Error from "./Error";
 
 export {
-  Admin,
+  AdminLayout,
   AddCipherTab,
   CiphersTab,
   UsersTab,
   Landing,
   Login,
-  User,
+  UserLayout,
   UserSettings,
   UserHistory,
   SignUp,

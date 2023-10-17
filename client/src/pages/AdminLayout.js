@@ -4,7 +4,7 @@ import AdminProtected from "./AdminProtected";
 import adminLinks from "../util/adminNavLinks";
 import { MainWrapper, SideNavWrapper } from "../assets/wrappers/ProfileWrapper";
 
-const Admin = () => {
+const AdminLayout = () => {
   return (
     <>
       <MainWrapper>
@@ -23,4 +23,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default AdminLayout;

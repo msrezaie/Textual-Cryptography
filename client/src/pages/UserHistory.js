@@ -41,6 +41,7 @@ const UserHistory = () => {
               <th scope="col">Plaintext</th>
               <th scope="col">Cipher</th>
               <th scope="col">Key[s]</th>
+              <th scope="col">Operation</th>
               <th scope="col">Ciphertext</th>
               <th scope="col">Actions</th>
             </tr>
@@ -61,6 +62,7 @@ const UserHistory = () => {
                   <td>{history.plaintext}</td>
                   <td>{history.cipher}</td>
                   <td>{historyKeys}</td>
+                  <td>{history.operation}</td>
                   <td>{history.ciphertext}</td>
                   <td>
                     <BtnWrapper>

@@ -4,10 +4,10 @@ import {
   Landing,
   Login,
   SignUp,
-  User,
+  UserLayout,
   UserSettings,
   UserHistory,
-  Admin,
+  AdminLayout,
   Error,
   AddCipherTab,
   CiphersTab,
@@ -23,11 +23,11 @@ const App = () => {
             <Route index element={<Landing />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />
-            <Route path="user" element={<User />}>
+            <Route path="user" element={<UserLayout />}>
               <Route index element={<UserSettings />} />
               <Route path="history" element={<UserHistory />} />
             </Route>
-            <Route path="admin" element={<Admin />}>
+            <Route path="admin" element={<AdminLayout />}>
               <Route index element={<CiphersTab />} />
               <Route path="users" element={<UsersTab />} />
               <Route path="addCipher" element={<AddCipherTab />} />
