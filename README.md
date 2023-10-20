@@ -17,12 +17,12 @@ API Documentation (Swagger UI): https://textcrypt-api.onrender.com/api-docs/
 - Users have the ability to sign up and use the app (+)
 - Registered users get their own http only cookie to access thier individual usage history (+)
 - Logged in users get to (view, add, remove, select) their usage history (+)
-- Admin user can login and manage (view, add, remove, modify) cipher files (+, -update/modify)
+- Admin user can login and manage (view, add, remove, modify) cipher files (+)
 - Admin functionalites are only accessable to admin users (currnently only 1 registered admin on the initial load of the API) (+)
 - Fully responsiveness (+)
 - Theme change between light and dark mode (+)
+- Users profile page for managing account settings (+)
 - Forgot password feature for registered users (-)
-- Users profile page for managing account settings (-)
 
 
 ## Technologies
@@ -41,6 +41,9 @@ API Documentation (Swagger UI): https://textcrypt-api.onrender.com/api-docs/
   - helmet: is used for protecting the server from some web vulnerabilities by setting HTTP response header to requests
   - xss-clean: is used for sanitizing user input coming from request body or URL params
   - express-rate-limit: is used for limiting the number of allowed requests in the API
+  - express-async-errors: is used for handling backend errors
+  - validator: is used for validating correct email formating
+  - swagger-ui-express: is used for serving and providing an interactive interface for the API 
 
 ### Frontend
 
