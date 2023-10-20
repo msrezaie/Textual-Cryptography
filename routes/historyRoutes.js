@@ -5,10 +5,12 @@ const {
   getAllHistory,
   saveHistory,
   deleteHistory,
+  deleteAllHistory,
 } = require("../controllers/historyController");
 
-router.get("/history", authenticateUser, getAllHistory);
-router.post("/history/save", authenticateUser, saveHistory);
-router.delete("/history/delete/:id", authenticateUser, deleteHistory);
+router.get("/", authenticateUser, getAllHistory);
+router.post("/save", authenticateUser, saveHistory);
+router.delete("/delete/:id", authenticateUser, deleteHistory);
+router.delete("/deleteAll/:userId", authenticateUser, deleteAllHistory);
 
 module.exports = router;

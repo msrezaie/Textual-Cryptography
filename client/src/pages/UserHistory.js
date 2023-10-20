@@ -12,7 +12,7 @@ const UserHistory = () => {
     const historyId = e.target.value;
     try {
       const response = await axios.delete(
-        `/api/v1/user/history/delete/${historyId}`
+        `/api/v1/history/delete/${historyId}`
       );
       setHistoryData((prevHistoryData) => {
         return prevHistoryData.filter((history) => history._id !== historyId);
@@ -21,6 +21,23 @@ const UserHistory = () => {
       toast.success(response.data.msg);
     } catch (error) {
       toast.error(error.response.data.msg);
+    }
+  };
+
+  const deleteAllBtn = async () => {
+    const userId = history[0]?.userId;
+    if (userId) {
+      try {
+        const response = await axios.delete(
+          `/api/v1/history/deleteAll/${userId}`
+        );
+        updateHistory([]);
+        toast.success(response.data.msg);
+      } catch (error) {
+        toast.error(error.response.data.msg);
+      }
+    } else {
+      toast.info("No history to delete!");
     }
   };
 
@@ -83,7 +100,11 @@ const UserHistory = () => {
           </tbody>
         </table>
       </figure>
-      <button className="contrast" style={{ width: "150px", padding: "10px" }}>
+      <button
+        className="contrast"
+        style={{ width: "150px", padding: "10px" }}
+        onClick={deleteAllBtn}
+      >
         Delete All
       </button>
     </article>
