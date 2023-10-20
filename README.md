@@ -55,4 +55,4 @@ API Documentation (Swagger UI): https://textcrypt-api.onrender.com/api-docs/
   - react-toastify: is used as the main package for pop up alert notifications
 
 ## Known Issues
-After a user signs up and generates some history, the select button on a history record at times don't work. This is due to improperly managed local state. Will be refactored and fixed in a future commit.
+After a user signs up and generates some history, the select button on a history record at times don't work. This is due to improperly managed local state of the history context. Will be refactored and fixed in a future commit.
