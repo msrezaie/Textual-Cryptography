@@ -60,14 +60,4 @@ const logout = async (req, res) => {
   res.status(200).json({ msg: "logged out!" });
 };
 
-// @desc    get authenticated user detail
-// @route   GET /api/v1/auth/getCurrentUser
-// @access  authenticated users only
-const getCurrentUser = async (req, res) => {
-  const validUser = await User.findOne({ _id: req.user.userId });
-  return res
-    .status(200)
-    .json({ email: validUser.email, isAdmin: validUser.isAdmin });
-};
-
-module.exports = { login, signup, getCurrentUser, logout };
+module.exports = { login, signup, logout };

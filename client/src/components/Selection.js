@@ -11,28 +11,30 @@ const Selection = () => {
     selectHistoryKeys,
     dispatch,
   } = useAppContext();
+
   const [selectedCipher, setSelectedCipher] = useState("");
 
   const cipherChange = (e) => {
-    setSelectedCipher(e.target.value);
-    const selectedCipher = ciphers.filter(
-      (cipher) => cipher.name === e.target.value
-    )[0];
+    const selectedCipherName = e.target.value;
+    setSelectedCipher(selectedCipherName);
+    const currentCipher = ciphers.find(
+      (cipher) => cipher.cipherName === selectedCipherName.toLowerCase()
+    );
     updateCipher({
       cipherName: e.target.value,
-      cipherDescription: selectedCipher.cipherDescription,
-      keysDescription: selectedCipher.keysDescription,
-      keyType: selectedCipher.keyType,
-      keyArgs: selectedCipher.keyArgs,
+      cipherDescription: currentCipher.cipherDescription,
+      keysDescription: currentCipher.keysDescription,
+      keyType: currentCipher.keyType,
+      keyArgs: currentCipher.keyArgs,
     });
   };
 
   useEffect(() => {
     const selectCipher = () => {
       setSelectedCipher(selectHistoryCipher);
-      const selectedCipher = ciphers.filter(
-        (cipher) => cipher.name === selectHistoryCipher
-      )[0];
+      const selectedCipher = ciphers.find(
+        (cipher) => cipher.cipherName === selectHistoryCipher
+      );
       selectedCipher &&
         dispatch({
           type: UPDATE_CIPHER_SELECT,
@@ -55,11 +57,12 @@ const Selection = () => {
       <label>
         <strong>Cipher Choices</strong>
       </label>
-      <select name="cipherName" onChange={cipherChange} value={selectedCipher}>
+      <select onChange={cipherChange} value={selectedCipher}>
         {ciphers.map((cipher) => {
           return (
-            <option key={cipher._id} value={cipher.name}>
-              {cipher.name.charAt(0).toUpperCase() + cipher.name.slice(1)}
+            <option key={cipher._id} value={cipher.cipherName}>
+              {cipher.cipherName.charAt(0).toUpperCase() +
+                cipher.cipherName.slice(1)}
             </option>
           );
         })}

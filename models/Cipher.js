@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const cipherSchema = mongoose.Schema(
   {
-    name: {
+    cipherName: {
       type: String,
       unique: true,
       required: [true, "please provide a name!"],

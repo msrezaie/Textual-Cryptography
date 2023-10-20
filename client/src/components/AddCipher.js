@@ -63,12 +63,14 @@ const AddCipher = () => {
           <strong>Cipher Details</strong>
         </header>
         <form ref={formRef} onSubmit={cipherSaveHandler}>
+          <label htmlFor="cipherName">Name of the Cipher</label>
           <input
             type="text"
             name="cipherName"
-            placeholder="Cipher name"
+            placeholder="i.e. reverse or caesar"
             required
           />
+          <label htmlFor="keyType">Key Type</label>
           <select
             id="keyType"
             name="keyType"
@@ -84,58 +86,71 @@ const AddCipher = () => {
 
           {keyType === "1-key" && (
             <>
+              <label htmlFor="keyDataType">Key Data Type</label>
               <select name="keyDataType" required>
                 <option value="">Select a key data type</option>
                 <option value="number">Number</option>
                 <option value="text">Text</option>
               </select>
+              <label htmlFor="keyDataDesc">Key Description</label>
               <input
                 type="text"
                 name="keyDataDesc"
-                placeholder="Key specification description"
+                placeholder="i.e. not an even number or number 14"
                 required
               />
             </>
           )}
           {keyType === "2-key" && (
             <>
+              <label htmlFor="key1DataType">Key 1 Data Type</label>
               <select name="key1DataType" required>
                 <option value="">First key data type</option>
                 <option value="number">Number</option>
                 <option value="text">Text</option>
               </select>
+              <label htmlFor="key1DataDesc">Key 1 Description</label>
               <input
                 type="text"
                 name="key1DataDesc"
-                placeholder="First key specification description"
+                placeholder="i.e. not an even number or number 14"
                 required
               />
+              <label htmlFor="key2DataType">Key 2 Data Type</label>
               <select name="key2DataType" required>
                 <option value="">Second key data type</option>
                 <option value="number">Number</option>
                 <option value="text">Text</option>
               </select>
+              <label htmlFor="key2DataDesc">Key 2 Description</label>
               <input
                 type="text"
                 name="key2DataDesc"
-                placeholder="Second key specification description"
+                placeholder="i.e. not an even number or number 14"
                 required
               />
             </>
           )}
 
+          <label htmlFor="cipherDescription">Cipher Description</label>
           <textarea
+            rows="5"
             type="text"
             name="cipherDescription"
             placeholder="About cipher"
             required
           />
+
+          <label htmlFor="cipherDescription">Cipher Key[s] Description</label>
           <textarea
+            rows="5"
             type="text"
             name="keysDescription"
             placeholder="About cipher keys"
             required
           />
+
+          <label htmlFor="cipherFile">Cipher Script File</label>
           <input type="file" name="cipherFile" accept=".py" required />
           <button
             type="submit"

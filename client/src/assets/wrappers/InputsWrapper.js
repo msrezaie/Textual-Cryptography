@@ -2,14 +2,19 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+  height: 100%;
+
+  @media (min-width: 992px) {
+    flex-direction: column;
+  }
 
   button {
-    max-width: 30%;
-    height: 30px;
-    padding: 0 5px;
+    padding: 5px 5px;
+    margin: 10px;
+    width: 130px;
   }
 `;
 

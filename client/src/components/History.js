@@ -13,7 +13,7 @@ const History = () => {
     const historyId = e.target.value;
     try {
       const response = await axios.delete(
-        `/api/v1/user/history/delete/${historyId}`
+        `/api/v1/history/delete/${historyId}`
       );
       setHistoryData((prevHistoryData) => {
         return prevHistoryData.filter((history) => history._id !== historyId);
@@ -26,7 +26,9 @@ const History = () => {
   };
 
   const selectBtn = async (e) => {
-    const selectedHistory = history.filter((x) => x._id === e.target.value)[0];
+    const selectedHistory = history.find(
+      (match) => match._id === e.target.value
+    );
     const { _id, keys, cipher, plaintext, ciphertext } = selectedHistory;
     setupSelectHistory({ _id, keys, cipher, plaintext, ciphertext });
   };

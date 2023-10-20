@@ -1,6 +1,6 @@
 import { AddCipher } from "../components";
 
-const AddCipherPage = () => {
+const AddCipherTab = () => {
   return (
     <>
       <AddCipher />
@@ -8,4 +8,4 @@ const AddCipherPage = () => {
   );
 };
 
-export default AddCipherPage;
+export default AddCipherTab;

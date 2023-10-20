@@ -7,33 +7,31 @@ const Cipher = require("../models/Cipher");
 // @route   GET /api/v1/cryptography/ciphers
 // @access  public
 const getAllCiphers = async (req, res) => {
-  const cipher = await Cipher.find();
-  if (!cipher) {
+  const ciphers = await Cipher.find();
+  if (!ciphers) {
     res.status(404);
     throw new Error("no cipher found!");
   }
 
-  res.json({ count: cipher.length, cipher });
+  res.json({ count: ciphers.length, ciphers });
 };
 
 // @desc    performs encrypt/decryption with the provided arguments
 // @route   POST /api/v1/cryptography
 // @access  public
 const transformText = (req, res) => {
-  let { cipher, operation, message, keys } = req.body;
+  let { cipherName, operation, message, keys } = req.body;
+  cipherName = cipherName.toLowerCase();
 
-  if (!cipher || !operation || !message || !keys) {
+  if (!cipherName || !operation || !message || !keys) {
     res.status(400);
     throw new Error("required arguements not received!");
   }
-  const cipherPath = path.join(
-    __dirname,
-    `../uploads/${cipher.toLowerCase()}.py`
-  );
+  const cipherPath = path.join(__dirname, `../uploads/${cipherName}.py`);
 
   if (!fs.existsSync(cipherPath)) {
     res.status(404);
-    throw new Error(`${cipher} does not exist!`);
+    throw new Error(`${cipherName} does not exist!`);
   }
 
   keys = JSON.stringify(keys);

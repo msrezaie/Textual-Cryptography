@@ -31,7 +31,7 @@ const Inputs = () => {
       } else {
         try {
           const { data } = await axios.post("/api/v1/cryptography", {
-            cipher: cipherName,
+            cipherName,
             operation,
             message: plaintext,
             keys,
@@ -40,7 +40,7 @@ const Inputs = () => {
           setCiphertext(encryted);
 
           if (userEmail && !isAdmin) {
-            await axios.post("/api/v1/user/history/save", {
+            await axios.post("/api/v1/history/save", {
               userEmail,
               operation,
               cipher: cipherName,
@@ -66,7 +66,7 @@ const Inputs = () => {
       } else {
         try {
           const { data } = await axios.post("/api/v1/cryptography", {
-            cipher: cipherName,
+            cipherName,
             operation,
             message: ciphertext,
             keys,
@@ -75,13 +75,13 @@ const Inputs = () => {
           setPlaintext(decryted);
 
           if (userEmail && !isAdmin) {
-            await axios.post("/api/v1/user/history/save", {
-              user: userEmail,
+            await axios.post("/api/v1/history/save", {
+              userEmail,
               operation,
               cipher: cipherName,
-              plaintext: decryted,
-              keys,
               ciphertext,
+              keys,
+              plaintext: decryted,
             });
             fetchHistoryData();
           }
