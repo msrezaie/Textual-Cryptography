@@ -10,7 +10,10 @@ import {
   FETCH_CIPHERS,
   GET_USER_HISTORY,
   UPDATE_CIPHER,
+  SETUP_STAGED_CIPHER,
+  UPDATE_FETCHED_CIPHERS,
   UPDATE_KEYS,
+  UPDATE_USER_STATE,
   UPDATE_HISTORY,
   UPDATE_FETCHED_USERS,
   SETUP_SELECT_HISTORY,
@@ -23,6 +26,7 @@ let initialState = {
   fetchedUsers: [],
   isAdmin: false,
   ciphers: [],
+  stagedCipher: {},
   cipherName: "",
   cipherDescription: "",
   keysDescription: "",
@@ -83,8 +87,8 @@ const AppProvider = ({ children }) => {
       if (data.count < 1) {
         toast.error("No Data, App is not Functional!", { autoClose: false });
       } else {
-        const fetchedCiphers = data.cipher.sort((a, b) =>
-          a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+        const fetchedCiphers = data.ciphers.sort((a, b) =>
+          a.cipherName < b.cipherName ? -1 : a.cipherName > b.cipherName ? 1 : 0
         );
         const firstCipher = fetchedCiphers[0];
 
@@ -92,7 +96,7 @@ const AppProvider = ({ children }) => {
           type: FETCH_CIPHERS,
           payload: {
             ciphers: fetchedCiphers,
-            cipherName: firstCipher.name,
+            cipherName: firstCipher.cipherName,
             cipherDescription: firstCipher.cipherDescription,
             keysDescription: firstCipher.keysDescription,
             keyType: firstCipher.keyType,
@@ -107,7 +111,7 @@ const AppProvider = ({ children }) => {
 
   const fetchHistoryData = async () => {
     try {
-      const { data } = await axios.get("/api/v1/user/history");
+      const { data } = await axios.get("/api/v1/history");
       dispatch({ type: GET_USER_HISTORY, payload: { history: data.history } });
     } catch (error) {
       console.log(error);
@@ -128,11 +132,20 @@ const AppProvider = ({ children }) => {
     dispatch({
       type: SETUP_CIPHERS,
       payload: {
-        cipherName: firstCipher?.name,
+        cipherName: firstCipher?.cipherName,
         cipherDescription: firstCipher?.cipherDescription,
         keysDescription: firstCipher?.keysDescription,
         keyType: firstCipher?.keyType,
         keyArgs: firstCipher?.keyArgs,
+      },
+    });
+  };
+
+  const setupStagedCipher = (selectedCipher) => {
+    dispatch({
+      type: SETUP_STAGED_CIPHER,
+      payload: {
+        selectedCipher,
       },
     });
   };
@@ -146,6 +159,15 @@ const AppProvider = ({ children }) => {
         keysDescription: cipherInfo.keysDescription,
         keyType: cipherInfo.keyType,
         keyArgs: cipherInfo.keyArgs,
+      },
+    });
+  };
+
+  const updateFetchedCiphers = (newCiphers) => {
+    dispatch({
+      type: UPDATE_FETCHED_CIPHERS,
+      payload: {
+        newCiphers,
       },
     });
   };
@@ -177,6 +199,15 @@ const AppProvider = ({ children }) => {
     });
   };
 
+  const updateUser = (userInfo) => {
+    dispatch({
+      type: UPDATE_USER_STATE,
+      payload: {
+        email: userInfo,
+      },
+    });
+  };
+
   const setupSelectHistory = (historyInfo) => {
     const { _id, keys, cipher, plaintext, ciphertext } = historyInfo;
     dispatch({
@@ -187,7 +218,7 @@ const AppProvider = ({ children }) => {
 
   const getCurrentUser = async () => {
     try {
-      const { data } = await axios.get("/api/v1/auth/getCurrentUser");
+      const { data } = await axios.get("/api/v1/user/getCurrentUser");
       const { email, isAdmin } = data;
       dispatch({
         type: SETUP_USER,
@@ -221,8 +252,11 @@ const AppProvider = ({ children }) => {
         loginUser,
         logout,
         updateCipher,
+        setupStagedCipher,
         updateKeys,
+        updateUser,
         updateHistory,
+        updateFetchedCiphers,
         updateFetchedUsers,
         setupSelectHistory,
         fetchCiphers,

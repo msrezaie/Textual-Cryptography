@@ -3,8 +3,11 @@ import {
   LOGOUT_USER,
   SETUP_CIPHERS,
   UPDATE_CIPHER,
+  SETUP_STAGED_CIPHER,
+  UPDATE_FETCHED_CIPHERS,
   UPDATE_KEYS,
   UPDATE_HISTORY,
+  UPDATE_USER_STATE,
   GET_USER_HISTORY,
   GET_USERS,
   UPDATE_FETCHED_USERS,
@@ -21,6 +24,11 @@ const reducer = (state, action) => {
       isAdmin: false,
       history: [],
       fetchedUsers: [],
+      selectHistoryId: "",
+      selectHistoryCipher: "",
+      selectHistoryPText: "",
+      selectHistoryCText: "",
+      selectHistoryKeys: {},
     };
   }
   if (action.type === SETUP_USER) {
@@ -62,6 +70,12 @@ const reducer = (state, action) => {
       selectHistoryKeys: {},
     };
   }
+  if (action.type === SETUP_STAGED_CIPHER) {
+    return {
+      ...state,
+      stagedCipher: action.payload.selectedCipher,
+    };
+  }
   if (action.type === UPDATE_HISTORY) {
     return {
       ...state,
@@ -83,6 +97,12 @@ const reducer = (state, action) => {
     return {
       ...state,
       keys: action.payload.keys,
+    };
+  }
+  if (action.type === UPDATE_FETCHED_CIPHERS) {
+    return {
+      ...state,
+      ciphers: action.payload.newCiphers,
     };
   }
   if (action.type === SETUP_SELECT_HISTORY) {
@@ -112,6 +132,12 @@ const reducer = (state, action) => {
     return {
       ...state,
       fetchedUsers: action.payload.newUsers,
+    };
+  }
+  if (action.type === UPDATE_USER_STATE) {
+    return {
+      ...state,
+      userEmail: action.payload.email,
     };
   }
   throw new Error(`${action.type} action not defined!`);
