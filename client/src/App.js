@@ -10,6 +10,7 @@ import {
   AdminLayout,
   Error,
   AddCipherTab,
+  ModifyCipherTab,
   CiphersTab,
   UsersTab,
 } from "./pages";
@@ -31,6 +32,7 @@ const App = () => {
               <Route index element={<CiphersTab />} />
               <Route path="users" element={<UsersTab />} />
               <Route path="addCipher" element={<AddCipherTab />} />
+              <Route path="modifyCipher" element={<ModifyCipherTab />} />
             </Route>
           </Route>
           <Route path="*" element={<Error />} />

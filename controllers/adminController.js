@@ -21,8 +21,11 @@ const createCipher = async (req, res) => {
   } else if (!keyType) {
     res.status(400);
     throw new Error("a valid key-type must be provided!");
+  } else if (keyType !== "no-key" && !keyArgs) {
+    res.status(400);
+    throw new Error("valid key-args must be provided!");
   } else {
-    const cipherExists = await Cipher.findOne({ name: cipherName });
+    const cipherExists = await Cipher.findOne({ cipherName });
 
     if (cipherExists) {
       res.status(400);
@@ -30,7 +33,7 @@ const createCipher = async (req, res) => {
     }
 
     const newCipher = {
-      name: cipherName,
+      cipherName,
       keyType,
       keyArgs,
       cipherDescription,
@@ -40,6 +43,52 @@ const createCipher = async (req, res) => {
 
     await Cipher.create(newCipher);
     res.status(201).json({ msg: `${cipherName} cipher added!` });
+  }
+};
+// @desc    updates existing cipher resource
+// @route   PATCH /api/v1/admin/cipher/update/:cipherName
+// @access  private (admin only)
+const updateCipher = async (req, res) => {
+  let { cipherName } = req.params;
+  let { newCipherName, cipherDescription, keysDescription, keyType, keyArgs } =
+    req.body;
+
+  cipherName = cipherName.toLowerCase();
+  newCipherName = newCipherName.toLowerCase();
+
+  if (!cipherName || !newCipherName) {
+    res.status(400);
+    throw new Error("cipher name must be provided!");
+  } else if (!keyType) {
+    res.status(400);
+    throw new Error("a valid key-type must be provided!");
+  } else if (keyType !== "no-key" && !keyArgs) {
+    res.status(400);
+    throw new Error("valid key-args must be provided!");
+  } else {
+    const modifedCipher = {
+      cipherName: newCipherName,
+      keyType,
+      keyArgs,
+      cipherDescription,
+      keysDescription,
+    };
+
+    if (req.file) {
+      modifedCipher.filePath = req.file.path;
+    }
+
+    const cipherUpdated = await Cipher.findOneAndUpdate(
+      { cipherName },
+      modifedCipher
+    );
+
+    if (!cipherUpdated) {
+      res.status(404);
+      throw new Error(`${cipherName} cipher does not exist!`);
+    }
+
+    res.status(200).json({ msg: `${cipherName} cipher updated!` });
   }
 };
 
@@ -54,7 +103,7 @@ const removeCipher = async (req, res) => {
     res.status(400);
     throw new Error("cipher name must be provided!");
   }
-  const cipherExists = await Cipher.findOne({ name: cipherName });
+  const cipherExists = await Cipher.findOne({ cipherName });
   if (!cipherExists) {
     res.status(404);
     throw new Error(`${cipherName} does not exist!`);
@@ -66,20 +115,12 @@ const removeCipher = async (req, res) => {
       await fs.promises.unlink(cipherExists.filePath);
     }
 
-    await Cipher.findOneAndDelete({ name: cipherName });
+    await Cipher.findOneAndDelete({ cipherName });
     res.status(200).json({ msg: `${cipherName} removed!` });
   } catch (error) {
     res.status(500);
     throw new Error(error);
   }
-};
-
-// @desc    updates existing cipher resource
-// @route   UPDATE /api/v1/admin/cipher/update/:name
-// @access  private (admin only)
-const updateCipher = async (req, res) => {
-  const { cipherName } = req.params;
-  res.json({ msg: "update cipher reached", cipherName });
 };
 
 // @desc    gets all existing users
@@ -127,7 +168,7 @@ const getCipherFile = async (req, res) => {
     res.status(400);
     throw new Error("cipher name must be provided!");
   }
-  const cipherExists = await Cipher.findOne({ name: cipherName });
+  const cipherExists = await Cipher.findOne({ cipherName });
   if (!cipherExists) {
     res.status(404);
     throw new Error(`${cipherName} does not exist!`);

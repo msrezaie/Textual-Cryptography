@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useAppContext } from "../context/appContext";
 import { BtnWrapper } from "../assets/wrappers/TableWrapper";
@@ -7,10 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const CiphersTable = () => {
   const navigate = useNavigate();
-  const { ciphers } = useAppContext();
+  const { ciphers, updateFetchedCiphers, setupStagedCipher } = useAppContext();
   const [adminCiphers, setAdminCiphers] = useState([...ciphers]);
-  const [cipherURL, setCipherURL] = useState("");
-  const downloadLink = useRef(null);
 
   const deleteBtn = async (e) => {
     const cipherName = e.target.value;
@@ -19,8 +17,11 @@ const CiphersTable = () => {
         `/api/v1/admin/cipher/delete/${cipherName}`
       );
       setAdminCiphers((previous) => {
-        return previous.filter((cipher) => cipher.name !== cipherName);
+        return previous.filter((cipher) => cipher.cipherName !== cipherName);
       });
+      updateFetchedCiphers(
+        ciphers.filter((cipher) => cipher.cipherName !== cipherName)
+      );
       toast.success(response.data.msg);
     } catch (error) {
       toast.error(error.response.data.msg);
@@ -28,14 +29,19 @@ const CiphersTable = () => {
   };
 
   const modifyBtn = async (e) => {
-    toast.info("not yet implemented");
+    const stagedCipher = ciphers.find(
+      (cipher) => cipher.cipherName === e.target.value
+    );
+    setupStagedCipher(stagedCipher);
+    navigate("/admin/modifyCipher");
   };
 
-  const getFile = async (cipherName) => {
-    // const cipherName = e.target.value;
+  const getFile = async (e) => {
+    const cipherName = e.target.value;
     try {
       const response = await axios.get(
-        `/api/v1/admin/cipher/file/${cipherName}`
+        `/api/v1/admin/cipher/file/${cipherName}`,
+        { responseType: "blob" }
       );
 
       const blob = new Blob([response.data], {
@@ -43,12 +49,12 @@ const CiphersTable = () => {
       });
 
       const url = window.URL.createObjectURL(blob);
-
-      setCipherURL(url);
-
-      if (downloadLink.current) {
-        downloadLink.current.click();
-      }
+      const downloadLink = document.createElement("a");
+      downloadLink.href = url;
+      downloadLink.setAttribute("download", `${cipherName}.py`);
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      downloadLink.remove();
     } catch (error) {
       toast.error(error.response.data.msg);
     }
@@ -78,22 +84,14 @@ const CiphersTable = () => {
           <tbody>
             {adminCiphers.length > 0 &&
               adminCiphers.map((cipher, index) => {
-                const cipherName = cipher.name;
-
                 return (
                   <tr key={cipher._id}>
                     <th scope="row">{index + 1}</th>
-                    <td>{cipher.name}</td>
+                    <td>{cipher.cipherName}</td>
                     <td>{cipher.keyType}</td>
                     <td>
-                      {/* eslint-disable-next-line */}
-                      <a
-                        style={{ display: "none" }}
-                        href={cipherURL}
-                        ref={downloadLink}
-                        download={"cipherfile.py"}
-                      ></a>
                       <button
+                        value={cipher.cipherName}
                         style={{
                           background: "none",
                           border: "none",
@@ -104,7 +102,7 @@ const CiphersTable = () => {
                           textDecoration: "underline",
                           outline: "none",
                         }}
-                        onClick={() => getFile(cipherName)}
+                        onClick={getFile}
                       >
                         {cipher.filePath}
                       </button>
@@ -116,7 +114,7 @@ const CiphersTable = () => {
                           <button
                             className="contrast"
                             onClick={deleteBtn}
-                            value={cipher.name}
+                            value={cipher.cipherName}
                           >
                             Delete
                           </button>
@@ -124,7 +122,7 @@ const CiphersTable = () => {
                         <li>
                           <button
                             className="contrast"
-                            value={cipher.name}
+                            value={cipher.cipherName}
                             onClick={modifyBtn}
                           >
                             Modify

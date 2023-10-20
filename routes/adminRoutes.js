@@ -26,7 +26,11 @@ router
   .delete(authenticateAdmin, removeCipher);
 router
   .route("/cipher/update/:cipherName")
-  .patch(authenticateAdmin, updateCipher);
+  .patch(
+    authenticateAdmin,
+    multer({ storage: fileStorage }).single("cipherFile"),
+    updateCipher
+  );
 router.route("/cipher/file/:cipherName").get(authenticateAdmin, getCipherFile);
 
 module.exports = router;

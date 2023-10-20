@@ -6,6 +6,7 @@ import Descriptions from "./Descriptions";
 import Keys from "./Keys";
 import Selection from "./Selection";
 import AddCipher from "./AddCipher";
+import ModifyCipher from "./ModifyCipher";
 import CiphersTable from "./CiphersTable";
 import History from "./History";
 import UsersTable from "./UsersTable";
@@ -20,6 +21,7 @@ export {
   Selection,
   Keys,
   AddCipher,
+  ModifyCipher,
   CiphersTable,
   History,
   UsersTable,
