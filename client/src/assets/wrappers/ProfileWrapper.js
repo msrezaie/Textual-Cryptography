@@ -79,4 +79,22 @@ const SideNavWrapper = styled.aside`
   }
 `;
 
-export { MainWrapper, SideNavWrapper };
+const UserBtns = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .btns-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  button {
+    padding: 10px 10px;
+    margin: 10px;
+    width: 130px;
+  }
+`;
+
+export { MainWrapper, SideNavWrapper, UserBtns };

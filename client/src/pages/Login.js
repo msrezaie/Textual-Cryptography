@@ -63,6 +63,13 @@ const Login = () => {
                     Not registered? <Link to="/signup">Sign Up</Link>
                   </label>
                 </li>
+                <li>
+                  <label>
+                    <Link onClick={() => toast.info("not yet implemented!")}>
+                      Forgot Password?
+                    </Link>
+                  </label>
+                </li>
               </ul>
             </LoginFieldset>
             <button type="submit" className="contrast">

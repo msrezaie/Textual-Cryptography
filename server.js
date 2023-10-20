@@ -17,6 +17,7 @@ const swaggerUi = require("swagger-ui-express");
 // exports
 const User = require("./models/User");
 const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const mainRoutes = require("./routes/mainRoutes");
 const historyRoutes = require("./routes/historyRoutes");
@@ -39,7 +40,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/cryptography", mainRoutes);
 app.use("/api/v1/admin", adminRoutes);
-app.use("/api/v1/user", historyRoutes);
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/history", historyRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
