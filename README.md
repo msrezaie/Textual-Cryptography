@@ -53,3 +53,6 @@ API Documentation (Swagger UI): https://textcrypt-api.onrender.com/api-docs/
   - styled-components: is used for allowing specific css styling to individual components 
   - axios: is used as the main library for HTTP requests
   - react-toastify: is used as the main package for pop up alert notifications
+
+## Known Issues
+After a user signs up and generates some history, the select button on a history record at times don't work. This is due to improperly managed local state. Will be refactored and fixed in a future commit.
