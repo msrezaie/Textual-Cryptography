@@ -18,6 +18,7 @@ API Documentation (Swagger UI): https://textcrypt-api.onrender.com/api-docs/
 - Registered users get their own http only cookie to access thier individual usage history (+)
 - Logged in users get to (view, add, remove, select) their usage history (+)
 - Admin user can login and manage (view, add, remove, modify) cipher files (+)
+- Admin user can also manage (view, add, remove, modify) user resources (-)
 - Admin functionalites are only accessable to admin users (currnently only 1 registered admin on the initial load of the API) (+)
 - Fully responsiveness (+)
 - Theme change between light and dark mode (+)
