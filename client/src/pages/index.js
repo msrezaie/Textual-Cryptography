@@ -1,6 +1,8 @@
 import AdminLayout from "./AdminLayout";
 import AddCipherTab from "./AddCipherTab";
+import AddUserTab from "./AddUserTab";
 import ModifyCipherTab from "./ModifyCipherTab";
+import ModifyUserTab from "./ModifyUserTab";
 import CiphersTab from "./CiphersTab";
 import UsersTab from "./UsersTab";
 import Landing from "./Landing";
@@ -15,7 +17,9 @@ import Error from "./Error";
 export {
   AdminLayout,
   AddCipherTab,
+  AddUserTab,
   ModifyCipherTab,
+  ModifyUserTab,
   CiphersTab,
   UsersTab,
   Landing,

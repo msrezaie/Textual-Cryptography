@@ -1,11 +1,13 @@
 import axios from "axios";
-import { useState } from "react";
-import { BtnWrapper } from "../assets/wrappers/TableWrapper";
-import { useAppContext } from "../context/appContext";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../context/appContext";
+import { BtnWrapper } from "../assets/wrappers/TableWrapper";
 
 const UsersTable = () => {
-  const { fetchedUsers, updateFetchedUsers } = useAppContext();
+  const navigate = useNavigate();
+  const { fetchedUsers, updateFetchedUsers, setupStagedUser } = useAppContext();
   const [users, setUsers] = useState([...fetchedUsers]);
 
   const deleteBtn = async (e) => {
@@ -27,8 +29,14 @@ const UsersTable = () => {
   };
 
   const modifyBtn = async (e) => {
-    toast.info("not yet functional");
+    const stagedUser = fetchedUsers.find((user) => user._id === e.target.value);
+    setupStagedUser(stagedUser);
+    navigate("/admin/modifyUser");
   };
+
+  useEffect(() => {
+    setUsers([...fetchedUsers]);
+  }, [fetchedUsers]);
 
   return (
     <article>
@@ -40,10 +48,11 @@ const UsersTable = () => {
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">email</th>
-              <th scope="col">admin</th>
-              <th scope="col">created at</th>
-              <th scope="col">actions</th>
+              <th scope="col">Email</th>
+              <th scope="col">Role</th>
+              <th scope="col">Created at</th>
+              <th scope="col">Updated at</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -52,8 +61,9 @@ const UsersTable = () => {
                 <tr key={user._id}>
                   <th scope="row">{index + 1}</th>
                   <td>{user.email}</td>
-                  <td>{String(user.isAdmin)}</td>
+                  <td>{user.isAdmin ? "Admin" : "Not Admin"}</td>
                   <td>{user.createdAt}</td>
+                  <td>{user.updatedAt}</td>
                   <td>
                     <BtnWrapper>
                       <li>
@@ -66,7 +76,11 @@ const UsersTable = () => {
                         </button>
                       </li>
                       <li>
-                        <button onClick={modifyBtn} className="contrast">
+                        <button
+                          value={user._id}
+                          onClick={modifyBtn}
+                          className="contrast"
+                        >
                           Modify
                         </button>
                       </li>
@@ -78,6 +92,13 @@ const UsersTable = () => {
           </tbody>
         </table>
       </figure>
+      <button
+        className="contrast"
+        style={{ width: "150px", padding: "10px" }}
+        onClick={() => navigate("/admin/addUser")}
+      >
+        Add New
+      </button>
     </article>
   );
 };
