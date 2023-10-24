@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useAppContext } from "../context/appContext";
-import BtnsWrapper from "../assets/wrappers/InputsWrapper";
+import { BtnsWrapper } from "../assets/wrappers/InputsWrapper";
 
 const Inputs = () => {
   const {
@@ -99,7 +99,7 @@ const Inputs = () => {
 
   return (
     <>
-      <div className="container card">
+      <div className="container">
         <label>
           <strong>Plaintext</strong>
         </label>
@@ -110,7 +110,7 @@ const Inputs = () => {
           placeholder="Type your plaintext here"
         ></textarea>
       </div>
-      <BtnsWrapper className="container card">
+      <BtnsWrapper className="container">
         <button name="encrypt" className="contrast" onClick={buttonHandler}>
           Encrypt
         </button>
@@ -128,7 +128,7 @@ const Inputs = () => {
           Clear
         </button>
       </BtnsWrapper>
-      <div className="container card">
+      <div className="container">
         <label>
           <strong>Encrypted Text</strong>
         </label>

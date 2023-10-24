@@ -12,9 +12,10 @@ const Operation = () => {
           <Selection />
           <Keys />
         </div>
-        <div className="grid">
+        <div className="grid" style={{ padding: "15px 0" }}>
           <Inputs />
         </div>
+        <label>Note: Non-printable characters will be replaced with ☒</label>
       </OperationArticle>
     </>
   );

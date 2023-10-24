@@ -19,6 +19,12 @@ const MainWrapper = styled.main`
   header {
     text-align: center;
   }
+
+  input[type="text"],
+  input[type="email"] {
+    max-width: 50%;
+    height: 40px;
+  }
 `;
 
 const SideNavWrapper = styled.aside`
@@ -41,17 +47,13 @@ const SideNavWrapper = styled.aside`
     background: teal;
     color: var(--primary-inverse);
   }
+
   @media (min-width: 992px) {
-    display: block;
     .sidebar {
       min-height: 83vh;
       height: 100%;
       width: 300px;
-      margin-left: -250px;
       transition: var(--transition);
-    }
-    .show-sidebar {
-      margin-left: 0;
     }
     .nav-links {
       padding-top: 2rem;

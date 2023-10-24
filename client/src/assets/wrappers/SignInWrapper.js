@@ -4,7 +4,8 @@ const MainWrapper = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: calc(100vh - 9rem);
+  min-height: calc(100vh - 7rem);
+
   @media (min-width: 768px) {
     max-width: 60%;
   }
@@ -12,7 +13,7 @@ const MainWrapper = styled.main`
     max-width: 50%;
   }
   @media (min-width: 1200px) {
-    max-width: 35%;
+    width: 600px;
   }
 `;
 

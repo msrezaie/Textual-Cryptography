@@ -40,14 +40,26 @@ h4 {
   margin-bottom: 30px;
 }
 
-th {
+th, td {
   text-align: center;
 }
 
-button {
-  margin-bottom: 0;
+button, h3 {
+  margin: 0;
 }
 
 textarea {
   resize: none;
+  margin: 0;
+}
+
+form, figure {
+  margin: 0;
+}
+
+select {
+  max-width: 50%;
+  height: 40px;
+  padding: 0;
+  font-size: 0.9rem;
 }

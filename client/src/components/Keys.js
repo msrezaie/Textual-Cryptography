@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
+import { KeysWrapper } from "../assets/wrappers/InputsWrapper";
 
 const Keys = () => {
   const { keyType, keyArgs, updateKeys, selectHistoryKeys } = useAppContext();
@@ -28,9 +29,11 @@ const Keys = () => {
   }, [selectHistoryKeys]);
 
   return (
-    <div className="container card">
+    <KeysWrapper className="container card">
       <label>
-        <strong>Keys</strong>
+        <strong>
+          Key{keyType === "no-key" || keyType === "1-key" ? "" : "s"}
+        </strong>
       </label>
 
       {keyType === "1-key" && (
@@ -45,7 +48,7 @@ const Keys = () => {
       )}
 
       {keyType === "2-key" && (
-        <div>
+        <div className="twoKeys">
           <input
             name="key1"
             value={keyValue?.key1 || ""}
@@ -65,9 +68,7 @@ const Keys = () => {
         </div>
       )}
       {keyType === "no-key" && <input disabled placeholder="No Key Required" />}
-
-      <label>Note: Non-printable characters will be replaced with ☒</label>
-    </div>
+    </KeysWrapper>
   );
 };
 export default Keys;
