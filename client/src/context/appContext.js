@@ -11,6 +11,7 @@ import {
   GET_USER_HISTORY,
   UPDATE_CIPHER,
   SETUP_STAGED_CIPHER,
+  SETUP_STAGED_USER,
   UPDATE_FETCHED_CIPHERS,
   UPDATE_KEYS,
   UPDATE_USER_STATE,
@@ -27,6 +28,7 @@ let initialState = {
   isAdmin: false,
   ciphers: [],
   stagedCipher: {},
+  stagedUser: {},
   cipherName: "",
   cipherDescription: "",
   keysDescription: "",
@@ -39,6 +41,17 @@ let initialState = {
   selectHistoryCText: "",
   selectHistoryKeys: {},
 };
+
+const formatDate = (date) =>
+  new Date(date).toLocaleString({
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    timeZoneName: "short",
+  });
 
 const AppContext = createContext();
 
@@ -95,7 +108,13 @@ const AppProvider = ({ children }) => {
         dispatch({
           type: FETCH_CIPHERS,
           payload: {
-            ciphers: fetchedCiphers,
+            ciphers: fetchedCiphers.map((cipher) => {
+              return {
+                ...cipher,
+                createdAt: formatDate(cipher.createdAt),
+                updatedAt: formatDate(cipher.updatedAt),
+              };
+            }),
             cipherName: firstCipher.cipherName,
             cipherDescription: firstCipher.cipherDescription,
             keysDescription: firstCipher.keysDescription,
@@ -121,7 +140,18 @@ const AppProvider = ({ children }) => {
   const fetchUsers = async () => {
     try {
       const { data } = await axios.get("/api/v1/admin/users");
-      dispatch({ type: GET_USERS, payload: { fetchedUsers: data.users } });
+      dispatch({
+        type: GET_USERS,
+        payload: {
+          fetchedUsers: data.users.map((user) => {
+            return {
+              ...user,
+              createdAt: formatDate(user.createdAt),
+              updatedAt: formatDate(user.updatedAt),
+            };
+          }),
+        },
+      });
     } catch (error) {
       console.log(error);
     }
@@ -146,6 +176,15 @@ const AppProvider = ({ children }) => {
       type: SETUP_STAGED_CIPHER,
       payload: {
         selectedCipher,
+      },
+    });
+  };
+
+  const setupStagedUser = (selectedUser) => {
+    dispatch({
+      type: SETUP_STAGED_USER,
+      payload: {
+        selectedUser,
       },
     });
   };
@@ -253,6 +292,7 @@ const AppProvider = ({ children }) => {
         logout,
         updateCipher,
         setupStagedCipher,
+        setupStagedUser,
         updateKeys,
         updateUser,
         updateHistory,
@@ -260,6 +300,7 @@ const AppProvider = ({ children }) => {
         updateFetchedUsers,
         setupSelectHistory,
         fetchCiphers,
+        fetchUsers,
         setupCiphers,
         fetchHistoryData,
       }}

@@ -10,7 +10,7 @@ const AdminLayout = () => {
       <MainWrapper>
         <AdminProtected>
           <SideNavWrapper>
-            <div className="sidebar show-sidebar">
+            <div className="sidebar">
               <SideBarNav links={adminLinks} />
             </div>
           </SideNavWrapper>

@@ -4,6 +4,7 @@ import {
   SETUP_CIPHERS,
   UPDATE_CIPHER,
   SETUP_STAGED_CIPHER,
+  SETUP_STAGED_USER,
   UPDATE_FETCHED_CIPHERS,
   UPDATE_KEYS,
   UPDATE_HISTORY,
@@ -74,6 +75,12 @@ const reducer = (state, action) => {
     return {
       ...state,
       stagedCipher: action.payload.selectedCipher,
+    };
+  }
+  if (action.type === SETUP_STAGED_USER) {
+    return {
+      ...state,
+      stagedUser: action.payload.selectedUser,
     };
   }
   if (action.type === UPDATE_HISTORY) {
