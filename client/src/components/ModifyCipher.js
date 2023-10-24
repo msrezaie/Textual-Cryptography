@@ -3,11 +3,11 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { useAppContext } from "../context/appContext";
 import { useNavigate } from "react-router-dom";
-import { SETUP_STAGED_CIPHER } from "../context/action";
+import { ModifyBtns } from "../assets/wrappers/AdminWrapper";
 
 const ModifyCipher = () => {
   const navigate = useNavigate();
-  const { fetchCiphers, stagedCipher, dispatch } = useAppContext();
+  const { fetchCiphers, stagedCipher, setupStagedCipher } = useAppContext();
 
   const [cipherValues, setCipherValues] = useState({ ...stagedCipher });
 
@@ -25,7 +25,7 @@ const ModifyCipher = () => {
     } = formDataObject;
 
     const cipherData = {
-      newCipherName: cipherName,
+      cipherName,
       keyType,
       cipherDescription,
       keysDescription,
@@ -45,7 +45,7 @@ const ModifyCipher = () => {
 
     try {
       const response = await axios.patch(
-        `/api/v1/admin/cipher/update/${stagedCipher.cipherName}`,
+        `/api/v1/admin/cipher/update/${stagedCipher._id}`,
         cipherData,
         {
           headers: {
@@ -55,17 +55,19 @@ const ModifyCipher = () => {
       );
       toast.success(response.data.msg);
       setCipherValues({});
-      dispatch({
-        type: SETUP_STAGED_CIPHER,
-        payload: {
-          selectedCipher: {},
-        },
-      });
+      setupStagedCipher({});
       fetchCiphers();
       navigate("/admin");
     } catch (error) {
       toast.error(error.response.data.msg);
     }
+  };
+
+  const cipherCancelHandler = async (e) => {
+    e.preventDefault();
+    setCipherValues({});
+    setupStagedCipher({});
+    navigate("/admin");
   };
 
   return (
@@ -256,16 +258,23 @@ const ModifyCipher = () => {
         />
         <label htmlFor="cipherFile">Cipher Script File</label>
         <input type="file" name="cipherFile" accept=".py" />
-        <p>
-          <i>Current script file will be kept if no file is selected!</i>
-        </p>
-        <button
-          type="submit"
-          style={{ width: "150px", padding: "10px" }}
-          className="contrast"
-        >
-          Update
-        </button>
+        <p>Note: Current script file will be kept if no file is selected!</p>
+        <ModifyBtns>
+          <button
+            type="submit"
+            style={{ width: "150px", padding: "10px" }}
+            className="contrast"
+          >
+            Update
+          </button>
+          <button
+            style={{ width: "150px", padding: "10px" }}
+            className="outline contrast"
+            onClick={cipherCancelHandler}
+          >
+            Cancel
+          </button>
+        </ModifyBtns>
       </form>
     </article>
   );
