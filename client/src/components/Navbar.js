@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
+import { ThemeSwitch } from "../assets/wrappers/NavbarWrapper";
 
 const Navbar = () => {
   const { userEmail, isAdmin, logout } = useAppContext();
@@ -30,7 +31,7 @@ const Navbar = () => {
           <li>
             {location === "/" && isAdmin ? (
               <Link to="/admin" className="contrast">
-                <strong>Admin Panel</strong>
+                <strong>Admin Dashboard</strong>
               </Link>
             ) : !location.startsWith("/user") && userEmail && !isAdmin ? (
               <Link to="/user" className="contrast">
@@ -59,18 +60,18 @@ const Navbar = () => {
               </Link>
             </li>
           )}
-          <li>
-            <i className="fa-solid fa-moon"></i>
-            <input
-              style={{ margin: "0 5px 5px 3px" }}
-              type="checkbox"
-              role="switch"
-              onClick={toggleDarkMode}
-            />
-            <i className="fa-solid fa-sun"></i>
-          </li>
         </ul>
       </nav>
+      <ThemeSwitch>
+        <i className="fa-solid fa-moon"></i>
+        <input
+          style={{ margin: "0px 3px 5px 3px" }}
+          type="checkbox"
+          role="switch"
+          onClick={toggleDarkMode}
+        />
+        <i className="fa-solid fa-sun"></i>
+      </ThemeSwitch>
     </>
   );
 };
