@@ -9,10 +9,10 @@ const signup = async (req, res) => {
 
   if (!email || !password) {
     res.status(400);
-    throw new Error("please provide email and password!");
+    throw new Error("Please provide email and password!");
   } else if (await User.findOne({ email })) {
     res.status(400);
-    throw new Error(`user with ${email} email already exists!`);
+    throw new Error(`User with ${email} email already exists!`);
   }
 
   const user = await User.create({ email, password });
@@ -29,7 +29,7 @@ const login = async (req, res) => {
 
   if (!email || !password) {
     res.status(400);
-    throw new Error("please provide email and password!");
+    throw new Error("Please provide email and password!");
   }
 
   const user = await User.findOne({ email }).select("+password");
@@ -39,7 +39,7 @@ const login = async (req, res) => {
     res.status(200).json({ email: user.email, isAdmin: user.isAdmin });
   } else {
     res.status(400);
-    throw new Error("invalid email or password!");
+    throw new Error("Invalid email or password!");
   }
 };
 
@@ -50,14 +50,14 @@ const logout = async (req, res) => {
   const token = req.cookies.jwt;
   if (!token) {
     res.status(401);
-    throw new Error("no valid token found!");
+    throw new Error("No valid token found!");
   }
   res.cookie("jwt", "", {
     httpOnly: true,
     maxAge: new Date(0),
     secure: process.env.PRODUCTION_ENV === "production",
   });
-  res.status(200).json({ msg: "logged out!" });
+  res.status(200).json({ msg: "Logged out!" });
 };
 
 module.exports = { login, signup, logout };

@@ -8,12 +8,17 @@ const {
   removeCipher,
   updateCipher,
   getUsers,
+  addUser,
   removeUser,
+  modifyUser,
   getCipherFile,
 } = require("../controllers/adminController");
 
 router.route("/users").get(authenticateAdmin, getUsers);
+router.route("/user/create").post(authenticateAdmin, addUser);
 router.route("/user/delete/:email").delete(authenticateAdmin, removeUser);
+router.route("/user/modify/:id").patch(authenticateAdmin, modifyUser);
+
 router
   .route("/cipher/create")
   .post(
@@ -25,7 +30,7 @@ router
   .route("/cipher/delete/:cipherName")
   .delete(authenticateAdmin, removeCipher);
 router
-  .route("/cipher/update/:cipherName")
+  .route("/cipher/update/:id")
   .patch(
     authenticateAdmin,
     multer({ storage: fileStorage }).single("cipherFile"),
