@@ -144,6 +144,9 @@ const addUser = async (req, res) => {
   if (!email || !password) {
     res.status(400);
     throw new Error("Email and Password must be provided!");
+  } else if (!validator.isEmail(email)) {
+    res.status(400);
+    throw new Error("Please provide a valid email!");
   } else if (!isAdmin) {
     res.status(400);
     throw new Error("Please provide a valid user role!");
