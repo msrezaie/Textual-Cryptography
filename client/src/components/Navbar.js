@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, NavLink } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
-import { ThemeSwitch } from "../assets/wrappers/NavbarWrapper";
+import { ThemeSwitch, NavbarWrapper } from "../assets/wrappers/NavbarWrapper";
 
 const Navbar = () => {
   const { userEmail, isAdmin, logout } = useAppContext();
@@ -19,7 +19,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="container-fluid">
+      <NavbarWrapper className="container-fluid">
         <ul>
           <li>
             <Link className="contrast" to="/">
@@ -29,14 +29,24 @@ const Navbar = () => {
         </ul>
         <ul>
           <li>
-            {location === "/" && isAdmin ? (
-              <Link to="/admin" className="contrast">
+            {isAdmin ? (
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  isActive ? "contrast active" : "contrast"
+                }
+              >
                 <strong>Admin Dashboard</strong>
-              </Link>
-            ) : !location.startsWith("/user") && userEmail && !isAdmin ? (
-              <Link to="/user" className="contrast">
-                <strong>Profile</strong>
-              </Link>
+              </NavLink>
+            ) : userEmail && !isAdmin ? (
+              <NavLink
+                to="/user"
+                className={({ isActive }) =>
+                  isActive ? "contrast active" : "contrast"
+                }
+              >
+                <strong>User Dashboard</strong>
+              </NavLink>
             ) : location === "/login" && (!isAdmin || !userEmail) ? (
               <Link to="/signup" className="contrast">
                 <strong>Sign Up</strong>
@@ -61,15 +71,10 @@ const Navbar = () => {
             </li>
           )}
         </ul>
-      </nav>
+      </NavbarWrapper>
       <ThemeSwitch>
         <i className="fa-solid fa-moon"></i>
-        <input
-          style={{ margin: "0px 3px 5px 3px" }}
-          type="checkbox"
-          role="switch"
-          onClick={toggleDarkMode}
-        />
+        <input type="checkbox" role="switch" onClick={toggleDarkMode} />
         <i className="fa-solid fa-sun"></i>
       </ThemeSwitch>
     </>

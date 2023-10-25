@@ -72,7 +72,7 @@ const UsersTable = () => {
                           onClick={deleteBtn}
                           className="contrast"
                         >
-                          Remove
+                          Delete
                         </button>
                       </li>
                       <li>

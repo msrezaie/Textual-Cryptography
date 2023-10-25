@@ -7,6 +7,22 @@ const MainWrapper = styled.main`
   .pages {
     width: 90vw;
     margin: 0 auto;
+    min-height: 80vh;
+  }
+
+  hgroup {
+    margin: 0;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    height: 50px;
+  }
+
+  p {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
   }
 
   @media (min-width: 992px) {
@@ -14,21 +30,43 @@ const MainWrapper = styled.main`
     .pages {
       width: 90%;
     }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      margin: 0;
+      height: 50px;
+    }
+
+    input[type="file"] {
+      margin: 0;
+    }
+
+    select {
+      height: 50px;
+      margin: 0;
+      padding: 0 20px;
+    }
+
+    p {
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
   }
 
   header {
     text-align: center;
   }
 
-  input[type="text"],
-  input[type="email"] {
-    max-width: 50%;
-    height: 40px;
+  .profile-inputs-container {
+    display: flex;
+    align-items: center;
   }
 `;
 
 const SideNavWrapper = styled.aside`
   display: flex;
+
   .nav-links {
     display: flex;
     flex-direction: row;
@@ -43,16 +81,19 @@ const SideNavWrapper = styled.aside`
   .nav-link:hover {
     color: white;
   }
+  .nav-link:focus {
+    color: var(--contrast-hover);
+  }
+
   .active {
-    background: teal;
-    color: var(--primary-inverse);
+    background-color: var(--contrast-focus);
+    color: var(--contrast-hover);
   }
 
   @media (min-width: 992px) {
     .sidebar {
       min-height: 83vh;
-      height: 100%;
-      width: 300px;
+      width: 250px;
       transition: var(--transition);
     }
     .nav-links {
@@ -67,36 +108,16 @@ const SideNavWrapper = styled.aside`
       padding-left: 2.5rem;
       text-decoration: none;
       transition: 0.3s ease-in-out all;
-      color: teal;
-      border-bottom: 1px solid #1f2d38;
     }
     .nav-link:hover {
       color: var(--primary);
     }
     .active {
-      color: var(--contrast);
-      background: none;
+      background-color: var(--contrast-focus);
+      color: var(--contrast-hover);
       padding-left: 3rem;
     }
   }
 `;
 
-const UserBtns = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-
-  .btns-container {
-    display: flex;
-    flex-direction: row;
-  }
-
-  button {
-    padding: 10px 10px;
-    margin: 10px;
-    width: 130px;
-  }
-`;
-
-export { MainWrapper, SideNavWrapper, UserBtns };
+export { MainWrapper, SideNavWrapper };

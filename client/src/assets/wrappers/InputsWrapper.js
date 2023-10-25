@@ -31,6 +31,12 @@ const KeysWrapper = styled.div`
     margin: 5px 0;
   }
 
+  input {
+    max-width: 100%;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+
   @media (min-width: 576px) {
     .twoKeys {
       display: flex;
@@ -42,12 +48,12 @@ const KeysWrapper = styled.div`
       padding: 10px;
       margin-right: 10px;
     }
-  }
 
-  input {
-    max-width: 50%;
-    height: 40px;
-    font-size: 0.9rem;
+    input {
+      max-width: 50%;
+      height: 40px;
+      font-size: 0.9rem;
+    }
   }
 `;
 

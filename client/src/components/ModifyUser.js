@@ -46,68 +46,83 @@ const ModifyUser = () => {
   return (
     <article>
       <header>
-        <strong>User Details</strong>
+        <strong>Update User Details</strong>
       </header>
       <form onSubmit={userUpdateHandler}>
-        <label htmlFor="">Email</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="example@email.com"
-          value={userValues.email || ""}
-          onChange={(e) =>
-            setUserValues({
-              ...userValues,
-              [e.target.name]: e.target.value,
-            })
-          }
-          required
-        />
-        <div
-        // style={{ pointerEvents: "none", opacity: "0.5", userSelect: "none" }}
-        >
-          <label htmlFor="">Role</label>
-          <input
-            type="radio"
-            name="isAdmin"
-            checked={userValues.isAdmin === true}
-            value={true}
-            onChange={(e) =>
-              setUserValues({
-                ...userValues,
-                [e.target.name]: e.target.value === "true",
-              })
-            }
-          />
-          <label htmlFor="">Admin</label>
-          <input
-            type="radio"
-            name="isAdmin"
-            checked={userValues.isAdmin === false}
-            value={false}
-            onChange={(e) =>
-              setUserValues({
-                ...userValues,
-                [e.target.name]: e.target.value === "true",
-              })
-            }
-          />
-          <label htmlFor="">Not Admin</label>
+        <div className="grid">
+          <hgroup>
+            <strong>User Email</strong>
+            <p>A valid Email address used for signing in.</p>
+          </hgroup>
+          <div className="profile-inputs-container">
+            <input
+              type="email"
+              name="email"
+              placeholder="example@email.com"
+              value={userValues.email || ""}
+              onChange={(e) =>
+                setUserValues({
+                  ...userValues,
+                  [e.target.name]: e.target.value,
+                })
+              }
+              required
+            />
+          </div>
         </div>
-
+        <div className="grid">
+          <hgroup>
+            <strong>New Password</strong>
+            <p>Leave empty to keep old password.</p>
+          </hgroup>
+          <div className="profile-inputs-container">
+            <input
+              type="password"
+              name="password"
+              placeholder="abcd123!@#"
+              autoComplete="off"
+            />
+          </div>
+        </div>
+        <div className="grid">
+          <hgroup>
+            <strong>User Role</strong>
+            <p>A user can have an Admin or Not Admin role.</p>
+          </hgroup>
+          <div className="profile-inputs-container">
+            <input
+              type="radio"
+              name="isAdmin"
+              checked={userValues.isAdmin === true}
+              value={true}
+              onChange={(e) =>
+                setUserValues({
+                  ...userValues,
+                  [e.target.name]: e.target.value === "true",
+                })
+              }
+            />
+            <label htmlFor="">Admin</label>
+            <input
+              type="radio"
+              name="isAdmin"
+              checked={userValues.isAdmin === false}
+              value={false}
+              onChange={(e) =>
+                setUserValues({
+                  ...userValues,
+                  [e.target.name]: e.target.value === "true",
+                })
+              }
+            />
+            <label htmlFor="">Not Admin</label>
+          </div>
+        </div>
         <ModifyBtns>
-          <button
-            type="submit"
-            style={{ width: "150px", padding: "10px" }}
-            className="contrast"
-          >
+          <button type="submit" className="contrast">
             Update
           </button>
-          <button
-            onClick={userCancelHandler}
-            style={{ width: "150px", padding: "10px" }}
-            className="outline contrast"
-          >
+          <button onClick={userCancelHandler} className="outline contrast">
             Cancel
           </button>
         </ModifyBtns>

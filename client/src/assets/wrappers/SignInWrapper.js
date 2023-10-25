@@ -4,7 +4,7 @@ const MainWrapper = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: calc(100vh - 7rem);
+  min-height: calc(100vh - 8rem);
 
   @media (min-width: 768px) {
     max-width: 60%;

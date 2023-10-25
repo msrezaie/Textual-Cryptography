@@ -15,7 +15,9 @@ const SideBarNav = ({ links }) => {
               }
               end
             >
-              <div className="contrast">{text}</div>
+              <div className="contrast">
+                <strong>{text}</strong>
+              </div>
             </NavLink>
           );
         })}

@@ -57,7 +57,11 @@ const Selection = () => {
       <label>
         <strong>Cipher Choices</strong>
       </label>
-      <select onChange={cipherChange} value={selectedCipher}>
+      <select
+        className="cipherSelect"
+        onChange={cipherChange}
+        value={selectedCipher}
+      >
         {ciphers.map((cipher) => {
           return (
             <option key={cipher._id} value={cipher.cipherName}>

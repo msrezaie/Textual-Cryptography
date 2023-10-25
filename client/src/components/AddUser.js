@@ -40,33 +40,54 @@ const AddUser = () => {
     <div>
       <article>
         <header>
-          <strong>User Detail</strong>
+          <strong>New User Details</strong>
         </header>
         <form ref={formRef} onSubmit={userSaveHandler}>
-          <label htmlFor="">User Email</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="example@email.com"
-            autoComplete="off"
-            required
-          />
-          <label htmlFor="">Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="abcd123!@#"
-            autoComplete="off"
-            required
-          />
-          <label htmlFor="">Role</label>
-          <input type="radio" name="isAdmin" value={true} required />
-          <label htmlFor="">Admin</label>
-          <input type="radio" name="isAdmin" value={false} required />
-          <label htmlFor="">Not Admin</label>
+          <div className="grid">
+            <hgroup>
+              <strong>User Email</strong>
+              <p>A valid Email address used for signing in.</p>
+            </hgroup>
+            <div className="profile-inputs-container">
+              <input
+                type="email"
+                name="email"
+                placeholder="example@email.com"
+                autoComplete="off"
+                required
+              />
+            </div>
+          </div>
+          <div className="grid">
+            <hgroup>
+              <strong>Password</strong>
+              <p>A new password that is at least 6 characters long.</p>
+            </hgroup>
+            <div className="profile-inputs-container">
+              <input
+                type="password"
+                name="password"
+                placeholder="abcd123!@#"
+                autoComplete="off"
+                required
+              />
+            </div>
+          </div>
+          <div className="grid">
+            <hgroup>
+              <strong>User Role</strong>
+              <p>A user can have an Admin or Not Admin role.</p>
+            </hgroup>
+            <div className="profile-inputs-container">
+              <input type="radio" name="isAdmin" value={true} required />
+              <label htmlFor="">Admin</label>
+              <input type="radio" name="isAdmin" value={false} required />
+              <label htmlFor="">Not Admin</label>
+            </div>
+          </div>
           <button
             type="submit"
-            style={{ width: "150px", padding: "10px", marginTop: "50px" }}
+            style={{ width: "150px", padding: "10px", marginTop: "30px" }}
             className="contrast"
           >
             Save

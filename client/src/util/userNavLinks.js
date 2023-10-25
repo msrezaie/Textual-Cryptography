@@ -1,7 +1,7 @@
 const links = [
   {
     id: 1,
-    text: "User Settings",
+    text: "Settings",
     path: "/user",
   },
   {

@@ -10,7 +10,7 @@ const UserLayout = () => {
       <MainWrapper>
         <UserProtected>
           <SideNavWrapper>
-            <div className="sidebar show-sidebar">
+            <div className="sidebar">
               <SideBarNav links={userLinks} />
             </div>
           </SideNavWrapper>

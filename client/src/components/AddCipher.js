@@ -60,98 +60,177 @@ const AddCipher = () => {
     <div>
       <article>
         <header>
-          <strong>Cipher Details</strong>
+          <strong>New Cipher Details</strong>
         </header>
         <form ref={formRef} onSubmit={cipherSaveHandler}>
-          <label htmlFor="cipherName">Name of the Cipher</label>
-          <input
-            type="text"
-            name="cipherName"
-            placeholder="i.e. reverse or caesar"
-            required
-          />
-          <label htmlFor="keyType">Key Type</label>
-          <select
-            id="keyType"
-            name="keyType"
-            onChange={(e) => setKeyType(e.target.value)}
-            value={keyType}
-            required
-          >
-            <option value="">Select a key type</option>
-            <option value="no-key">No Key</option>
-            <option value="1-key">1 Key</option>
-            <option value="2-key">2 Key</option>
-          </select>
+          <div className="grid">
+            <hgroup>
+              <strong>Cipher</strong>
+              <p>A name for the Cipher.</p>
+            </hgroup>
+            <div className="profile-inputs-container">
+              <input
+                type="text"
+                name="cipherName"
+                placeholder="i.e. Caesar"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="grid">
+            <hgroup>
+              <strong>Key Type</strong>
+              <p>The number of Keys this Cipher require.</p>
+            </hgroup>
+            <div className="profile-inputs-container">
+              <select
+                id="keyType"
+                name="keyType"
+                onChange={(e) => setKeyType(e.target.value)}
+                value={keyType}
+                required
+              >
+                <option value="">Select a key type</option>
+                <option value="no-key">No Key</option>
+                <option value="1-key">1 Key</option>
+                <option value="2-key">2 Key</option>
+              </select>
+            </div>
+          </div>
 
           {keyType === "1-key" && (
             <>
-              <label htmlFor="keyDataType">Key Data Type</label>
-              <select name="keyDataType" required>
-                <option value="">Select a key data type</option>
-                <option value="number">Number</option>
-                <option value="text">Text</option>
-              </select>
-              <label htmlFor="keyDataDesc">Key Description</label>
-              <input
-                type="text"
-                name="keyDataDesc"
-                placeholder="i.e. not an even number or number 14"
-                required
-              />
+              <div className="grid">
+                <hgroup>
+                  <strong>Key Data Type</strong>
+                  <p>Specify whether the Key can be a number or text.</p>
+                </hgroup>
+                <div className="profile-inputs-container">
+                  <select name="keyDataType" required>
+                    <option value="">Select a key data type</option>
+                    <option value="number">Number</option>
+                    <option value="text">Text</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid">
+                <hgroup>
+                  <strong>Key Description</strong>
+                  <p>Any brief details about the Key.</p>
+                </hgroup>
+                <div className="profile-inputs-container">
+                  <input
+                    type="text"
+                    name="keyDataDesc"
+                    placeholder="i.e. not an even number or number 14"
+                    required
+                  />
+                </div>
+              </div>
             </>
           )}
           {keyType === "2-key" && (
             <>
-              <label htmlFor="key1DataType">Key 1 Data Type</label>
-              <select name="key1DataType" required>
-                <option value="">First key data type</option>
-                <option value="number">Number</option>
-                <option value="text">Text</option>
-              </select>
-              <label htmlFor="key1DataDesc">Key 1 Description</label>
-              <input
-                type="text"
-                name="key1DataDesc"
-                placeholder="i.e. not an even number or number 14"
-                required
-              />
-              <label htmlFor="key2DataType">Key 2 Data Type</label>
-              <select name="key2DataType" required>
-                <option value="">Second key data type</option>
-                <option value="number">Number</option>
-                <option value="text">Text</option>
-              </select>
-              <label htmlFor="key2DataDesc">Key 2 Description</label>
-              <input
-                type="text"
-                name="key2DataDesc"
-                placeholder="i.e. not an even number or number 14"
-                required
-              />
+              <div className="grid">
+                <hgroup>
+                  <strong>Key 1 Data Type</strong>
+                  <p>Specify whether the first Key can be a number or text.</p>
+                </hgroup>
+                <div className="profile-inputs-container">
+                  <select name="key1DataType" required>
+                    <option value="">First key data type</option>
+                    <option value="number">Number</option>
+                    <option value="text">Text</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid">
+                <hgroup>
+                  <strong>Key 1 Description</strong>
+                  <p>Any brief details about the first Key.</p>
+                </hgroup>
+                <div className="profile-inputs-container">
+                  <input
+                    type="text"
+                    name="key1DataDesc"
+                    placeholder="i.e. not an even number or number 14"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid">
+                <hgroup>
+                  <strong>Key 2 Data Type</strong>
+                  <p>Specify whether the second Key can be a number or text.</p>
+                </hgroup>
+                <div className="profile-inputs-container">
+                  <select name="key2DataType" required>
+                    <option value="">Second key data type</option>
+                    <option value="number">Number</option>
+                    <option value="text">Text</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid">
+                <hgroup>
+                  <strong>Key 2 Description</strong>
+                  <p>Any brief details about the second Key.</p>
+                </hgroup>
+                <div className="profile-inputs-container">
+                  <input
+                    type="text"
+                    name="key2DataDesc"
+                    placeholder="i.e. not an even number or number 14"
+                    required
+                  />
+                </div>
+              </div>
             </>
           )}
+          <div className="grid">
+            <hgroup>
+              <strong>Cipher Description</strong>
+              <p>
+                Description of the Cipher which will be shown once the Cipher is
+                selected.
+              </p>
+            </hgroup>
+            <div className="profile-inputs-container">
+              <textarea
+                rows="5"
+                type="text"
+                name="cipherDescription"
+                placeholder="About this Cipher"
+                required
+              />
+            </div>
+          </div>
+          <div className="grid">
+            <hgroup>
+              <strong>Cipher Key[s] Description</strong>
+              <p>Any brief details about the second Key.</p>
+            </hgroup>
+            <div className="profile-inputs-container">
+              <textarea
+                rows="5"
+                type="text"
+                name="keysDescription"
+                placeholder="About Cipher Key[s]"
+                required
+              />
+            </div>
+          </div>
+          <div className="grid">
+            <hgroup>
+              <strong>Cipher Script File</strong>
+              <p>The algorithm file performing encryption/decryption.</p>
+            </hgroup>
+            <div className="">
+              <input type="file" name="cipherFile" accept=".py" required />
+            </div>
+          </div>
 
-          <label htmlFor="cipherDescription">Cipher Description</label>
-          <textarea
-            rows="5"
-            type="text"
-            name="cipherDescription"
-            placeholder="About cipher"
-            required
-          />
-
-          <label htmlFor="cipherDescription">Cipher Key[s] Description</label>
-          <textarea
-            rows="5"
-            type="text"
-            name="keysDescription"
-            placeholder="About cipher keys"
-            required
-          />
-
-          <label htmlFor="cipherFile">Cipher Script File</label>
-          <input type="file" name="cipherFile" accept=".py" required />
           <button
             type="submit"
             style={{ width: "150px", padding: "10px" }}
