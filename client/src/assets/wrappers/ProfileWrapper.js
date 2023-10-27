@@ -7,7 +7,7 @@ const MainWrapper = styled.main`
   .pages {
     width: 90vw;
     margin: 0 auto;
-    min-height: 80vh;
+    min-height: 78vh;
   }
 
   hgroup {

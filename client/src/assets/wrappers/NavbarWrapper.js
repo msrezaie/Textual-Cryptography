@@ -7,6 +7,9 @@ const NavbarWrapper = styled.nav`
   li {
     margin: auto 3px;
   }
+  .brand {
+    font-size: 1.2rem;
+  }
 `;
 
 const ThemeSwitch = styled.div`
