@@ -4,6 +4,7 @@ import {
   Landing,
   Login,
   SignUp,
+  ResetPassword,
   UserLayout,
   UserSettings,
   UserHistory,
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/" element={<LandingLayout />}>
             <Route index element={<Landing />} />
             <Route path="login" element={<Login />} />
+            <Route path="resetPassword" element={<ResetPassword />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="user" element={<UserLayout />}>
               <Route index element={<UserSettings />} />

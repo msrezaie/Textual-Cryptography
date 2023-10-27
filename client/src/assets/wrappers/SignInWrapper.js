@@ -17,17 +17,31 @@ const MainWrapper = styled.main`
   }
 `;
 
-const LoginFieldset = styled.fieldset`
-  margin-bottom: 0;
+const SigninFieldset = styled.fieldset`
   ul {
     display: flex;
+    padding: 0;
+    margin: 0;
     justify-content: space-between;
-    white-space: nowrap;
-    margin-bottom: 12px;
   }
   li {
+    margin: 0;
     list-style: none;
   }
 `;
 
-export { MainWrapper, LoginFieldset };
+const AnchorBtn = styled.div`
+  .a-btn {
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: teal;
+    outline: none;
+    padding-bottom: 0;
+  }
+  .a-btn:hover {
+    color: var(--contrast);
+  }
+`;
+
+export { MainWrapper, SigninFieldset, AnchorBtn };
