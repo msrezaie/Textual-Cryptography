@@ -14,12 +14,12 @@ const AddUser = () => {
   const userSaveHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const { email, password, isAdmin } = Object.fromEntries(formData);
+    const { email, password, role } = Object.fromEntries(formData);
 
     const newUserInfo = {
       email,
       password,
-      isAdmin,
+      role,
     };
 
     try {
@@ -76,13 +76,17 @@ const AddUser = () => {
           <div className="grid">
             <hgroup>
               <strong>User Role</strong>
-              <p>A user can have an Admin or Not Admin role.</p>
+              <p>
+                A user's role can Root Admin, Read-only Admin, or just a User.
+              </p>
             </hgroup>
             <div className="profile-inputs-container">
-              <input type="radio" name="isAdmin" value={true} required />
-              <label htmlFor="">Admin</label>
-              <input type="radio" name="isAdmin" value={false} required />
-              <label htmlFor="">Not Admin</label>
+              <select name="role" required>
+                <option value="">Select a Role type</option>
+                <option value="user">User</option>
+                <option value="read-only-admin">Read-only Admin</option>
+                <option value="root-admin">Root Admin</option>
+              </select>
             </div>
           </div>
           <button

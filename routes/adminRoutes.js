@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { multer, fileStorage } = require("../util/fileUpload");
-const { authenticateAdmin } = require("../middleware/authHandler");
+const {
+  authenticateReadAdmin,
+  authenticateRootAdmin,
+} = require("../middleware/authHandler");
 
 const {
   createCipher,
@@ -14,28 +17,30 @@ const {
   getCipherFile,
 } = require("../controllers/adminController");
 
-router.route("/users").get(authenticateAdmin, getUsers);
-router.route("/user/create").post(authenticateAdmin, addUser);
-router.route("/user/delete/:email").delete(authenticateAdmin, removeUser);
-router.route("/user/modify/:id").patch(authenticateAdmin, modifyUser);
+router.route("/users").get(authenticateReadAdmin, getUsers);
+router.route("/user/create").post(authenticateRootAdmin, addUser);
+router.route("/user/delete/:email").delete(authenticateRootAdmin, removeUser);
+router.route("/user/modify/:id").patch(authenticateRootAdmin, modifyUser);
 
 router
   .route("/cipher/create")
   .post(
-    authenticateAdmin,
+    authenticateRootAdmin,
     multer({ storage: fileStorage }).single("cipherFile"),
     createCipher
   );
 router
   .route("/cipher/delete/:cipherName")
-  .delete(authenticateAdmin, removeCipher);
+  .delete(authenticateRootAdmin, removeCipher);
 router
   .route("/cipher/update/:id")
   .patch(
-    authenticateAdmin,
+    authenticateRootAdmin,
     multer({ storage: fileStorage }).single("cipherFile"),
     updateCipher
   );
-router.route("/cipher/file/:cipherName").get(authenticateAdmin, getCipherFile);
+router
+  .route("/cipher/file/:cipherName")
+  .get(authenticateReadAdmin, getCipherFile);
 
 module.exports = router;

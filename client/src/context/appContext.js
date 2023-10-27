@@ -25,7 +25,7 @@ let initialState = {
   userEmail: "",
   history: [],
   fetchedUsers: [],
-  isAdmin: false,
+  role: "",
   ciphers: [],
   stagedCipher: {},
   stagedUser: {},
@@ -61,10 +61,10 @@ const AppProvider = ({ children }) => {
   const loginUser = async (userInfo) => {
     try {
       const { data } = await axios.post("/api/v1/auth/login", userInfo);
-      const { email, isAdmin } = data;
+      const { email, role } = data;
       dispatch({
         type: SETUP_USER,
-        payload: { email, isAdmin },
+        payload: { email, role },
       });
     } catch (error) {
       toast.error(error.response.data.msg);
@@ -74,10 +74,10 @@ const AppProvider = ({ children }) => {
   const signUpUser = async (userInfo) => {
     try {
       const { data } = await axios.post("/api/v1/auth/signup", userInfo);
-      const { email, isAdmin } = data;
+      const { email, role } = data;
       dispatch({
         type: SETUP_USER,
-        payload: { email, isAdmin },
+        payload: { email, role },
       });
     } catch (error) {
       toast.error(error.response.data.msg);
@@ -257,11 +257,11 @@ const AppProvider = ({ children }) => {
 
   const getCurrentUser = async () => {
     try {
-      const { data } = await axios.get("/api/v1/user/getCurrentUser");
-      const { email, isAdmin } = data;
+      const { data } = await axios.get("/api/v1/auth/getCurrentUser");
+      const { email, role } = data;
       dispatch({
         type: SETUP_USER,
-        payload: { email, isAdmin },
+        payload: { email, role },
       });
     } catch (error) {
       console.log(error.response.data.msg);
@@ -274,13 +274,12 @@ const AppProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (state.userEmail) {
+    if (state.role === "user") {
       fetchHistoryData();
-    }
-    if (state.isAdmin) {
+    } else if (state.role && state.role !== "user") {
       fetchUsers();
     }
-  }, [state.userEmail, state.isAdmin]);
+  }, [state.userEmail, state.role]);
 
   return (
     <AppContext.Provider

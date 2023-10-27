@@ -9,18 +9,18 @@ const ModifyUser = () => {
   const navigate = useNavigate();
 
   const { fetchUsers, stagedUser, setupStagedUser } = useAppContext();
-  const [userValues, setUserValues] = useState({ ...stagedUser });
+  const [userValues, setUserValues] = useState({ password: "", ...stagedUser });
 
   const userUpdateHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const { email, isAdmin } = Object.fromEntries(formData);
+    const { email, password, role } = Object.fromEntries(formData);
 
     const modifiedUserInfo = {
       email,
-      isAdmin,
+      password,
+      role,
     };
-
     try {
       const response = await axios.patch(
         `/api/v1/admin/user/modify/${stagedUser._id}`,
@@ -59,7 +59,8 @@ const ModifyUser = () => {
               type="email"
               name="email"
               placeholder="example@email.com"
-              value={userValues.email || ""}
+              autoComplete="off"
+              value={userValues.email}
               onChange={(e) =>
                 setUserValues({
                   ...userValues,
@@ -81,41 +82,40 @@ const ModifyUser = () => {
               name="password"
               placeholder="abcd123!@#"
               autoComplete="off"
+              value={userValues.password}
+              onChange={(e) =>
+                setUserValues({
+                  ...userValues,
+                  [e.target.name]: e.target.value,
+                })
+              }
             />
           </div>
         </div>
         <div className="grid">
           <hgroup>
             <strong>User Role</strong>
-            <p>A user can have an Admin or Not Admin role.</p>
+            <p>
+              A user's role can Root Admin, Read-only Admin, or just a User.
+            </p>
           </hgroup>
           <div className="profile-inputs-container">
-            <input
-              type="radio"
-              name="isAdmin"
-              checked={userValues.isAdmin === true}
-              value={true}
-              onChange={(e) =>
+            <select
+              name="role"
+              value={userValues.role}
+              onChange={(e) => {
                 setUserValues({
                   ...userValues,
-                  [e.target.name]: e.target.value === "true",
-                })
-              }
-            />
-            <label htmlFor="">Admin</label>
-            <input
-              type="radio"
-              name="isAdmin"
-              checked={userValues.isAdmin === false}
-              value={false}
-              onChange={(e) =>
-                setUserValues({
-                  ...userValues,
-                  [e.target.name]: e.target.value === "true",
-                })
-              }
-            />
-            <label htmlFor="">Not Admin</label>
+                  [e.target.name]: e.target.value,
+                });
+              }}
+              required
+            >
+              <option value="">Select a Role type</option>
+              <option value="user">User</option>
+              <option value="read-only-admin">Read-only Admin</option>
+              <option value="root-admin">Root Admin</option>
+            </select>
           </div>
         </div>
         <ModifyBtns>

@@ -4,7 +4,7 @@ import { useAppContext } from "../context/appContext";
 import { ThemeSwitch, NavbarWrapper } from "../assets/wrappers/NavbarWrapper";
 
 const Navbar = () => {
-  const { userEmail, isAdmin, logout } = useAppContext();
+  const { userEmail, role, logout } = useAppContext();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const location = useLocation().pathname;
 
@@ -22,14 +22,14 @@ const Navbar = () => {
       <NavbarWrapper className="container-fluid">
         <ul>
           <li>
-            <Link className="contrast" to="/">
+            <Link className="contrast brand" to="/">
               <strong>TextCrypt</strong>
             </Link>
           </li>
         </ul>
         <ul>
           <li>
-            {isAdmin ? (
+            {role && role !== "user" ? (
               <NavLink
                 to="/admin"
                 className={({ isActive }) =>
@@ -38,7 +38,7 @@ const Navbar = () => {
               >
                 <strong>Admin Dashboard</strong>
               </NavLink>
-            ) : userEmail && !isAdmin ? (
+            ) : role === "user" ? (
               <NavLink
                 to="/user"
                 className={({ isActive }) =>
@@ -47,11 +47,11 @@ const Navbar = () => {
               >
                 <strong>User Dashboard</strong>
               </NavLink>
-            ) : location === "/login" && (!isAdmin || !userEmail) ? (
+            ) : location === "/login" && (!role || !userEmail) ? (
               <Link to="/signup" className="contrast">
                 <strong>Sign Up</strong>
               </Link>
-            ) : location === "/signup" && (!isAdmin || !userEmail) ? (
+            ) : location === "/signup" && (!role || !userEmail) ? (
               <Link to="/login" className="contrast">
                 <strong>Login</strong>
               </Link>

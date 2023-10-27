@@ -57,10 +57,7 @@ const updateCipher = async (req, res) => {
 
   cipherName = cipherName.toLowerCase();
 
-  if (!id) {
-    res.status(400);
-    throw new Error("cipher id must be provided!");
-  } else if (!keyType) {
+  if (!keyType) {
     res.status(400);
     throw new Error("a valid key-type must be provided!");
   } else if (!cipherName) {
@@ -103,10 +100,6 @@ const removeCipher = async (req, res) => {
   let { cipherName } = req.params;
   cipherName = cipherName.toLowerCase();
 
-  if (!cipherName) {
-    res.status(400);
-    throw new Error("cipher name must be provided!");
-  }
   const cipherExists = await Cipher.findOne({ cipherName });
   if (!cipherExists) {
     res.status(404);
@@ -139,7 +132,7 @@ const getUsers = async (req, res) => {
 // @route   POST /api/v1/admin/user/create
 // @access  private (admin only)
 const addUser = async (req, res) => {
-  let { email, password, isAdmin } = req.body;
+  let { email, password, role } = req.body;
 
   if (!email || !password) {
     res.status(400);
@@ -147,15 +140,15 @@ const addUser = async (req, res) => {
   } else if (!validator.isEmail(email)) {
     res.status(400);
     throw new Error("Please provide a valid email!");
-  } else if (!isAdmin) {
+  } else if (!role) {
     res.status(400);
     throw new Error("Please provide a valid user role!");
   } else if (await User.findOne({ email })) {
     res.status(400);
     throw new Error(`User with ${email} email already exists!`);
   }
-  isAdmin = isAdmin === "true";
-  await User.create({ email, password, isAdmin });
+
+  await User.create({ email, password, role });
   res.status(201).json({ msg: "User added!" });
 };
 
@@ -165,15 +158,11 @@ const addUser = async (req, res) => {
 const removeUser = async (req, res) => {
   const { email } = req.params;
 
-  if (!email) {
-    res.status(400);
-    throw new Error("User email must be provided!");
-  }
   const userExists = await User.findOne({ email });
   if (!userExists) {
     res.status(404);
     throw new Error(`User with ${email} email does not exist!`);
-  } else if (userExists.email === process.env.ADMIN_E) {
+  } else if (userExists.email === process.env.ROOT_ADMIN_EMAIL) {
     res.status(403);
     throw new Error("Action not allowed!");
   }
@@ -192,34 +181,30 @@ const removeUser = async (req, res) => {
 // @access  private (admin only)
 const modifyUser = async (req, res) => {
   let { id } = req.params;
-  let { email, isAdmin } = req.body;
+  let { email, role, password } = req.body;
 
-  if (!id) {
-    res.status(400);
-    throw new Error("User Id must be provided!");
-  } else if (!email || !validator.isEmail(email)) {
+  if (!email || !validator.isEmail(email)) {
     res.status(400);
     throw new Error("Please provide a valid email!");
-  } else if (!isAdmin) {
+  } else if (!role) {
     res.status(400);
     throw new Error("Please provide a valid user role!");
   } else {
     const userExists = await User.findOne({ _id: id });
-    if (userExists.email === process.env.ADMIN_E) {
+    if (userExists.email === process.env.ROOT_ADMIN_EMAIL) {
       res.status(403);
       throw new Error(`Action not allowed!`);
     }
     try {
-      isAdmin = isAdmin === "true";
-      const userUpdated = await User.findOneAndUpdate(
-        { _id: id },
-        { email, isAdmin }
-      );
-
-      if (!userUpdated) {
-        res.status(404);
-        throw new Error(`User with ID ${id} does not exist!`);
+      if (password) {
+        userExists.email = email;
+        userExists.role = role;
+        userExists.password = password;
+        await userExists.save();
+      } else {
+        await User.findOneAndUpdate({ _id: id }, { email, role });
       }
+
       res.status(200).json({ msg: "User info updated!" });
     } catch (error) {
       res.status(500);
@@ -233,10 +218,7 @@ const modifyUser = async (req, res) => {
 // @access  private (admin only)
 const getCipherFile = async (req, res) => {
   let cipherName = req.params.cipherName.toLowerCase();
-  if (!cipherName) {
-    res.status(400);
-    throw new Error("cipher name must be provided!");
-  }
+
   const cipherExists = await Cipher.findOne({ cipherName });
   if (!cipherExists) {
     res.status(404);

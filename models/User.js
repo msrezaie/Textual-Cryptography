@@ -20,9 +20,13 @@ const userSchema = mongoose.Schema(
       minlength: [6, "password must be at least 6 characters long!"],
       select: false,
     },
-    isAdmin: {
-      type: Boolean,
-      default: false,
+    role: {
+      type: String,
+      enum: {
+        values: ["user", "read-only-admin", "root-admin"],
+        message: "Invalid role!",
+      },
+      required: [true, "please provide a valid role!"],
     },
   },
   { timestamps: true }

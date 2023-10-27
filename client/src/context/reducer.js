@@ -22,7 +22,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       userEmail: "",
-      isAdmin: false,
+      role: "",
       history: [],
       fetchedUsers: [],
       selectHistoryId: "",
@@ -36,7 +36,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       userEmail: action.payload.email,
-      isAdmin: action.payload.isAdmin,
+      role: action.payload.role,
     };
   }
   if (action.type === FETCH_CIPHERS) {

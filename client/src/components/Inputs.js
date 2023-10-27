@@ -10,7 +10,7 @@ const Inputs = () => {
     keys,
     keyType,
     userEmail,
-    isAdmin,
+    role,
     fetchHistoryData,
     selectHistoryPText,
     selectHistoryCText,
@@ -39,7 +39,7 @@ const Inputs = () => {
           const encryted = data.result;
           setCiphertext(encryted);
 
-          if (userEmail && !isAdmin) {
+          if (role === "user") {
             await axios.post("/api/v1/history/save", {
               userEmail,
               operation,
@@ -74,7 +74,7 @@ const Inputs = () => {
           const decryted = data.result;
           setPlaintext(decryted);
 
-          if (userEmail && !isAdmin) {
+          if (role === "user") {
             await axios.post("/api/v1/history/save", {
               userEmail,
               operation,

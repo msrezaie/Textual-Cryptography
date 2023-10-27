@@ -61,7 +61,7 @@ const UsersTable = () => {
                 <tr key={user._id}>
                   <th scope="row">{index + 1}</th>
                   <td>{user.email}</td>
-                  <td>{user.isAdmin ? "Admin" : "Not Admin"}</td>
+                  <td>{user.role}</td>
                   <td>{user.createdAt}</td>
                   <td>{user.updatedAt}</td>
                   <td>
