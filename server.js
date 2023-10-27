@@ -15,7 +15,8 @@ const swaggerDocument = require("yamljs").load("./swagger.yaml");
 const swaggerUi = require("swagger-ui-express");
 
 // exports
-const User = require("./models/User");
+const generateAdmins = require("./util/generateAdmins");
+
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -62,15 +63,7 @@ const PORT = process.env.PORT || 4000;
 const start = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    const adminUser = await User.findOne({ isAdmin: true });
-    if (!adminUser) {
-      await User.create({
-        email: process.env.ADMIN_E,
-        password: process.env.ADMIN_P,
-        isAdmin: true,
-      });
-      console.log("admin user generated!");
-    }
+    await generateAdmins();
     app.listen(PORT, console.log(`server listening in port: ${PORT}`));
   } catch (error) {
     console.log(error);

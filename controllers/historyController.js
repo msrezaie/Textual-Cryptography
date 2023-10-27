@@ -30,12 +30,8 @@ const saveHistory = async (req, res) => {
 // @route   DELETE /api/v1/history/delete/:id
 // @access  authenticated users only
 const deleteHistory = async (req, res) => {
-  let { id } = req.params;
+  const { id } = req.params;
 
-  if (!id) {
-    res.status(400);
-    throw new Error("No history id given!");
-  }
   try {
     const historyExists = await History.findByIdAndDelete({ _id: id });
     if (!historyExists) {
@@ -53,12 +49,8 @@ const deleteHistory = async (req, res) => {
 // @route   DELETE /api/v1/history/deleteAll/:userId
 // @access  authenticated users only
 const deleteAllHistory = async (req, res) => {
-  let { userId } = req.params;
+  const { userId } = req.params;
 
-  if (!userId) {
-    res.status(400);
-    throw new Error("No user id given!");
-  }
   try {
     await History.deleteMany({ userId });
 
