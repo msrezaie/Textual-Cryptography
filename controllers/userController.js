@@ -25,6 +25,11 @@ const deleteAccount = async (req, res) => {
   try {
     await User.findOneAndDelete({ email });
     await History.deleteMany({ userId: userExists._id });
+    res.cookie("jwt", "", {
+      httpOnly: true,
+      maxAge: new Date(0),
+      secure: process.env.PRODUCTION_ENV === "production",
+    });
     res.status(200).json({ msg: `User account removed!` });
   } catch (error) {
     res.status(500);
