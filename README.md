@@ -15,18 +15,18 @@ Read-only Admin Password: readOnlyAdmin123
 ## Feature Breakdown
 
 #### Encryption/Decryption
-Visitors (not signed up users) can encrypt/decrypt their input text with available ciphers
+Visitors (not signed up users) can encrypt/decrypt text with available ciphers
 
-#### Sign in/Login
+#### Sign up/Login
 Users who sign in:
 - Have their usage history saved and accessible whenever they login
-- From their saved usage history they get to select and work again on a record
+- Get to select and work again on their saved usage history records
 - Get their own dashboard with options
 
 #### Root Admin Role
 Root Admin users have access to the admin dashboard to:
 - Manage (view, add, remove, modify) cipher information.
-- Manage (view, add, remove, modify) other users who have registered
+- Manage (view, add, remove, modify) all registered users
 
 #### Read-only Admin Role
 Read-only admins can only access the admin dashboard but cannot add, remove, or modify any of the resources in the app
@@ -35,7 +35,7 @@ Read-only admins can only access the admin dashboard but cannot add, remove, or 
 The app is fully responsive and functional on any screen size
 
 #### Theme Switch
-The can change between light and dark mode
+The app's theme can be switched between light and dark mode
 
 #### Forgot Password
 Users who have forgotten their password can reset their password using a One Time Password (OTP) sent to their email
