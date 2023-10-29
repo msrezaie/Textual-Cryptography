@@ -23,7 +23,7 @@ const ModifyUser = () => {
     };
     try {
       const response = await axios.patch(
-        `/api/v1/admin/user/modify/${stagedUser._id}`,
+        `/api/v1/admin/user/update/${stagedUser.email}`,
         modifiedUserInfo
       );
       toast.success(response.data.msg);

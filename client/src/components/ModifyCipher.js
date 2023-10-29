@@ -45,7 +45,7 @@ const ModifyCipher = () => {
 
     try {
       const response = await axios.patch(
-        `/api/v1/admin/cipher/update/${stagedCipher._id}`,
+        `/api/v1/admin/cipher/update/${stagedCipher.cipherName}`,
         cipherData,
         {
           headers: {

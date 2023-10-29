@@ -5,6 +5,37 @@ const User = require("../models/User");
 const History = require("../models/History");
 const validator = require("validator");
 
+// @desc    gets saved cipher's file
+// @route   GET /api/v1/admin/cipher/file/:cipherName
+// @access  private (admin only)
+const getCipherFile = async (req, res) => {
+  let cipherName = req.params.cipherName.toLowerCase();
+
+  const cipherExists = await Cipher.findOne({ cipherName });
+  if (!cipherExists) {
+    res.status(404);
+    throw new Error(`${cipherName} does not exist!`);
+  }
+  try {
+    const fileExists = fs.existsSync(cipherExists.filePath);
+    if (!fileExists) {
+      res.status(404);
+      throw new Error("unable to find cipher file!");
+    }
+    const filename = `${cipherName}.py`;
+    const filePath = path.join(__dirname, "../uploads", filename);
+    const file = await fs.promises.readFile(filePath);
+
+    res.setHeader("Content-Type", "text/plain");
+    res.setHeader("Content-Disposition", `attachment; filename=${filename}`);
+
+    res.send(file);
+  } catch (error) {
+    res.status(500);
+    throw new Error(error);
+  }
+};
+
 // @desc    creates a cipher file and add its information
 // @route   POST /api/v1/admin/cipher/create
 // @access  private (admin only)
@@ -48,10 +79,10 @@ const createCipher = async (req, res) => {
 };
 
 // @desc    updates existing cipher resource
-// @route   PATCH /api/v1/admin/cipher/update/:id
+// @route   PATCH /api/v1/admin/cipher/update/:cipher
 // @access  private (admin only)
 const updateCipher = async (req, res) => {
-  let { id } = req.params;
+  let { cipher } = req.params;
   let { cipherName, cipherDescription, keysDescription, keyType, keyArgs } =
     req.body;
 
@@ -80,7 +111,7 @@ const updateCipher = async (req, res) => {
     }
 
     const cipherUpdated = await Cipher.findOneAndUpdate(
-      { _id: id },
+      { cipherName: cipher },
       modifedCipher
     );
 
@@ -177,10 +208,10 @@ const removeUser = async (req, res) => {
 };
 
 // @desc    updates registerd user's information
-// @route   PATCH /api/v1/admin/user/modify/:id
+// @route   PATCH /api/v1/admin/user/update/:userEmail
 // @access  private (admin only)
-const modifyUser = async (req, res) => {
-  let { id } = req.params;
+const updateUser = async (req, res) => {
+  let { userEmail } = req.params;
   let { email, role, password } = req.body;
 
   if (!email || !validator.isEmail(email)) {
@@ -190,7 +221,7 @@ const modifyUser = async (req, res) => {
     res.status(400);
     throw new Error("Please provide a valid user role!");
   } else {
-    const userExists = await User.findOne({ _id: id });
+    const userExists = await User.findOne({ email: userEmail });
     if (userExists.email === process.env.ROOT_ADMIN_EMAIL) {
       res.status(403);
       throw new Error(`Action not allowed!`);
@@ -202,45 +233,14 @@ const modifyUser = async (req, res) => {
         userExists.password = password;
         await userExists.save();
       } else {
-        await User.findOneAndUpdate({ _id: id }, { email, role });
+        await User.findOneAndUpdate({ email: userEmail }, { email, role });
       }
 
-      res.status(200).json({ msg: "User info updated!" });
+      res.status(200).json({ msg: "User data updated!" });
     } catch (error) {
       res.status(500);
       throw new Error(error);
     }
-  }
-};
-
-// @desc    gets saved cipher's file
-// @route   GET /api/v1/admin/cipher/file/:cipherName
-// @access  private (admin only)
-const getCipherFile = async (req, res) => {
-  let cipherName = req.params.cipherName.toLowerCase();
-
-  const cipherExists = await Cipher.findOne({ cipherName });
-  if (!cipherExists) {
-    res.status(404);
-    throw new Error(`${cipherName} does not exist!`);
-  }
-  try {
-    const fileExists = fs.existsSync(cipherExists.filePath);
-    if (!fileExists) {
-      res.status(404);
-      throw new Error("unable to find cipher file!");
-    }
-    const filename = `${cipherName}.py`;
-    const filePath = path.join(__dirname, "../uploads", filename);
-    const file = await fs.promises.readFile(filePath);
-
-    res.setHeader("Content-Type", "text/plain");
-    res.setHeader("Content-Disposition", `attachment; filename=${filename}`);
-
-    res.send(file);
-  } catch (error) {
-    res.status(500);
-    throw new Error(error);
   }
 };
 
@@ -251,6 +251,6 @@ module.exports = {
   getUsers,
   addUser,
   removeUser,
-  modifyUser,
+  updateUser,
   getCipherFile,
 };

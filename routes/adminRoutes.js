@@ -13,15 +13,30 @@ const {
   getUsers,
   addUser,
   removeUser,
-  modifyUser,
+  updateUser,
   getCipherFile,
 } = require("../controllers/adminController");
 
+// @route   GET /api/v1/admin/users
 router.route("/users").get(authenticateReadAdmin, getUsers);
-router.route("/user/create").post(authenticateRootAdmin, addUser);
-router.route("/user/delete/:email").delete(authenticateRootAdmin, removeUser);
-router.route("/user/modify/:id").patch(authenticateRootAdmin, modifyUser);
 
+// @route   POST /api/v1/admin/user/create
+router.route("/user/create").post(authenticateRootAdmin, addUser);
+
+// @route   DELETE /api/v1/admin/user/delete/:email
+router.route("/user/delete/:email").delete(authenticateRootAdmin, removeUser);
+
+// @route   PATCH /api/v1/admin/user/update/:userEmail
+router
+  .route("/user/update/:userEmail")
+  .patch(authenticateRootAdmin, updateUser);
+
+// @route   GET /api/v1/admin/cipher/file/:cipherName
+router
+  .route("/cipher/file/:cipherName")
+  .get(authenticateReadAdmin, getCipherFile);
+
+// @route   POST /api/v1/admin/cipher/create
 router
   .route("/cipher/create")
   .post(
@@ -29,18 +44,19 @@ router
     multer({ storage: fileStorage }).single("cipherFile"),
     createCipher
   );
+
+// @route   DELETE /api/v1/admin/cipher/delete/:cipherName
 router
   .route("/cipher/delete/:cipherName")
   .delete(authenticateRootAdmin, removeCipher);
+
+// @route   PATCH /api/v1/admin/cipher/update/:cipher
 router
-  .route("/cipher/update/:id")
+  .route("/cipher/update/:cipher")
   .patch(
     authenticateRootAdmin,
     multer({ storage: fileStorage }).single("cipherFile"),
     updateCipher
   );
-router
-  .route("/cipher/file/:cipherName")
-  .get(authenticateReadAdmin, getCipherFile);
 
 module.exports = router;
