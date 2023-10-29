@@ -7,6 +7,11 @@ info:
     The JWT token is generated and set in the cookie when the user logs in. The user's browser will automatically send the JWT token in the cookie on each subsequent request.
     <br>
     <br>
+    Read-only Admin Email: readonlyadmin@textcrypt.msr
+    <br>
+    Read-only Admin Password: readOnlyAdmin123
+    <br>
+    <br>
     **Token will not be accepted besides a successful sign in!**
   contact: {}
   version: "1.0"
