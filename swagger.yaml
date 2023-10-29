@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Textual Cryptography API
+  title: TextCrypt API
   description: >
     A text based cryptography API where entered text will be encrypted or decrypted using different ciphers.
     Authentication can only be performed using an HTTP-only cookie that contains the JWT token.
@@ -19,6 +19,7 @@ paths:
       tags:
         - Cryptography
       summary: Perform Encrypt or Decrypt
+      description: Main endpoint performing encryption/decryption
       operationId: PerformEncryptorDecrypt
       parameters: []
       requestBody:
@@ -29,17 +30,17 @@ paths:
               allOf:
                 - $ref: "#/components/schemas/PerformEncryptorDecryptRequest"
                 - example:
-                    cipher: caesar
+                    cipherName: caesar
                     operation: encrypt
                     message: hello world
                     keys:
-                      key1: "13"
+                      key: "12"
             example:
-              cipher: caesar
+              cipherName: caesar
               operation: encrypt
               message: hello world
               keys:
-                key1: "13"
+                key: "12"
         required: true
       responses:
         "200":
@@ -52,6 +53,7 @@ paths:
       tags:
         - Cryptography
       summary: Get Ciphers
+      description: Returns information about all the saved Ciphers
       operationId: GetCiphers
       parameters: []
       responses:
@@ -65,8 +67,134 @@ paths:
       tags:
         - Admin
       summary: Get Users
-      description: An admin authenticated user's token required
+      description: >-
+        Returns information about all the registered users
+
+
+        An admin authenticated user's token required
       operationId: GetUsers
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/user/create:
+    post:
+      tags:
+        - Admin
+      summary: Create User
+      description: >-
+        Creates a User resource
+
+
+        A root admin authenticated user's token required
+      operationId: CreateUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CreateUserRequest"
+                - example:
+                    email: user@email.com
+                    password: user1234
+                    role: user
+            example:
+              email: user@email.com
+              password: user1234
+              role: user
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/user/update/{email}:
+    parameters:
+      - in: path
+        name: email
+        schema:
+          type: string
+        required: true
+        description: The user email
+    patch:
+      tags:
+        - Admin
+      summary: Update User
+      description: >-
+        Updates a User resource
+
+
+        A root admin authenticated user's token required
+      operationId: UpdateUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/UpdateUserRequest"
+                - example:
+                    email: newEmail@email.com
+                    role: read-only-admin
+                    password: newPassword123
+            example:
+              email: newEmail@email.com
+              role: read-only-admin
+              password: newPassword123
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/user/delete/{email}:
+    parameters:
+      - in: path
+        name: email
+        schema:
+          type: string
+        required: true
+        description: The user email
+    delete:
+      tags:
+        - Admin
+      summary: Delete User
+      description: >-
+        Deletes a User resource
+
+
+        A root admin authenticated user's token required
+      operationId: DeleteUser
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/cipher/file/{cipher}:
+    parameters:
+      - in: path
+        name: cipher
+        value: caesar
+        schema:
+          type: string
+        required: true
+        description: The name of the cipher
+    get:
+      tags:
+        - Admin
+      summary: Get Cipher File
+      description: >-
+        Returns a Cipher's saved script file
+
+
+        A root admin authenticated user's token required
+      operationId: GetCipherFile
       parameters: []
       responses:
         "200":
@@ -78,7 +206,11 @@ paths:
       tags:
         - Admin
       summary: Create Cipher
-      description: An admin authenticated user's token required
+      description: >-
+        Creates a Cipher resource
+
+
+        A root admin authenticated user's token required
       operationId: CreateCipher
       parameters: []
       requestBody:
@@ -88,7 +220,8 @@ paths:
             schema:
               required:
                 - cipherName
-                - description
+                - cipherDescription
+                - keysDescription
                 - cipherFile
                 - keyType
                 - keyArgs
@@ -97,9 +230,12 @@ paths:
                 cipherName:
                   type: string
                   example: caesar
-                description:
+                cipherDescription:
                   type: string
-                  example: 'The Caesar cipher is a type of encryption that replaces each letter in a message with a different letter that is a fixed number of positions away in the alphabet.\r\n\r\nFor example, the formula might be something like this:\r\n\r\nNew letter = (Original letter + 3) % 26\r\n\r\nIn this formula, each letter is first assigned a number (A=0, B=1, C=2, etc.), the original letter is added to 3, and then the result is taken modulo 26. This gives a new number which corresponds to a new letter (the letter that matches the number in the alphabet).\r\n\r\nSo, if the original letter was \"A\", the new letter would be \"D\". To decode the message, the process is reversed, with the original formula being used in reverse and subtracting 3 instead of adding it. This gives the original message back.\r\n\r\nAllowed Key: the key used in the Caesar cipher is an integer between 1 and 25, which represents the number of positions each letter is shifted.'
+                  example: The Caesar cipher is a type of encryption that replaces each letter in a message with a different letter that is a fixed number of positions away in the alphabet.\r\n\r\nFor example, the formula might be something like this:\r\n\r\nNew letter = (Original letter + 3) % 26\r\n\r\nIn this formula, each letter is first assigned a number (A=0, B=1, C=2, etc.), the original letter is added to 3, and then the result is taken modulo 26. This gives a new number which corresponds to a new letter (the letter that matches the number in the alphabet).\r\n\r\nSo, if the original letter was \"A\", the new letter would be \"D\". To decode the message, the process is reversed, with the original formula being used in reverse and subtracting 3 instead of adding it. This gives the original message back.
+                keysDescription:
+                  type: string
+                  example: The key used in the Caesar cipher is an integer between 1 and 25, which represents the number of positions each letter is shifted.
                 cipherFile:
                   type: string
                   format: binary
@@ -118,19 +254,84 @@ paths:
           description: ""
           headers: {}
       deprecated: false
-  /admin/cipher/delete/{name}:
+  /admin/cipher/update/{cipher}:
     parameters:
       - in: path
-        name: name
+        name: cipher
+        value: caesar
         schema:
           type: string
         required: true
-        description: The cipher name
+        description: The name of the cipher
+    patch:
+      tags:
+        - Admin
+      summary: Update Cipher
+      description: >-
+        Updates a Cipher resource
+
+
+        A root admin authenticated user's token required
+      operationId: UpdateCipher
+      parameters: []
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding: {}
+            schema:
+              required:
+                - cipherName
+                - cipherDescription
+                - keysDescription
+                - cipherFile
+                - keyType
+                - keyArgs
+              type: object
+              properties:
+                cipherName:
+                  type: string
+                  example: caesar
+                cipherDescription:
+                  type: string
+                  example: The Caesar cipher is a type of encryption that replaces each letter in a message with a different letter that is a fixed number of positions away in the alphabet.\r\n\r\nFor example, the formula might be something like this:\r\n\r\nNew letter = (Original letter + 3) % 26\r\n\r\nIn this formula, each letter is first assigned a number (A=0, B=1, C=2, etc.), the original letter is added to 3, and then the result is taken modulo 26. This gives a new number which corresponds to a new letter (the letter that matches the number in the alphabet).\r\n\r\nSo, if the original letter was \"A\", the new letter would be \"D\". To decode the message, the process is reversed, with the original formula being used in reverse and subtracting 3 instead of adding it. This gives the original message back.
+                keysDescription:
+                  type: string
+                  example: The key used in the Caesar cipher is an integer between 1 and 25, which represents the number of positions each letter is shifted.
+                cipherFile:
+                  type: string
+                  format: binary
+                keyType:
+                  type: string
+                  example: 1-key
+                keyArgs:
+                  allOf:
+                    - $ref: "#/components/schemas/keyArgs"
+                    - example:
+                        keyDataType: number
+                        keyDataDesc: i.e. 1-25
+        required: false
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/cipher/delete/{cipher}:
+    parameters:
+      - in: path
+        name: cipher
+        schema:
+          type: string
+        required: true
+        description: The name of the cipher
     delete:
       tags:
         - Admin
       summary: Delete Cipher
-      description: An admin authenticated user's token required
+      description: >-
+        Deletes a Cipher resource
+
+
+        A root admin authenticated user's token required
       operationId: DeleteCipher
       parameters: []
       responses:
@@ -138,12 +339,16 @@ paths:
           description: ""
           headers: {}
       deprecated: false
-  /user/history:
+  /history:
     get:
       tags:
-        - User
+        - History
       summary: Get History
-      description: An authenticated user's token required
+      description: >-
+        Returns all the saved History records of the authenticated user
+
+
+        An authenticated user's token required
       operationId: GetHistory
       parameters: []
       responses:
@@ -151,12 +356,40 @@ paths:
           description: ""
           headers: {}
       deprecated: false
-  /user/history/save:
+  /history/delete/{id}: 
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The history resource id
+    delete:
+      tags:
+        - History
+      summary: Delete History
+      description: >-
+        Deletes a History resource
+
+
+        An authenticated user's token required
+      operationId: DeleteHistory
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /history/save:
     post:
       tags:
-        - User
+        - History
       summary: Save History
-      description: An authenticated user's token required
+      description: >-
+        Creates a History resource
+
+
+        An authenticated user's token required
       operationId: SaveHistory
       parameters: []
       requestBody:
@@ -167,35 +400,43 @@ paths:
               allOf:
                 - $ref: "#/components/schemas/SaveHistoryRequest"
                 - example:
-                    cipher: atbash
-                    plaintext: hello
-                    keys: ""
-                    ciphertext: sadfsd
+                    operation: encrypt
+                    cipher: caesar
+                    plaintext: hello world
+                    keys:
+                      key: "12"
+                    ciphertext: tqxxa iadxp
             example:
-              cipher: atbash
-              plaintext: hello
-              keys: ""
-              ciphertext: sadfsd
+              operation: encrypt
+              cipher: caesar
+              plaintext: hello world
+              keys:
+                key: "12"
+              ciphertext: tqxxa iadxp
         required: true
       responses:
         "200":
           description: ""
           headers: {}
       deprecated: false
-  /user/history/{id}:
+  /history/deleteAll/{id}:
     parameters:
       - in: path
         name: id
         schema:
-          type: integer
+          type: string
         required: true
-        description: The user ID
+        description: The user resource id
     delete:
       tags:
-        - User
-      summary: Delete History
-      description: An authenticated user's token required
-      operationId: DeleteHistory
+        - History
+      summary: Delete All History
+      description: >-
+        Delete all History resources of the user
+
+
+        An authenticated user's token required
+      operationId: DeleteAllHistory
       parameters: []
       responses:
         "200":
@@ -206,8 +447,9 @@ paths:
     post:
       tags:
         - Auth
-      summary: Create User
-      operationId: CreateUser
+      summary: Signup User
+      description: Creates a User resource
+      operationId: SignupUser
       parameters: []
       requestBody:
         description: ""
@@ -215,18 +457,17 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: "#/components/schemas/CreateUserRequest"
+                - $ref: "#/components/schemas/SignupUserRequest"
                 - example:
-                    name: user1
-                    password: user1@#4
+                    email: user@email.com
+                    password: temp1234
             example:
-              name: user1
-              password: user1@#4
+              email: user@email.com
+              password: temp1234
         required: true
       responses:
         "200":
-          description: >
-            The jwt token is returned in a http-only cookie named `jwt`. This cookie will automatically be included in subsequent requests.
+          description: ""
           headers: {}
       deprecated: false
       security: []
@@ -235,6 +476,7 @@ paths:
       tags:
         - Auth
       summary: Login User
+      description: Authenticates the registered User
       operationId: LoginUser
       parameters: []
       requestBody:
@@ -245,16 +487,15 @@ paths:
               allOf:
                 - $ref: "#/components/schemas/LoginUserRequest"
                 - example:
-                    name: user1
-                    password: user1@#4
+                    email: user@email.com
+                    password: temp1234
             example:
-              name: user1
-              password: user1@#4
+              email: user@email.com
+              password: temp1234
         required: true
       responses:
         "200":
-          description: >
-            The jwt token is returned in a http-only cookie named `jwt`. This cookie will automatically be included in subsequent requests.
+          description: ""
           headers: {}
       deprecated: false
       security: []
@@ -263,7 +504,7 @@ paths:
       tags:
         - Auth
       summary: Logout User
-      description: An authenticated user's token required
+      description: Destroys authenticated user's token and cookie
       operationId: LogoutUser
       parameters: []
       responses:
@@ -276,7 +517,11 @@ paths:
       tags:
         - Auth
       summary: Get Current User
-      description: An authenticated user's token required
+      description: >-
+        Returns authenticated user's information
+
+
+        An authenticated user's token required
       operationId: GetCurrentUser
       parameters: []
       responses:
@@ -284,18 +529,175 @@ paths:
           description: ""
           headers: {}
       deprecated: false
+  /user/update/{email}:
+    parameters:
+      - in: path
+        name: email
+        schema:
+          type: string
+        required: true
+        description: The user email
+    patch:
+      tags:
+        - User
+      summary: Update Account
+      description: >-
+        Updates an authenticated user's resource
+
+
+        An authenticated user's token required
+      operationId: UpdateAccount
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/UpdateAccountRequest"
+                - example:
+                    userEmail: newEmail@email.com
+            example:
+              userEmail: newEmail@email.com
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /user/update/{email}:
+    parameters:
+      - in: path
+        name: email
+        schema:
+          type: string
+        required: true
+        description: The user email
+    delete:
+      tags:
+        - User
+      summary: Delete Account
+      description: >-
+        Deletes the User account
+
+
+        An authenticated user's token required
+      operationId: DeleteAccount
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /user/sendOTP:
+    post:
+      tags:
+        - User
+      summary: Send OTP
+      description: Generates and sends an OTP to a registered user's email
+      operationId: SendOTP
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/SendOTPRequest"
+                - example:
+                    email: user@email.com
+            example:
+              email: user@email.com
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /user/validateOTP:
+    post:
+      tags:
+        - User
+      summary: Validate OTP
+      description: >-
+        Validates inputted OTP
+
+
+        A valid OTP required
+      operationId: ValidateOTP
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/ValidateOTPRequest"
+                - example:
+                    email: mohsulaymanr@yahoo.com
+                    otp: 637A9C
+            example:
+              email: mohsulaymanr@yahoo.com
+              otp: 637A9C
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /user/resetPassword/{email}:
+    parameters:
+      - in: path
+        name: email
+        schema:
+          type: string
+        required: true
+        description: The user email
+    patch:
+      tags:
+        - User
+      summary: Reset Password
+      description: >-
+        Updates an OTP validated registered user's password
+
+
+        A valid OTP required
+      operationId: ResetPassword
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/ResetPasswordRequest"
+                - example:
+                    otp: 49EF3D
+                    newPassword: aSuperStrongPass123
+            example:
+              otp: 49EF3D
+              newPassword: aSuperStrongPass123
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
 components:
   schemas:
     PerformEncryptorDecryptRequest:
       title: PerformEncryptorDecryptRequest
       required:
-        - cipher
+        - cipherName
         - operation
         - message
         - keys
       type: object
       properties:
-        cipher:
+        cipherName:
           type: string
         operation:
           type: string
@@ -306,21 +708,75 @@ components:
             - $ref: "#/components/schemas/Keys"
             - {}
       example:
-        cipher: caesar
+        cipherName: caesar
         operation: encrypt
         message: hello world
         keys:
-          key1: "13"
+          key: "12"
     Keys:
       title: Keys
       required:
-        - key1
+        - key
       type: object
       properties:
-        key1:
+        key:
           type: string
       example:
-        key1: "13"
+        key: "12"
+    CreateUserRequest:
+      title: CreateUserRequest
+      required:
+        - email
+        - password
+        - role
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+      example:
+        email: user@email.com
+        password: user1234
+        role: user
+    UpdateUserRequest:
+      title: UpdateUserRequest
+      required:
+        - email
+        - role
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        role:
+          type: string
+        password:
+          type: string
+      example:
+        email: newEmail@email.com
+        role: read-only-admin
+        password: newPassword123
+    DeleteUserRequest:
+      title: DeleteUserRequest
+      required:
+        - email
+        - password
+        - role
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+      example:
+        email: temp@temp.com
+        password: temp1234
+        role: user
     keyArgs:
       title: keyArgs
       required:
@@ -338,61 +794,118 @@ components:
     SaveHistoryRequest:
       title: SaveHistoryRequest
       required:
+        - operation
         - cipher
         - plaintext
         - keys
         - ciphertext
       type: object
       properties:
+        operation:
+          type: string
         cipher:
           type: string
         plaintext:
           type: string
         keys:
-          type: string
+          allOf:
+            - $ref: "#/components/schemas/Keys"
+            - {}
         ciphertext:
           type: string
       example:
-        cipher: atbash
-        plaintext: hello
-        keys: ""
-        ciphertext: sadfsd
-    CreateUserRequest:
-      title: CreateUserRequest
+        operation: encrypt
+        cipher: caesar
+        plaintext: hello world
+        keys:
+          key: "12"
+        ciphertext: tqxxa iadxp
+    SignupUserRequest:
+      title: SignupUserRequest
       required:
-        - name
+        - email
         - password
       type: object
       properties:
-        name:
+        email:
           type: string
         password:
           type: string
       example:
-        name: user1
-        password: user1@#4
+        email: user@email.com
+        password: temp1234
     LoginUserRequest:
       title: LoginUserRequest
       required:
-        - name
+        - email
         - password
       type: object
       properties:
-        name:
+        email:
           type: string
         password:
           type: string
       example:
-        name: user1
-        password: user1@#4
+        email: user@email.com
+        password: temp1234
+    UpdateAccountRequest:
+      title: UpdateAccountRequest
+      required:
+        - userEmail
+      type: object
+      properties:
+        userEmail:
+          type: string
+      example:
+        userEmail: newEmail@email.com
+    SendOTPRequest:
+      title: SendOTPRequest
+      required:
+        - email
+      type: object
+      properties:
+        email:
+          type: string
+      example:
+        email: user@email.com
+    ValidateOTPRequest:
+      title: ValidateOTPRequest
+      required:
+        - email
+        - otp
+      type: object
+      properties:
+        email:
+          type: string
+        otp:
+          type: string
+      example:
+        email: mohsulaymanr@yahoo.com
+        otp: 637A9C
+    ResetPasswordRequest:
+      title: ResetPasswordRequest
+      required:
+        - otp
+        - newPassword
+      type: object
+      properties:
+        otp:
+          type: string
+        newPassword:
+          type: string
+      example:
+        otp: 49EF3D
+        newPassword: aSuperStrongPass123
 security:
   - jwtCookie: []
 tags:
   - name: Cryptography
     description: ""
-  - name: Admin
+  - name: Auth
     description: ""
   - name: User
     description: ""
-  - name: Auth
+  - name: History
+    description: ""
+  - name: Admin
     description: ""
