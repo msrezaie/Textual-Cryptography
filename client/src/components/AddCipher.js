@@ -191,10 +191,7 @@ const AddCipher = () => {
           <div className="grid">
             <hgroup>
               <strong>Cipher Description</strong>
-              <p>
-                Description of the Cipher which will be shown once the Cipher is
-                selected.
-              </p>
+              <p>A description for the Cipher.</p>
             </hgroup>
             <div className="profile-inputs-container">
               <textarea
@@ -209,7 +206,7 @@ const AddCipher = () => {
           <div className="grid">
             <hgroup>
               <strong>Cipher Key[s] Description</strong>
-              <p>Any brief details about the second Key.</p>
+              <p>A description for the Cipher's key[s].</p>
             </hgroup>
             <div className="profile-inputs-container">
               <textarea

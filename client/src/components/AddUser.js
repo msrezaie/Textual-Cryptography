@@ -77,7 +77,8 @@ const AddUser = () => {
             <hgroup>
               <strong>User Role</strong>
               <p>
-                A user's role can Root Admin, Read-only Admin, or just a User.
+                A user's role can be Root Admin, Read-only Admin, or just a
+                User.
               </p>
             </hgroup>
             <div className="profile-inputs-container">
