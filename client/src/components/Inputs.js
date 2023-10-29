@@ -9,7 +9,6 @@ const Inputs = () => {
     cipherName,
     keys,
     keyType,
-    userEmail,
     role,
     fetchHistoryData,
     selectHistoryPText,
@@ -41,7 +40,6 @@ const Inputs = () => {
 
           if (role === "user") {
             await axios.post("/api/v1/history/save", {
-              userEmail,
               operation,
               cipher: cipherName,
               plaintext,
@@ -76,7 +74,6 @@ const Inputs = () => {
 
           if (role === "user") {
             await axios.post("/api/v1/history/save", {
-              userEmail,
               operation,
               cipher: cipherName,
               ciphertext,

@@ -5,9 +5,6 @@ const historySchema = mongoose.Schema(
     userId: {
       type: String,
     },
-    userEmail: {
-      type: String,
-    },
     operation: {
       type: String,
     },

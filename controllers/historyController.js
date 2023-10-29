@@ -1,4 +1,5 @@
 const History = require("../models/History");
+const User = require("../models/User");
 
 // @desc    get all the saved encryption/decryption usage of a user
 // @route   GET /api/v1/history
@@ -12,18 +13,16 @@ const getAllHistory = async (req, res) => {
 // @route   POST /api/v1/history/save
 // @access  authenticated users only
 const saveHistory = async (req, res) => {
-  const { userEmail, operation, cipher, plaintext, keys, ciphertext } =
-    req.body;
+  const { operation, cipher, plaintext, keys, ciphertext } = req.body;
   const savedHistory = await History.create({
     userId: req.user.userId,
-    userEmail,
     operation,
     plaintext,
     cipher,
     keys,
     ciphertext,
   });
-  res.json(savedHistory);
+  return res.json(savedHistory);
 };
 
 // @desc    deletes encryption/decryption usage of a user
@@ -31,18 +30,12 @@ const saveHistory = async (req, res) => {
 // @access  authenticated users only
 const deleteHistory = async (req, res) => {
   const { id } = req.params;
-
-  try {
-    const historyExists = await History.findByIdAndDelete({ _id: id });
-    if (!historyExists) {
-      res.status(404);
-      throw new Error("Invalid history id!");
-    }
-    res.status(200).json({ msg: "History deleted!" });
-  } catch (error) {
-    res.status(500);
-    throw new Error(error);
+  const historyExists = await History.findByIdAndDelete({ _id: id });
+  if (!historyExists) {
+    res.status(404);
+    throw new Error("Invalid history id!");
   }
+  res.status(200).json({ msg: "History deleted!" });
 };
 
 // @desc    deletes all encryption/decryption usage history of a user
