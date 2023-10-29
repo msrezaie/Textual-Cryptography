@@ -21,12 +21,12 @@ const getAllCiphers = async (req, res) => {
 // @access  public
 const transformText = (req, res) => {
   let { cipherName, operation, message, keys } = req.body;
-  cipherName = cipherName.toLowerCase();
 
   if (!cipherName || !operation || !message || !keys) {
     res.status(400);
     throw new Error("required arguements not received!");
   }
+  cipherName = cipherName.toLowerCase();
   const cipherPath = path.join(__dirname, `../uploads/${cipherName}.py`);
 
   if (!fs.existsSync(cipherPath)) {

@@ -2,6 +2,26 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const generateCookie = require("../util/generateCookie");
 
+// @desc    get authenticated user's detail
+// @route   GET /api/v1/auth/getCurrentUser
+// @access  authenticated users only
+const getCurrentUser = async (req, res) => {
+  const token = req.cookies.jwt;
+  if (!token) {
+    res.status(401);
+    throw new Error("no valid token found!");
+  }
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const validUser = await User.findOne({ _id: payload.id });
+
+    res.status(200).json({ email: validUser.email, role: validUser.role });
+  } catch (error) {
+    res.status(401);
+    throw new Error("Unauthorized access!");
+  }
+};
+
 // @desc    creates token, cookie and registers users
 // @route   POST /api/v1/auth/signup
 // @access  public
@@ -59,26 +79,6 @@ const logout = async (req, res) => {
     secure: process.env.PRODUCTION_ENV === "production",
   });
   res.status(200).json({ msg: "Logged out!" });
-};
-
-// @desc    get authenticated user's detail
-// @route   GET /api/v1/auth/getCurrentUser
-// @access  authenticated users only
-const getCurrentUser = async (req, res) => {
-  const token = req.cookies.jwt;
-  if (!token) {
-    res.status(401);
-    throw new Error("no valid token found!");
-  }
-  try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    const validUser = await User.findOne({ _id: payload.id });
-
-    res.status(200).json({ email: validUser.email, role: validUser.role });
-  } catch (error) {
-    res.status(401);
-    throw new Error("Unauthorized access!");
-  }
 };
 
 module.exports = { login, signup, logout, getCurrentUser };
