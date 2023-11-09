@@ -40,7 +40,7 @@ app.use(
 app.use(helmet());
 app.use(
   cors({
-    origin: "https://text-crypt.netlify.app/",
+    origin: "https://text-crypt.netlify.app",
     optionsSuccessStatus: 200,
   })
 );
