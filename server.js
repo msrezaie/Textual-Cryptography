@@ -30,6 +30,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+app.set("trust proxy", 1);
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 100,
+  })
+);
+app.use(helmet());
+app.use(
+  cors({
+    origin: "https://text-crypt.netlify.app/",
+    optionsSuccessStatus: 200,
+  })
+);
+app.use(xss());
+
 app.get("/", (req, res) => {
   res.send(
     '<h2>Welcome to Textual Cryptography API</h2><a href="/api-docs">Documentation</a>'
@@ -46,17 +62,6 @@ app.use("/api/v1/history", historyRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
-
-app.set("trust proxy", 1);
-app.use(
-  rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    limit: 100,
-  })
-);
-app.use(helmet());
-app.use(cors());
-app.use(xss());
 
 const PORT = process.env.PORT || 4000;
 
